@@ -6,6 +6,7 @@ const AddNote = () => {
     const[title, setTitle] = useState('');
     const[body, setBody] = useState('');
     const[category, setCategory] = useState('programming');
+
     const history = useHistory();
 
     const saveNote = (e) => {
