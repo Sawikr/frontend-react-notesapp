@@ -5,6 +5,9 @@ import NoteDetails from "./element/NoteDetails";
 import NotesList from './element/NotesList';
 import NotFound from './element/NotFound';
 import AddNote from "./element/AddNote";
+import Add from "./element/Add";
+import Info from "./element/Info";
+import Space from "./element/Space";
 
 function App() {
     return (
@@ -19,6 +22,9 @@ function App() {
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>
+                <Space />
+                <Add />
+                <Info />
             </div>
         </BrowserRouter>
     );

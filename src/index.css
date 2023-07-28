@@ -16,6 +16,11 @@ button {
 .primary-color {
   color: #79589f;
 }
+
+.info-color {
+  color: black;
+}
+
 /* navbar */
 .navbar {
   padding: 20px;
@@ -29,9 +34,32 @@ button {
 .navbar a {
   color: black;
 }
+
 .navbar a:hover {
   text-decoration: none;
   color: #79589f;
+}
+
+/* info */
+.info {
+  padding: 20px;
+  display: inline;
+  align-items: center;
+  max-width: 600px;
+  border-bottom: 1px solid #f2f2f2;
+  font-size: 12px;
+}
+
+.info a {
+  color: black;
+}
+
+.space {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 /* notes list */
@@ -40,6 +68,7 @@ button {
   margin: 0px auto;
   padding: 20px;
 }
+
 .notes-preview a{
   background: #f4f4f4;
   display: block;
