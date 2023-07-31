@@ -16,7 +16,7 @@ const NoteDetails = () => {
             .catch(error => {
                 console.log('An error occurred!', error);
             })
-    }, [id]);
+    }, []);
 
     const handleDelete = () => {
         NotesService.remove(id)

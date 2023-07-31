@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NotesService from '../service/NotesService';
 
-const NotesList = () => {
+function NotesList() {
 
     const [notes, setNotes] = useState([]);
 

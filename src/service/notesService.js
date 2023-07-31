@@ -1,7 +1,7 @@
 import httpClient from "../http-common";
 
 const getAll = () => {
-    return httpClient.get("/notes");
+    return httpClient.get('/notes');
 }
 
 const create = data => {
@@ -20,5 +20,13 @@ const update = data => {
     return httpClient.put('/notes', data);
 }
 
+const getWeather = () => {
+    return httpClient.get('/notes/weather');
+}
+
+const getCurrency = () => {
+    return httpClient.get('/notes/currency');
+}
+
 // eslint-disable-next-line
-export default { getAll, create, get, remove, update };
+export default { getAll, create, get, remove, update, getWeather, getCurrency };

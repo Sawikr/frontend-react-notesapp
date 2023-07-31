@@ -8,6 +8,8 @@ import AddNote from "./element/AddNote";
 import Add from "./element/Add";
 import Info from "./element/Info";
 import Space from "./element/Space";
+import Weather from "./element/Weather";
+import Currency from "./element/Currency";
 
 function App() {
     return (
@@ -18,6 +20,8 @@ function App() {
                     <Switch>
                         <Route exact path="/" component={NotesList} />
                         <Route path="/add" component={AddNote} />
+                        <Route path="/notes/weather" component={Weather} />
+                        <Route path="/notes/nbp" component={Currency} />
                         <Route path="/notes/edit/:id" component={AddNote} />
                         <Route path="/notes/:id" component={NoteDetails} />
                         <Route path="*" component={NotFound} />

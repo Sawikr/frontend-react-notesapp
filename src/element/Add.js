@@ -4,8 +4,8 @@ const Add = () => {
     return (  
         <nav className="navbar">
             <div>
-                <Link to="/nbp">NBP</Link>
-                <Link to="/weather" className="ml-3">Weather</Link>
+                <Link to="/notes/nbp">Currency NBP</Link>
+                <Link to="/notes/weather" className="ml-3">Weather</Link>
             </div>
         </nav>
     );

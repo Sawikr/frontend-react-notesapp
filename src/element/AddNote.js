@@ -8,9 +8,14 @@ const AddNote = () => {
     const[category, setCategory] = useState('programming');
     const history = useHistory();
     const {id} = useParams();
+    const[errors, setErrors] = useState(false);
 
     const saveNote = (e) => {
         e.preventDefault();
+        if (!title || !body) {
+            setErrors(true);
+            return;
+        }
         const note = {title, body, category, id};
         if (id) {
             NotesService.update(note)
@@ -45,12 +50,13 @@ const AddNote = () => {
                     console.log("An error occurred!", error);
                 })
         }
-    }, [id]);
+    }, []);
 
     return (
         <div className="create">
             <div className="text-center">
                 <h5>{id ? "Update a Note" : "Add a New Note"}</h5>
+                {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>
                 <div className="form-group">
@@ -83,6 +89,7 @@ const AddNote = () => {
                         <option value="vacation">Vacation</option>
                         <option value="meeting">Meeting</option>
                         <option value="blogging">Blogging</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
                 <div className="text-center">
