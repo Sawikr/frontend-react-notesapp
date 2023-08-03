@@ -5,6 +5,9 @@ function Weather() {
 
     const [weather, setWeather] = useState([]);
 
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
     useEffect(() => {
         NotesService.getWeather()
             .then(response => {
@@ -28,7 +31,8 @@ function Weather() {
             <h8>Humidity:</h8>
             <div className="mb-3">{weather.humidity}</div>
             <h8>Wind speed:</h8>
-            <div className="mb-3">{weather.windSpeed}</div>
+            <div className="mb-3">{weather.windSpeed}</div><h8>Date:</h8>
+            <div className="mb-3">{date}</div>
         </div>
     );
 }

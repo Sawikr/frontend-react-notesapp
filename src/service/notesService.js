@@ -24,9 +24,21 @@ const getWeather = () => {
     return httpClient.get('/notes/weather');
 }
 
-const getCurrency = () => {
-    return httpClient.get('/notes/currency');
+const getCurrencyEUR = () => {
+    return httpClient.get('/notes/currency/eur');
+}
+
+const getCurrencyUSD = () => {
+    return httpClient.get('/notes/currency/usd');
+}
+
+const getCurrencyCHF = () => {
+    return httpClient.get('/notes/currency/chf');
+}
+
+const getCurrencyGBP = () => {
+    return httpClient.get('/notes/currency/gbp');
 }
 
 // eslint-disable-next-line
-export default { getAll, create, get, remove, update, getWeather, getCurrency };
+export default { getAll, create, get, remove, update, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP };
