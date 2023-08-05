@@ -18,7 +18,7 @@ function App() {
                 <Navbar />
                 <div>
                     <Switch>
-                        <Route exact path="/" component={NotesList} />
+                        <Route exact path="/radoslaw-sawicki-frontend-react-notesapp" component={NotesList} />
                         <Route path="/add" component={AddNote} />
                         <Route path="/notes/weather" component={Weather} />
                         <Route path="/notes/nbp" component={Currency} />

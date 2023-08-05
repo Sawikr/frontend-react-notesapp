@@ -21,7 +21,7 @@ const AddNote = () => {
             NotesService.update(note)
                 .then(response => {
                     console.log("Note updated successfully", response.data);
-                    history.push("/");
+                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);
@@ -30,7 +30,7 @@ const AddNote = () => {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);
-                    history.push("/");
+                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);

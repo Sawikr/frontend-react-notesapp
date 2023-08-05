@@ -21,7 +21,7 @@ const NoteDetails = () => {
     const handleDelete = () => {
         NotesService.remove(id)
             .then(response => {
-                history.push("/");
+                history.push("/radoslaw-sawicki-frontend-react-notesapp");
             })
             .catch(error => {
                 console.log('An error occurred!', error);
