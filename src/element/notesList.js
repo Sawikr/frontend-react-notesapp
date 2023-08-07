@@ -27,7 +27,7 @@ function NotesList() {
                         <div key={note.id} className="notes-preview mt-3">
                             <Link to={`/notes/${note.id}`}>
                                 <h5 className="primary-color text-capitalize">{note.title}</h5>
-                                <Moment parse="YYYY-MM-DD HH:mm:ss" fromNow>{note.updatedAt}</Moment>
+                                <Moment fromNow>{note.updatedAt}</Moment>
                             </Link>
                         </div>
                     ))
