@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import NotesService from "../service/NotesService";
+import Space from "./Space";
 
 function Weather() {
 
@@ -21,8 +22,9 @@ function Weather() {
 
     return (
         <div className="main-content">
+            <Space/>
             <h4>Forecast</h4>
-            <p> </p>
+            <p>{""}</p>
             <h8>City:</h8>
             <div className="mb-3">Poznań</div>
             <h8>Temperature:</h8>

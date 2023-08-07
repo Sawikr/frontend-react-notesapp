@@ -7,15 +7,17 @@ import NotFound from './element/NotFound';
 import AddNote from "./element/AddNote";
 import Add from "./element/Add";
 import Info from "./element/Info";
-import Space from "./element/Space";
+import SpaceNavbar from "./element/SpaceNavbar";
 import Weather from "./element/Weather";
 import Currency from "./element/Currency";
+import Space from "./element/Space";
 
 function App() {
     return (
         <BrowserRouter>
             <div>
                 <Navbar />
+                <Space />
                 <div>
                     <Switch>
                         <Route exact path="/radoslaw-sawicki-frontend-react-notesapp" component={NotesList} />
@@ -27,7 +29,7 @@ function App() {
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>
-                <Space />
+                <SpaceNavbar />
                 <Add />
                 <Info />
             </div>

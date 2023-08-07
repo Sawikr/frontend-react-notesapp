@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NotesService from '../service/NotesService';
+import Moment from "react-moment";
 
 function NotesList() {
 
@@ -19,14 +20,14 @@ function NotesList() {
 
     return (
         <div className="main-content">
-            <h4>List of Notes</h4>
+            <h4 className="text-center">List of Notes</h4>
             <div className="notes-list mt-4">
                 {
                     notes && notes.map(note => (
                         <div key={note.id} className="notes-preview mt-3">
                             <Link to={`/notes/${note.id}`}>
                                 <h5 className="primary-color text-capitalize">{note.title}</h5>
-                                <p>{note.body}</p>
+                                <Moment parse="YYYY-MM-DD HH:mm:ss" fromNow>{note.updatedAt}</Moment>
                             </Link>
                         </div>
                     ))

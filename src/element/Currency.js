@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import NotesService from "../service/NotesService";
+import Space from "./Space";
 
 function Currency() {
 
@@ -58,8 +59,9 @@ function Currency() {
 
     return (
         <div className="main-content">
+            <Space/>
             <h4>Currency of NBP</h4>
-            <p> </p>
+            <p>{""}</p>
             <h8>EUR/PLN:</h8>
             <div className="mb-3">{JSON.stringify(currencyEUR)}</div>
             <h8>USD/PLN:</h8>

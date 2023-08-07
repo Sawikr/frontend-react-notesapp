@@ -1,7 +1,7 @@
 const Space = () => {
     return (  
-        <nav className="navbar">
-            <p> </p>
+        <nav>
+            <p>{''}</p>
         </nav>
     );
 }
