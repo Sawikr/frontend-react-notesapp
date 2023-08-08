@@ -41,6 +41,8 @@ const NoteDetails = () => {
                         <h5 className="text-capitalize primary-color">{currentNote.title}</h5>
                         <div className="mb-3 font-italic metadata">
                             <Moment fromNow>{currentNote.updatedAt}</Moment>
+                            <span className="text-capitalize">, </span>
+                            <Moment format="DD/MM/YYYY HH:MM">{currentNote.updatedAt}</Moment>
                             <span className="text-capitalize">, {currentNote.category}</span>
                         </div>
                         <div className="mb-3">{currentNote.body}</div>

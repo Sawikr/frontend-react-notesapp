@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import NotesService from "../service/NotesService";
 import Space from "./Space";
+import Moment from "react-moment";
 
 function Weather() {
 
@@ -35,7 +36,9 @@ function Weather() {
             <div className="mb-3">{weather.humidity}</div>
             <h8>Wind speed:</h8>
             <div className="mb-3">{weather.windSpeed}</div><h8>Date:</h8>
-            <div className="mb-3">{date}</div>
+            <div className="mb-3">
+                <Moment format="DD/MM/YYYY">{date}</Moment>
+            </div>
         </div>
     );
 }
