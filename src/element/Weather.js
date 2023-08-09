@@ -37,7 +37,7 @@ function Weather() {
             <h8>Wind speed:</h8>
             <div className="mb-3">{weather.windSpeed}</div><h8>Date:</h8>
             <div className="mb-3">
-                <Moment format="DD/MM/YYYY">{date}</Moment>
+                <Moment format="MM/DD/YYYY">{date}</Moment>
             </div>
         </div>
     );

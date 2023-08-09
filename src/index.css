@@ -6,6 +6,7 @@
   font-family: "Ubuntu", serif;
   color: #333;
 }
+
 button {
   background: #79589f;
   color: white;
@@ -13,6 +14,7 @@ button {
   padding: 5px 10px;
   cursor: pointer;
 }
+
 .primary-color {
   color: #79589f;
 }
@@ -74,6 +76,7 @@ button {
   display: block;
   padding: 1rem;
 }
+
 .notes-preview a:hover {
   background: #e4e4e4;
   text-decoration: none;
