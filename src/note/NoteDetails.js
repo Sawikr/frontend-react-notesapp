@@ -32,6 +32,10 @@ const NoteDetails = () => {
         history.push(`/notes/edit/${id}`);
     }
 
+    const handleSend = () => {
+        history.push(`/notes/email/${id}`);
+    }
+
     return (
         <div className="note-details main-content">
             {
@@ -49,6 +53,7 @@ const NoteDetails = () => {
                     </article>
                     <button onClick={handleUpdate}>Edit</button>
                     <button onClick={handleDelete} className="ml-3">Delete</button>
+                    <button onClick={handleSend} className="ml-3">Send</button>
                 </div>
             }
         </div>

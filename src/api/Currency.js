@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import NotesService from "../service/NotesService";
-import Space from "./Space";
+import Space from "../element/Space";
 import Moment from "react-moment";
 
 function Currency() {
