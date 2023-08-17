@@ -20,7 +20,9 @@ const AddNote = () => {
         if (id) {
             NotesService.update(note)
                 .then(response => {
+                    console.log(note);
                     console.log("Note updated successfully", response.data);
+                    alert("Note updated successfully!");
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
                 .catch(error => {
@@ -30,6 +32,7 @@ const AddNote = () => {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);
+                    alert("Note added successfully!");
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
                 .catch(error => {

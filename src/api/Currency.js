@@ -10,8 +10,7 @@ function Currency() {
     const [currencyCHF, setCurrencyCHF] = useState([]);
     const [currencyGBP, setCurrencyGBP] = useState([]);
 
-    const current = new Date();
-    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+    const currentDate = Date.now().valueOf();
 
     useEffect(() => {
         NotesService.getCurrencyEUR()
@@ -73,7 +72,7 @@ function Currency() {
             <div className="mb-3">{JSON.stringify(currencyGBP)}</div>
             <h8>Date:</h8>
             <div className="mb-3">
-                <Moment format="MM/DD/YYYY">{date}</Moment>
+                <Moment format="DD/MM/YYYY">{currentDate}</Moment>
             </div>
         </div>
     );
