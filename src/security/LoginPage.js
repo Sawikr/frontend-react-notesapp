@@ -1,11 +1,26 @@
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
+import LoginService from "../service/LoginService";
 
 const LoginPage = () => {
     const[user, setUser] = useState('');
     const[password, setPassword] = useState('');
+    const[loginName, setLoginName] = useState('');
+    const[isLogin, setIsLogin] = useState('');
     const[errors, setErrors] = useState(false);
     const history = useHistory();
+
+    const sendLogin = () => {
+        const login = {loginName, isLogin};
+        LoginService.sendLogin(login)
+            .then(response => {
+                console.log(login);
+                console.log("Login sent successfully", response.data);
+            })
+            .catch(error => {
+                console.log("An error occurred!", error);
+            })
+    }
 
     const login = (e) => {
         e.preventDefault();
@@ -20,6 +35,7 @@ const LoginPage = () => {
         if (isUser === user && isPassword === password) {
             window.isLogin = true;
             alert("Login is successfully!");
+            sendLogin();
             history.push("/notes/list");
         } else {
             alert("An error occurred!");

@@ -32,7 +32,7 @@ const AddNote = () => {
                     console.log("An error occurred!", error);
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
-        } else {
+        } else if (id && window.isLogin) {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);
@@ -46,6 +46,9 @@ const AddNote = () => {
                     console.log('An error occurred!', error);
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
+        } else {
+            alert("Log in first!");
+            history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
     }
 
