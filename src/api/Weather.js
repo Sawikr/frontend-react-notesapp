@@ -4,9 +4,7 @@ import Space from "../element/Space";
 import Moment from "react-moment";
 
 function Weather() {
-
     const [weather, setWeather] = useState([]);
-
     const currentDate = Date.now().valueOf();
 
     useEffect(() => {

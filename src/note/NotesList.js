@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import NotesService from '../service/NotesService';
 import Moment from "react-moment";
 
 function NotesList() {
-
     const [notes, setNotes] = useState([]);
     const history = useHistory();
 

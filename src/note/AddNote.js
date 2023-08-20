@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import { useHistory, useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import NotesService from "../service/NotesService";
 
 const AddNote = () => {
@@ -17,7 +17,7 @@ const AddNote = () => {
             return;
         }
         const note = {title, body, category, id};
-        if (id) {
+        if (id && window.isLogin) {
             NotesService.update(note)
                 .then(response => {
                     console.log(note);
@@ -41,10 +41,10 @@ const AddNote = () => {
                         history.push("/notes/list");
                     } else
                         alert("Log in first!");
-                        history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
+                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         }
     }

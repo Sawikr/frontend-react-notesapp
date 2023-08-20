@@ -4,12 +4,10 @@ import Space from "../element/Space";
 import Moment from "react-moment";
 
 function Currency() {
-
     const [currencyEUR, setCurrencyEUR] = useState([]);
     const [currencyUSD, setCurrencyUSD] = useState([]);
     const [currencyCHF, setCurrencyCHF] = useState([]);
     const [currencyGBP, setCurrencyGBP] = useState([]);
-
     const currentDate = Date.now().valueOf();
 
     useEffect(() => {
