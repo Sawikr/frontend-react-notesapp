@@ -1,21 +1,28 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import NotesService from '../service/NotesService';
 import Moment from "react-moment";
 
 function NotesList() {
 
     const [notes, setNotes] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
-        NotesService.getAll()
-            .then(response => {
-                console.log('Printing response!', response.data);
-                setNotes(response.data);
-            })
-            .catch(error => {
-                console.log('An error occurred!', error);
-            })
+        if (window.isLogin) {
+            NotesService.getAll()
+                .then(response => {
+                    console.log('Printing response!', response.data);
+                    setNotes(response.data);
+                })
+                .catch(error => {
+                    console.log('An error occurred!', error);
+
+                })
+        } else {
+            alert("Log in first!");
+            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        }
     }, []);
 
     return (

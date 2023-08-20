@@ -25,7 +25,7 @@ const SendMail = () => {
                     console.log(sendEmail);
                     console.log("Email sent successfully", response.data);
                     alert("E-mail sent successfully to " + email + "!");
-                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                    history.push("/notes/list");
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);

@@ -21,8 +21,8 @@ const NoteDetails = () => {
     const handleDelete = () => {
         NotesService.remove(id)
             .then(response => {
-                alert("Email deleted successfully!");
-                history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                alert("Note deleted successfully!");
+                history.push("/notes/list");
             })
             .catch(error => {
                 console.log('An error occurred!', error);

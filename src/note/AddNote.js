@@ -22,18 +22,26 @@ const AddNote = () => {
                 .then(response => {
                     console.log(note);
                     console.log("Note updated successfully", response.data);
-                    alert("Note updated successfully!");
-                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                    if (window.isLogin) {
+                        alert("Note updated successfully!");
+                        history.push("/notes/list");
+                    } else
+                        alert("Log in first!");
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);
+                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         } else {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);
-                    alert("Note added successfully!");
-                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                    if (window.isLogin) {
+                        alert("Note added successfully!");
+                        history.push("/notes/list");
+                    } else
+                        alert("Log in first!");
+                        history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);

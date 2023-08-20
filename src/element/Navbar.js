@@ -5,7 +5,7 @@ const Navbar = () => {
         <nav className="navbar">
             <h2 className="primary-color">Notes App</h2>
             <div>
-                <Link to="/radoslaw-sawicki-frontend-react-notesapp/">Home</Link>
+                <Link to="/notes/list">Home</Link>
                 <Link to="/add" className="ml-3">New Note</Link>
             </div>
         </nav>

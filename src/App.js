@@ -12,6 +12,7 @@ import SpaceNavbar from "./element/SpaceNavbar";
 import Weather from "./api/Weather";
 import Currency from "./api/Currency";
 import Space from "./element/Space";
+import LoginPage from "./security/LoginPage";
 
 function App() {
     return (
@@ -21,13 +22,14 @@ function App() {
                 <Space />
                 <div>
                     <Switch>
-                        <Route exact path="/radoslaw-sawicki-frontend-react-notesapp" component={NotesList} />
+                        <Route exact path="/notes/list" component={NotesList} />
                         <Route path="/add" component={AddNote} />
                         <Route path="/notes/email/:id" component={SendMail} />
                         <Route path="/notes/weather" component={Weather} />
                         <Route path="/notes/nbp" component={Currency} />
                         <Route path="/notes/edit/:id" component={AddNote} />
                         <Route path="/notes/:id" component={NoteDetails} />
+                        <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>
