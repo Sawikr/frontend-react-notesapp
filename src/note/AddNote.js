@@ -32,7 +32,7 @@ const AddNote = () => {
                     console.log("An error occurred!", error);
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
-        } else if (id && window.isLogin) {
+        } else if (window.isLogin) {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);

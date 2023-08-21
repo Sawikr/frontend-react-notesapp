@@ -96,7 +96,7 @@ const SendMail = () => {
                     </textarea>
                     </div>
                     <div className="text-center">
-                        <button onClick={(e) => sendMail(e)}>Send email</button>
+                        <button onClick={(e) => sendMail(e)}>Send Email</button>
                     </div>
                 </form>
             </div>
