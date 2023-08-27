@@ -1,14 +1,42 @@
 import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import NotesService from "../service/NotesService";
+import LoginService from "../service/LoginService";
 
 const AddNote = () => {
     const[title, setTitle] = useState('');
     const[body, setBody] = useState('');
     const[category, setCategory] = useState('programming');
+    const[loginName, setLoginName] = useState('User');
+    const[isLogin, setIsLogin] = useState(true);
+    const[listName, setListName] = useState('UserList');
+    const[errors, setErrors] = useState(false);
     const history = useHistory();
     const {id} = useParams();
-    const[errors, setErrors] = useState(false);
+
+    const sendLogin = () => {
+        const login = {loginName, isLogin};
+        LoginService.sendLogin(login)
+            .then(response => {
+                console.log(login);
+                console.log("Login sent successfully", response.data);
+            })
+            .catch(error => {
+                console.log("An error occurred!", error);
+            })
+    }
+
+    const sendList = () => {
+        const list = {listName};
+        LoginService.sendList(list)
+            .then(response => {
+                console.log(list);
+                console.log("List sent successfully", response.data);
+            })
+            .catch(error => {
+                console.log("An error occurred!", error);
+            })
+    }
 
     const saveNote = (e) => {
         e.preventDefault();
@@ -16,34 +44,33 @@ const AddNote = () => {
             setErrors(true);
             return;
         }
+
         const note = {title, body, category, id};
-        if (id && window.isLogin) {
+        if (id && window.isLogin === true) {
             NotesService.update(note)
                 .then(response => {
                     console.log(note);
                     console.log("Note updated successfully", response.data);
-                    if (window.isLogin) {
-                        alert("Note updated successfully!");
-                        history.push("/notes/list");
-                    } else
-                        alert("Log in first!");
+                    alert("Note updated successfully!");
+                    history.push("/notes/list");
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);
+                    alert("An error occurred!");
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
-        } else if (window.isLogin) {
+        } else if (window.isLogin === true) {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);
-                    if (window.isLogin) {
-                        alert("Note added successfully!");
-                        history.push("/notes/list");
-                    } else
-                        alert("Log in first!");
+                    alert("Note added successfully!");
+                    sendLogin();
+                    sendList();
+                    history.push("/notes/list");
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
+                    alert("An error occurred!");
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         } else {

@@ -5,10 +5,14 @@ import LoginService from "../service/LoginService";
 const LoginPage = () => {
     const[user, setUser] = useState('');
     const[password, setPassword] = useState('');
-    const[loginName, setLoginName] = useState('');
-    const[isLogin, setIsLogin] = useState('');
+    const[loginName, setLoginName] = useState('User');
+    const[isLogin, setIsLogin] = useState(true);
+    const[listName, setListName] = useState('UserList');
     const[errors, setErrors] = useState(false);
     const history = useHistory();
+
+    let isUser = "user";
+    let isPassword = "user";
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -22,6 +26,18 @@ const LoginPage = () => {
             })
     }
 
+    const sendList = () => {
+        const list = {listName};
+        LoginService.sendList(list)
+            .then(response => {
+                console.log(list);
+                console.log("List sent successfully", response.data);
+            })
+            .catch(error => {
+                console.log("An error occurred!", error);
+            })
+    }
+
     const login = (e) => {
         e.preventDefault();
         if (!user || !password) {
@@ -29,13 +45,11 @@ const LoginPage = () => {
             return;
         }
 
-        let isUser = "user";
-        let isPassword = "user";
-
         if (isUser === user && isPassword === password) {
             window.isLogin = true;
             alert("Login is successfully!");
             sendLogin();
+            sendList();
             history.push("/notes/list");
         } else {
             alert("An error occurred!");
