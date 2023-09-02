@@ -4,7 +4,7 @@ The application also includes current exchange rates and weather forecast.
 
 ## Launching the application
 NotesApp is deployed at: [https://sawikr.github.io/radoslaw-sawicki-frontend-react-notesapp/](https://sawikr.github.io/radoslaw-sawicki-frontend-react-notesapp/).
-In order to log in to the application, you need a username and password. In both cases, enter the word "*user*".
+In order to log in to the application, you need a username and password. In both cases, enter the word "*user*". After logging in, wait a while for the server to load.
 
 ## Repository
 This repository contains the frontend mechanics of the aforementioned application.
