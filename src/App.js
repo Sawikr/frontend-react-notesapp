@@ -13,6 +13,7 @@ import Weather from "./api/Weather";
 import Currency from "./api/Currency";
 import Space from "./element/Space";
 import LoginPage from "./security/LoginPage";
+import RegisterPage from "./security/RegisterPage";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                     <Switch>
                         <Route exact path="/notes/list" component={NotesList} />
                         <Route path="/add" component={AddNote} />
+                        <Route path="/notes/auth/register" component={RegisterPage} />
                         <Route path="/notes/email/:id" component={SendMail} />
                         <Route path="/notes/weather" component={Weather} />
                         <Route path="/notes/nbp" component={Currency} />

@@ -1,44 +1,35 @@
-import httpClient from "../http-common";
+import axios from "axios";
+import {BASE_URL} from "../http-common";
 
-const getAll = () => {
-    return httpClient.get('/notes');
-}
+export const getAll = () =>
+    axios.get(BASE_URL + '/notes')
 
-const create = data => {
-    return httpClient.post("/notes", data);
-}
+export const create = data =>
+    axios.post(BASE_URL + '/notes', data)
 
-const get = id => {
-    return httpClient.get(`/notes/${id}`);
-}
+export const get = id =>
+    axios.get(BASE_URL + `/notes/${id}`)
 
-const remove = id => {
-    return httpClient.delete(`/notes/${id}`);
-}
+export const remove = id =>
+    axios.delete(BASE_URL + `/notes/${id}`)
 
-const update = data => {
-    return httpClient.put('/notes', data);
-}
+export const update = data =>
+    axios.put(BASE_URL + '/notes', data)
 
-const getWeather = () => {
-    return httpClient.get('/notes/weather');
-}
+export const getWeather = () =>
+    axios.get(BASE_URL + '/notes/weather')
 
-const getCurrencyEUR = () => {
-    return httpClient.get('/notes/currency/eur');
-}
+export const getCurrencyEUR = () =>
+    axios.get(BASE_URL + '/notes/currency/eur')
 
-const getCurrencyUSD = () => {
-    return httpClient.get('/notes/currency/usd');
-}
+export const getCurrencyUSD = () =>
+    axios.get(BASE_URL + '/notes/currency/usd')
 
-const getCurrencyCHF = () => {
-    return httpClient.get('/notes/currency/chf');
-}
+export const getCurrencyCHF = () =>
+    axios.get(BASE_URL + '/notes/currency/chf')
 
-const getCurrencyGBP = () => {
-    return httpClient.get('/notes/currency/gbp');
-}
+export const getCurrencyGBP = () =>
+    axios.get(BASE_URL + '/notes/currency/gbp')
 
 // eslint-disable-next-line
 export default { getAll, create, get, remove, update, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP };

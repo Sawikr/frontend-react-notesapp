@@ -2,13 +2,15 @@ import {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import NotesService from '../service/NotesService';
 import Moment from "react-moment";
+import {isUserLoggedIn} from "../service/LoginService";
 
 function NotesList() {
     const [notes, setNotes] = useState([]);
     const history = useHistory();
+    const isAuth = isUserLoggedIn();
 
     useEffect(() => {
-        if (window.isLogin) {
+        if (isAuth) {
             NotesService.getAll()
                 .then(response => {
                     console.log('Printing response!', response.data);
@@ -16,7 +18,6 @@ function NotesList() {
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
-
                 })
         } else {
             alert("Log in first!");

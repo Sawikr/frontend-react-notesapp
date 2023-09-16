@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import NotesService from "../service/NotesService";
-import LoginService from "../service/LoginService";
+import LoginService, {isUserLoggedIn} from "../service/LoginService";
 
 const AddNote = () => {
     const[title, setTitle] = useState('');
@@ -13,6 +13,7 @@ const AddNote = () => {
     const[errors, setErrors] = useState(false);
     const history = useHistory();
     const {id} = useParams();
+    const isAuth = isUserLoggedIn();
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -46,7 +47,7 @@ const AddNote = () => {
         }
 
         const note = {title, body, category, id};
-        if (id && window.isLogin === true) {
+        if (id && isAuth) {
             NotesService.update(note)
                 .then(response => {
                     console.log(note);
@@ -59,7 +60,7 @@ const AddNote = () => {
                     alert("An error occurred!");
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
-        } else if (window.isLogin === true) {
+        } else if (isAuth) {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully", response.data);

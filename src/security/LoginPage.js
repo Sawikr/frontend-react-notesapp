@@ -1,20 +1,17 @@
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
-import LoginService from "../service/LoginService";
+import LoginService, {saveLoggedInUser} from "../service/LoginService";
+import {storeToken} from "../service/LoginService";
 
 const LoginPage = () => {
-    const[user, setUser] = useState('');
+    const[usernameOrEmail, setUsernameOrEmail] = useState('');
     const[password, setPassword] = useState('');
-    const[loginName, setLoginName] = useState('User');
     const[isLogin, setIsLogin] = useState(true);
-    const[listName, setListName] = useState('UserList');
     const[errors, setErrors] = useState(false);
     const history = useHistory();
 
-    let isUser = "user";
-    let isPassword = "user";
-
     const sendLogin = () => {
+        let loginName = usernameOrEmail;
         const login = {loginName, isLogin};
         LoginService.sendLogin(login)
             .then(response => {
@@ -27,6 +24,7 @@ const LoginPage = () => {
     }
 
     const sendList = () => {
+        let listName = usernameOrEmail;
         const list = {listName};
         LoginService.sendList(list)
             .then(response => {
@@ -38,23 +36,33 @@ const LoginPage = () => {
             })
     }
 
-    const login = (e) => {
+    async function login(e) {
         e.preventDefault();
-        if (!user || !password) {
+        if (!usernameOrEmail || !password) {
             setErrors(true);
             return;
         }
 
-        if (isUser === user && isPassword === password) {
-            window.isLogin = true;
-            alert("Login is successfully!");
-            sendLogin();
-            sendList();
-            history.push("/notes/list");
-        } else {
-            alert("An error occurred!");
-            history.push("/radoslaw-sawicki-frontend-react-notesapp");
-        }
+        await LoginService.loginObj(usernameOrEmail, password)
+            .then((response) => {
+                console.log("LoginObj is successfully!", response.data);
+
+                const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
+                storeToken(token);
+                saveLoggedInUser(usernameOrEmail);
+
+                sendLogin();
+                sendList();
+
+                alert("Login is successfully!");
+                history.push("/notes/list");
+
+                window.location.reload();
+            })
+            .catch(error => {
+                console.log("An error occurred!", error);
+                history.push("/radoslaw-sawicki-frontend-react-notesapp");
+            })
     }
 
     return (
@@ -65,13 +73,14 @@ const LoginPage = () => {
             </div>
             <form>
                 <div className="form-group">
-                    <label htmlFor="user">User: <sup>*</sup></label>
+                    <label htmlFor="user">User or Email: <sup>*</sup></label>
                     <input 
                         type="text" 
                         className="form-control"
                         id="user"
-                        value={user}
-                        onChange={(e) => setUser(e.target.value)}
+                        placeholder={'Enter user'}
+                        value={usernameOrEmail}
+                        onChange={(e) => setUsernameOrEmail(e.target.value)}
                     />
                 </div>
                 <div className="form-group">
@@ -80,6 +89,7 @@ const LoginPage = () => {
                         type="text"
                         className="form-control"
                         id="password"
+                        placeholder={'Enter password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}>
                     </input>
