@@ -29,5 +29,10 @@ export const getLoggedInUser = () => {
     return sessionStorage.getItem("authenticatedUser");
 }
 
+export const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+}
+
 // eslint-disable-next-line
 export default { sendLogin, sendList, loginObj };
