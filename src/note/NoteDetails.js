@@ -1,32 +1,44 @@
 import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
+import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from "../service/NotesService";
 import Moment from "react-moment";
 
 const NoteDetails = () => {
-    const {id} = useParams();
     const[currentNote, setCurrentNote] = useState('');
+    const {id} = useParams();
     const history = useHistory();
+    const isAuth = isUserLoggedIn();
 
     useEffect(() => {
-        NotesService.get(id)
-            .then(note => {
-                setCurrentNote(note.data);
-            })
-            .catch(error => {
-                console.log('An error occurred!', error);
-            })
+        if (isAuth) {
+            NotesService.get(id)
+                .then(note => {
+                    setCurrentNote(note.data);
+                })
+                .catch(error => {
+                    console.log('An error occurred!', error);
+                })
+        } else {
+                alert("Log in first!");
+                history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        }
     }, []);
 
     const handleDelete = () => {
-        NotesService.remove(id)
-            .then(response => {
-                alert("Note deleted successfully!");
-                history.push("/notes/list");
-            })
-            .catch(error => {
-                console.log('An error occurred!', error);
-            })
+        if (isAuth) {
+            NotesService.remove(id)
+                .then(response => {
+                    alert("Note deleted successfully!");
+                    history.push("/notes/list");
+                })
+                .catch(error => {
+                    console.log('An error occurred!', error);
+                })
+        } else {
+            alert("Log in first!");
+            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        }
     }
 
     const handleUpdate = () => {

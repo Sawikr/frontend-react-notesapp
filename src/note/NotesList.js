@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from '../service/NotesService';
 import Moment from "react-moment";
-import {isUserLoggedIn} from "../service/LoginService";
 
-function NotesList() {
+const NotesList = () => {
     const [notes, setNotes] = useState([]);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
