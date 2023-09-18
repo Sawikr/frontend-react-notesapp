@@ -1,6 +1,6 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
-import LoginService, {saveLoggedInUser} from "../service/LoginService";
+import LoginService, {isUserLoggedIn, saveLoggedInUser} from "../service/LoginService";
 import {storeToken} from "../service/LoginService";
 
 const LoginPage = () => {
@@ -9,6 +9,7 @@ const LoginPage = () => {
     const[isLogin, setIsLogin] = useState(true);
     const[errors, setErrors] = useState(false);
     const history = useHistory();
+    const isAuth = isUserLoggedIn();
 
     const sendLogin = () => {
         let loginName = usernameOrEmail;
@@ -36,8 +37,17 @@ const LoginPage = () => {
             })
     }
 
+    useEffect(() => {
+        if (isAuth) {
+            history.push("/notes/list");
+        } else {
+            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        }
+    }, []);
+
     async function login(e) {
         e.preventDefault();
+
         if (!usernameOrEmail || !password) {
             setErrors(true);
             return;
@@ -55,13 +65,11 @@ const LoginPage = () => {
                 sendList();
 
                 alert("Login is successfully!");
-                history.push("/notes/list");
-
-                window.location.reload();
+                window.location.reload(false);
             })
             .catch(error => {
                 console.log("An error occurred!", error);
-                history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                alert("Login is unsuccessfully. Check your username and password!");
             })
     }
 

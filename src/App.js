@@ -23,14 +23,14 @@ function App() {
                 <Space />
                 <div>
                     <Switch>
-                        <Route exact path="/notes/list" component={NotesList}/>
-                        <Route path="/add" component={AddNote}/>
+                        <Route exact path="/notes/list" component={NotesList} />
+                        <Route path="/add" component={AddNote} />
                         <Route path="/notes/auth/register" component={RegisterPage} />
                         <Route path="/notes/email/:id" component={SendMail} />
                         <Route path="/notes/weather" component={Weather} />
                         <Route path="/notes/nbp" component={Currency} />
                         <Route path="/notes/edit/:id" component={AddNote}/>
-                        <Route path="/notes/:id" component={NoteDetails}/>
+                        <Route path="/notes/:id" component={NoteDetails} />
                         <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
                         <Route path="*" component={NotFound} />
                     </Switch>

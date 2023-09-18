@@ -31,4 +31,4 @@ export const logout = () => {
 }
 
 // eslint-disable-next-line
-export default { sendLogin, sendList, loginObj };
+export default { sendLogin, sendList, loginObj, storeToken, getToken, saveLoggedInUser, isUserLoggedIn, logout };
