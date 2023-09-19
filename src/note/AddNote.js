@@ -137,6 +137,7 @@ const AddNote = () => {
                     </select>
                 </div>
                 <div className="text-center">
+                    <Space/>
                     <button onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
                 </div>
             </form>

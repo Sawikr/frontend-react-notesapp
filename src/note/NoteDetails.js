@@ -57,6 +57,7 @@ const NoteDetails = () => {
                 <div>
                     <article>
                         <h5 className="text-capitalize primary-color">{currentNote.title}</h5>
+                        <p></p>
                         <div className="mb-3 font-italic metadata">
                             <Moment fromNow>{currentNote.updatedAt}</Moment>
                             <span className="text-capitalize">, </span>
@@ -65,6 +66,7 @@ const NoteDetails = () => {
                         </div>
                         <div className="mb-3">{currentNote.body}</div>
                     </article>
+                    <Space/>
                     <button onClick={handleUpdate}>Edit</button>
                     <button onClick={handleDelete} className="ml-3">Delete</button>
                     <button onClick={handleSend} className="ml-3">Send</button>

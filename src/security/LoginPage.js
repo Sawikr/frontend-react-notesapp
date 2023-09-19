@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import LoginService, {isUserLoggedIn, saveLoggedInUser} from "../service/LoginService";
 import {storeToken} from "../service/LoginService";
+import Space from "../element/Space";
 
 const LoginPage = () => {
     const[usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -77,7 +78,7 @@ const LoginPage = () => {
         <div className="login">
             <div className="text-center">
                 <h5>Login to Notes App</h5>
-                &nbsp;
+                <Space/>
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>
@@ -104,6 +105,7 @@ const LoginPage = () => {
                     </input>
                 </div>
                 <div className="text-center">
+                    <Space/>
                     <button onClick={(e) => login(e)}>Login</button>
                 </div>
             </form>

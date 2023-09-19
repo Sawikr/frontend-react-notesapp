@@ -1,6 +1,7 @@
 import {useState} from "react";
 import RegisterService from "../service/RegisterService";
 import {useHistory} from "react-router-dom";
+import Space from "../element/Space";
 
 const RegisterPage = () => {
     const[name, setName] = useState('');
@@ -33,7 +34,7 @@ const RegisterPage = () => {
         <div className="login">
             <div className="text-center">
                 <h5>Register to Notes App</h5>
-                &nbsp;
+                <Space/>
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>
@@ -79,6 +80,7 @@ const RegisterPage = () => {
                     </input>
                 </div>
                 <div className="text-center">
+                    <Space/>
                     <button onClick={(e) => register(e)}>Register</button>
                 </div>
             </form>
