@@ -3,6 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from '../service/NotesService';
 import Moment from "react-moment";
+import Space from "../element/Space";
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -28,7 +29,7 @@ const NotesList = () => {
     return (
         <div className="main-content">
             <h4 className="text-center">List of Notes</h4>
-            &nbsp;
+            <Space/>
             <div className="notes-list mt-4">
                 {
                     notes && notes.map(note => (
@@ -41,7 +42,7 @@ const NotesList = () => {
                     ))
                 }
             </div>
-            &nbsp;
+            <Space/>
         </div>
     );
 }

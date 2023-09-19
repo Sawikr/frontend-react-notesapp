@@ -22,7 +22,7 @@ function Weather() {
         <div className="main-content">
             <Space/>
             <h4>Forecast</h4>
-            <p>{""}</p>
+            <Space/>
             <h8>City:</h8>
             <div className="mb-3">Poznań</div>
             <h8>Temperature:</h8>

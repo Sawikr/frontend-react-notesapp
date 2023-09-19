@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import NotesService from "../service/NotesService";
 import LoginService, {isUserLoggedIn} from "../service/LoginService";
+import Space from "../element/Space";
 
 const AddNote = () => {
     const[title, setTitle] = useState('');
@@ -98,7 +99,7 @@ const AddNote = () => {
         <div className="create">
             <div className="text-center">
                 <h5>{id ? "Update a Note" : "Add a New Note"}</h5>
-                &nbsp;
+                <Space/>
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>
@@ -139,6 +140,7 @@ const AddNote = () => {
                     <button onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
                 </div>
             </form>
+            <Space/>
         </div>
     );
 }

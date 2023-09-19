@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from "../service/NotesService";
 import Moment from "react-moment";
+import Space from "../element/Space";
 
 const NoteDetails = () => {
     const[currentNote, setCurrentNote] = useState('');
@@ -69,6 +70,7 @@ const NoteDetails = () => {
                     <button onClick={handleSend} className="ml-3">Send</button>
                 </div>
             }
+            <Space/>
         </div>
     );
 }

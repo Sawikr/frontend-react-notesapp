@@ -59,7 +59,7 @@ function Currency() {
         <div className="main-content">
             <Space/>
             <h4>Currency of NBP</h4>
-            <p>{""}</p>
+            <Space/>
             <h8>EUR/PLN:</h8>
             <div className="mb-3">{JSON.stringify(currencyEUR)}</div>
             <h8>USD/PLN:</h8>
