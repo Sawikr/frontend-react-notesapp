@@ -42,6 +42,25 @@ button {
   color: #79589f;
 }
 
+/* username */
+.username {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 14px;
+}
+
+.username a {
+  color: black;
+}
+
+.username a:hover {
+  text-decoration: none;
+  color: #79589f;
+}
+
 /* info */
 .info {
   padding: 20px;
@@ -49,7 +68,7 @@ button {
   align-items: center;
   max-width: 600px;
   border-bottom: 1px solid #f2f2f2;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .info a {
@@ -91,6 +110,12 @@ button {
 .create {
   max-width: 400px;
   margin: 20px auto;
+}
+
+/* login and register form */
+.login {
+  max-width: 400px;
+  margin: 40px auto;
 }
 
 /* weather */

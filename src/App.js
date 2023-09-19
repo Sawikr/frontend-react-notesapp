@@ -14,12 +14,14 @@ import Currency from "./api/Currency";
 import Space from "./element/Space";
 import LoginPage from "./security/LoginPage";
 import RegisterPage from "./security/RegisterPage";
+import Username from "./element/Username";
 
 function App() {
     return (
         <BrowserRouter>
             <div>
                 <Navbar />
+                <Username />
                 <Space />
                 <div>
                     <Switch>

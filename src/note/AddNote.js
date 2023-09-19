@@ -98,6 +98,7 @@ const AddNote = () => {
         <div className="create">
             <div className="text-center">
                 <h5>{id ? "Update a Note" : "Add a New Note"}</h5>
+                &nbsp;
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>

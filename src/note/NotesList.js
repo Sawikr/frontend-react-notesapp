@@ -28,6 +28,7 @@ const NotesList = () => {
     return (
         <div className="main-content">
             <h4 className="text-center">List of Notes</h4>
+            &nbsp;
             <div className="notes-list mt-4">
                 {
                     notes && notes.map(note => (
