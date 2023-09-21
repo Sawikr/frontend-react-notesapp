@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import MailService from "../service/MailService";
 import NotesService from "../service/NotesService";
+import Space from "../element/Space";
 
 const SendMail = () => {
     const[title, setTitle] = useState('');
@@ -62,6 +63,7 @@ const SendMail = () => {
             <div className="create">
                 <div className="text-center">
                     <h5>Send a Email</h5>
+                    {!errors && <Space/>}
                     {errors &&
                         <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
                 </div>
@@ -96,9 +98,11 @@ const SendMail = () => {
                     </textarea>
                     </div>
                     <div className="text-center">
+                        <Space/>
                         <button onClick={(e) => sendMail(e)}>Send Email</button>
                     </div>
                 </form>
+                <Space/>
             </div>
     );
 }

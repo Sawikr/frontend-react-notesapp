@@ -15,6 +15,7 @@ const AddNote = () => {
     const history = useHistory();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
+    const username = sessionStorage.getItem("authenticatedUser");
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -47,7 +48,7 @@ const AddNote = () => {
             return;
         }
 
-        const note = {title, body, category, id};
+        const note = {title, body, category, id, username};
         if (id && isAuth) {
             NotesService.update(note)
                 .then(response => {
@@ -88,6 +89,7 @@ const AddNote = () => {
                     setTitle(note.data.title);
                     setBody(note.data.body);
                     setCategory(note.data.category);
+
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);
@@ -99,7 +101,7 @@ const AddNote = () => {
         <div className="create">
             <div className="text-center">
                 <h5>{id ? "Update a Note" : "Add a New Note"}</h5>
-                <Space/>
+                {!errors && <Space/>}
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>

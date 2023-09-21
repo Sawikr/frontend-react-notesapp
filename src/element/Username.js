@@ -10,7 +10,10 @@ const Username = () => {
             <div>
                 {
                     isAuth &&
-                    <h2 className="username primary-color">{username}</h2>
+                    <div className="username">
+                        Logged in:
+                        <span className="primary-color ml-1">{username}</span>
+                    </div>
                 }
             </div>
         </nav>

@@ -9,6 +9,7 @@ const NotesList = () => {
     const [notes, setNotes] = useState([]);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
+    const username = sessionStorage.getItem("authenticatedUser");
 
     useEffect(() => {
         if (isAuth) {

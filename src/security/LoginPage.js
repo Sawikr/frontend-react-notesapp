@@ -78,7 +78,7 @@ const LoginPage = () => {
         <div className="login">
             <div className="text-center">
                 <h5>Login to Notes App</h5>
-                <Space/>
+                {!errors && <Space/>}
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
             </div>
             <form>
