@@ -9,7 +9,6 @@ const NotesList = () => {
     const [notes, setNotes] = useState([]);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
-    const username = sessionStorage.getItem("authenticatedUser");
 
     useEffect(() => {
         if (isAuth) {
@@ -27,13 +26,17 @@ const NotesList = () => {
         }
     }, []);
 
+    function checkLoggedInUser() {
+        return sessionStorage.getItem("authenticatedUser");
+    }
+
     return (
         <div className="main-content">
             <h4 className="text-center">List of Notes</h4>
             <Space/>
             <div className="notes-list mt-4">
                 {
-                    notes && notes.map(note => (
+                    notes && notes.filter(name => name.loginUser === checkLoggedInUser()).map(note => (
                         <div key={note.id} className="notes-preview mt-3">
                             <Link to={`/notes/${note.id}`}>
                                 <h5 className="primary-color text-capitalize">{note.title}</h5>

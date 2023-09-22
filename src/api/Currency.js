@@ -57,7 +57,6 @@ function Currency() {
 
     return (
         <div className="main-content">
-            <Space/>
             <h4>Currency of NBP</h4>
             <Space/>
             <h8>EUR/PLN:</h8>

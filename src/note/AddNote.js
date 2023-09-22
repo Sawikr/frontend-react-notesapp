@@ -8,7 +8,6 @@ const AddNote = () => {
     const[title, setTitle] = useState('');
     const[body, setBody] = useState('');
     const[category, setCategory] = useState('programming');
-    const[loginName, setLoginName] = useState('User');
     const[isLogin, setIsLogin] = useState(true);
     const[listName, setListName] = useState('UserList');
     const[errors, setErrors] = useState(false);
@@ -16,6 +15,8 @@ const AddNote = () => {
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
     const username = sessionStorage.getItem("authenticatedUser");
+    const[loginUser, setLoginUser] = useState(username);
+    const[loginName, setLoginName] = useState(username);
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -48,7 +49,7 @@ const AddNote = () => {
             return;
         }
 
-        const note = {title, body, category, id, username};
+        const note = {title, body, category, loginUser, id};
         if (id && isAuth) {
             NotesService.update(note)
                 .then(response => {
