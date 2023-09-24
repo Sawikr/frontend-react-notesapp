@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import MailService from "../service/MailService";
 import NotesService from "../service/NotesService";
+import Popup from "reactjs-popup";
 import Space from "../element/Space";
 
 const SendMail = () => {
@@ -69,7 +70,12 @@ const SendMail = () => {
                 </div>
                 <form>
                     <div className="form-group">
-                        <label htmlFor="email">Email: <sup>*</sup></label>
+                        <Popup trigger={<label htmlFor="email">Email: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
                         <input
                             type="text"
                             className="form-control"
@@ -79,7 +85,12 @@ const SendMail = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="title">Note Title: <sup>*</sup></label>
+                        <Popup trigger={<label htmlFor="title">Note Title: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
                         <input
                             type="text"
                             className="form-control"
@@ -89,7 +100,12 @@ const SendMail = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="body">Note Description: <sup>*</sup></label>
+                        <Popup trigger={<label htmlFor="body">Note Description: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
                         <textarea
                             id="body"
                             className="form-control"
@@ -97,8 +113,9 @@ const SendMail = () => {
                             onChange={(e) => setBody(e.target.value)}>
                     </textarea>
                     </div>
+                    <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
+                        <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                     <div className="text-center">
-                        <Space/>
                         <button onClick={(e) => sendMail(e)}>Send Email</button>
                     </div>
                 </form>

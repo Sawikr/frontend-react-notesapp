@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import NotesService from "../service/NotesService";
 import LoginService, {isUserLoggedIn} from "../service/LoginService";
+import Popup from "reactjs-popup";
 import Space from "../element/Space";
 
 const AddNote = () => {
@@ -107,7 +108,12 @@ const AddNote = () => {
             </div>
             <form>
                 <div className="form-group">
-                    <label htmlFor="title">Note Title: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="title">Note Title: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input 
                         type="text" 
                         className="form-control"
@@ -117,7 +123,12 @@ const AddNote = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="body">Note Description: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="body">Note Description: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <textarea 
                         id="body"
                         className="form-control"
@@ -139,8 +150,9 @@ const AddNote = () => {
                         <option value="other">Other</option>
                     </select>
                 </div>
+                <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
+                    <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                 <div className="text-center">
-                    <Space/>
                     <button onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
                 </div>
             </form>

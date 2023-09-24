@@ -1,5 +1,6 @@
 import {useState} from "react";
 import RegisterService from "../service/RegisterService";
+import Popup from "reactjs-popup";
 import {useHistory} from "react-router-dom";
 import Space from "../element/Space";
 
@@ -39,7 +40,12 @@ const RegisterPage = () => {
             </div>
             <form>
                 <div className="form-group">
-                    <label htmlFor="title">Name: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="name">Name: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input
                         type="text"
                         className="form-control"
@@ -50,7 +56,12 @@ const RegisterPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="body">Username: <sup>*</sup></label>
+                    <Popup trigger={ <label htmlFor="body">Username: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input
                         id="body"
                         className="form-control"
@@ -60,9 +71,14 @@ const RegisterPage = () => {
                     </input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="body">Email: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="email">Email: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input
-                        id="body"
+                        id="email"
                         className="form-control"
                         placeholder={'Enter email'}
                         value={email}
@@ -70,17 +86,23 @@ const RegisterPage = () => {
                     </input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="body">Password: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="password">Password: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input
-                        id="body"
+                        id="password"
                         className="form-control"
                         placeholder={'Enter password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}>
                     </input>
                 </div>
+                <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
+                    <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                 <div className="text-center">
-                    <Space/>
                     <button onClick={(e) => register(e)}>Register</button>
                 </div>
             </form>

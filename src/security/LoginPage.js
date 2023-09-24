@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import LoginService, {isUserLoggedIn, saveLoggedInUser} from "../service/LoginService";
+import Popup from 'reactjs-popup';
 import {storeToken} from "../service/LoginService";
 import Space from "../element/Space";
 
@@ -83,7 +84,12 @@ const LoginPage = () => {
             </div>
             <form>
                 <div className="form-group">
-                    <label htmlFor="user">User or Email: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="user">User or Email: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input 
                         type="text" 
                         className="form-control"
@@ -94,7 +100,12 @@ const LoginPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password: <sup>*</sup></label>
+                    <Popup trigger={<label htmlFor="password">Password: <sup>*</sup></label>}
+                           position="right center">
+                        <div className="popup-body">
+                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                        </div>
+                    </Popup>
                     <input
                         type="text"
                         className="form-control"
@@ -104,8 +115,9 @@ const LoginPage = () => {
                         onChange={(e) => setPassword(e.target.value)}>
                     </input>
                 </div>
+                <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
+                    <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                 <div className="text-center">
-                    <Space/>
                     <button onClick={(e) => login(e)}>Login</button>
                 </div>
             </form>

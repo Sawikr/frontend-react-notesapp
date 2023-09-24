@@ -1,9 +1,12 @@
 const Info = () => {
-    return (  
+
+    const currentYear = new Date().getFullYear();
+
+    return (
         <div className="text-center">
             <div>
                 <p></p>
-                <h8 className="info primary-color font-italic">©Copyright 2023 Radosław Sawicki</h8>
+                <h8 className="info primary-color font-italic">Copyright ©{currentYear} Radosław Sawicki</h8>
             </div>
         </div>
     );
