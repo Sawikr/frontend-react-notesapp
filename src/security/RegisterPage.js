@@ -24,6 +24,7 @@ const RegisterPage = () => {
             .then(response => {
                 console.log(register);
                 console.log("Register sent successfully!", response.data);
+                alert("Register is successfully!");
                 history.push("/radoslaw-sawicki-frontend-react-notesapp");
             })
             .catch(error => {
