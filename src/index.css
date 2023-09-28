@@ -138,3 +138,16 @@ button {
   background: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+/* category */
+.main-category {
+  max-width: 140px;
+  padding: 8px;
+  margin: 0px auto;
+  border-radius: 5px;
+  border-color: white;
+  background: #f4f4f4;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 10px;
+  color: #79589f;
+  outline-color: white;
+}

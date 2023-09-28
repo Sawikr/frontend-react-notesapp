@@ -143,11 +143,12 @@ const AddNote = () => {
                         className="form-control"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}>
-                        <option value="programming">Programming</option>
-                        <option value="vacation">Vacation</option>
-                        <option value="meeting">Meeting</option>
                         <option value="blogging">Blogging</option>
+                        <option value="congregation">Congregation</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="programming">Programming</option>
                         <option value="other">Other</option>
+                        <option value="vacation">Vacation</option>
                     </select>
                 </div>
                 <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
