@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from '../service/NotesService';
-import Moment from "react-moment";
 import Space from "../element/Space";
+import SortNotesService from "../service/SortNotesService";
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -27,22 +27,6 @@ const NotesList = () => {
         }
     }, []);
 
-    function checkLoggedInUser() {
-        return sessionStorage.getItem("authenticatedUser");
-    }
-
-    function checkCategory(category) {
-        return category;
-    }
-
-    function checkIfCategoryIsAll(category) {
-        if (category === 'all') {
-            return true;
-        }
-        else
-            return false;
-    }
-
     return (
         <div className="main-content">
             <h4 className="text-center">List of Notes</h4>
@@ -64,30 +48,10 @@ const NotesList = () => {
             </div>
             <div className="notes-list mt-4">
                 {
-                    !checkIfCategoryIsAll(category) &&
-
-                    notes && notes.filter(name => {return name.loginUser === checkLoggedInUser() && name.category === checkCategory(category)})
-                        .sort().reverse().map(note => (
-                            <div key={note.id} className="notes-preview mt-3">
-                                <Link to={`/notes/${note.id}`}>
-                                    <h5 className="primary-color text-capitalize">{note.title}</h5>
-                                    <Moment fromNow>{note.updatedAt}</Moment>
-                                </Link>
-                            </div>
-                        ))
-                }
-                {
-                    checkIfCategoryIsAll(category) &&
-
-                    notes && notes.filter(name => name.loginUser === checkLoggedInUser())
-                        .sort().reverse().map(note => (
-                            <div key={note.id} className="notes-preview mt-3">
-                                <Link to={`/notes/${note.id}`}>
-                                    <h5 className="primary-color text-capitalize">{note.title}</h5>
-                                    <Moment fromNow>{note.updatedAt}</Moment>
-                                </Link>
-                            </div>
-                        ))
+                    <SortNotesService
+                        notes={notes}
+                        category={category}
+                    />
                 }
             </div>
             <Space/>
