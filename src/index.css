@@ -63,15 +63,19 @@ button {
 
 /* info */
 .info {
-  padding: 20px;
+  padding: 0;
   display: inline;
   align-items: center;
   max-width: 600px;
-  border-bottom: 1px solid #f2f2f2;
   font-size: 13px;
 }
 
 .info a {
+  color: #79589f;
+}
+
+.info a:hover {
+  text-decoration: none;
   color: black;
 }
 

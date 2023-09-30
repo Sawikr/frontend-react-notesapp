@@ -1,14 +1,18 @@
+import {Link} from "react-router-dom";
+
 const Info = () => {
 
     const currentYear = new Date().getFullYear();
 
     return (
-        <div className="text-center">
-            <div>
+        <nav>
+            <div className="info">
                 <p></p>
-                <h8 className="info primary-color font-italic">Copyright ©{currentYear} Radosław Sawicki</h8>
+                <div className="text-center">
+                    <Link to="/info" className="info primary-color font-italic">Copyright ©{currentYear} Radosław Sawicki</Link>
+                </div>
             </div>
-        </div>
+        </nav>
     );
 }
  

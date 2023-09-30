@@ -15,6 +15,7 @@ import Space from "./element/Space";
 import LoginPage from "./security/LoginPage";
 import RegisterPage from "./security/RegisterPage";
 import Username from "./element/Username";
+import Copyright from "./element/Copyright";
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                         <Route path="/notes/edit/:id" component={AddNote}/>
                         <Route path="/notes/:id" component={NoteDetails} />
                         <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
+                        <Route path="/info" component={Copyright} />
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>
