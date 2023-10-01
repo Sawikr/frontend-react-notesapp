@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import Navbar from "./element/Navbar";
 import NoteDetails from "./note/NoteDetails";
 import NotesList from './note/NotesList';
@@ -19,31 +19,29 @@ import Copyright from "./element/Copyright";
 
 function App() {
     return (
-        <BrowserRouter>
+        <div>
+            <Navbar />
+            <Username />
+            <Space />
             <div>
-                <Navbar />
-                <Username />
-                <Space />
-                <div>
-                    <Switch>
-                        <Route exact path="/notes/list" component={NotesList} />
-                        <Route path="/add" component={AddNote} />
-                        <Route path="/notes/auth/register" component={RegisterPage} />
-                        <Route path="/notes/email/:id" component={SendMail} />
-                        <Route path="/notes/weather" component={Weather} />
-                        <Route path="/notes/nbp" component={Currency} />
-                        <Route path="/notes/edit/:id" component={AddNote}/>
-                        <Route path="/notes/:id" component={NoteDetails} />
-                        <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
-                        <Route path="/info" component={Copyright} />
-                        <Route path="*" component={NotFound} />
-                    </Switch>
-                </div>
-                <SpaceNavbar />
-                <Add />
-                <Info />
+                <Switch>
+                    <Route exact path="/notes/list" component={NotesList} />
+                    <Route path="/add" component={AddNote} />
+                    <Route path="/notes/auth/register" component={RegisterPage} />
+                    <Route path="/notes/email/:id" component={SendMail} />
+                    <Route path="/notes/weather" component={Weather} />
+                    <Route path="/notes/nbp" component={Currency} />
+                    <Route path="/notes/edit/:id" component={AddNote}/>
+                    <Route path="/notes/:id" component={NoteDetails} />
+                    <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
+                    <Route path="/info" component={Copyright} />
+                    <Route path="*" component={NotFound} />
+                </Switch>
             </div>
-        </BrowserRouter>
+            <SpaceNavbar />
+            <Add />
+            <Info/>
+        </div>
     );
 }
 

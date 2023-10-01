@@ -11,20 +11,44 @@ const Add = () => {
         window.location.reload();
     }
 
+    function handleClickLogin() {
+        console.log('Link clicked!');
+        history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        window.location.reload();
+    }
+
+    function handleClickRegister() {
+        console.log('Link clicked!');
+        history.push("/notes/auth/register");
+        window.location.reload();
+    }
+
+    function handleClickCurrency() {
+        console.log('Link clicked!');
+        history.push("/notes/nbp");
+        window.location.reload();
+    }
+
+    function handleClickWeather() {
+        console.log('Link clicked!');
+        history.push("/notes/weather");
+        window.location.reload();
+    }
+
     return (  
         <nav className="navbar">
             <div>
-                <Link to="/notes/nbp">Currency NBP</Link>
-                <Link to="/notes/weather" className="ml-3">Weather</Link>
+                <Link to="/notes/nbp" onClick={handleClickCurrency}>Currency NBP</Link>
+                <Link to="/notes/weather" className="ml-3" onClick={handleClickWeather}>Weather</Link>
             </div>
             <div>
                 {
                     !isAuth &&
-                    <Link to="/notes/auth/register" className="ml-3">Register</Link>
+                    <Link to="/notes/auth/register" className="ml-3" onClick={handleClickRegister}>Register</Link>
                 }
                 {
                     !isAuth &&
-                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3">Login</Link>
+                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Login</Link>
                 }
                 {
                     isAuth &&
