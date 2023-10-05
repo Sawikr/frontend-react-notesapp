@@ -1,5 +1,6 @@
 import axios from "axios";
 import httpClient, {BASE_URL} from "../http-common";
+import {clickInfoToken} from "./AddService";
 
 const sendLogin = data =>
     axios.post(BASE_URL + '/users', data);
@@ -26,6 +27,7 @@ export const isUserLoggedIn = () => {
 }
 
 export const logout = () => {
+    clickInfoToken(false);
     localStorage.clear();
     sessionStorage.clear();
 }

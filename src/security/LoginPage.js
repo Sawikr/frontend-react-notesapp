@@ -6,10 +6,11 @@ import {storeToken} from "../service/LoginService";
 import Space from "../element/Space";
 
 const LoginPage = () => {
-    const[usernameOrEmail, setUsernameOrEmail] = useState('');
-    const[password, setPassword] = useState('');
-    const[isLogin, setIsLogin] = useState(true);
-    const[errors, setErrors] = useState(false);
+    const [usernameOrEmail, setUsernameOrEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLogin, setIsLogin] = useState(true);
+    const [errors, setErrors] = useState(false);
+    const [isShown, setIsShown] = useState(false);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
 
@@ -107,7 +108,7 @@ const LoginPage = () => {
                         </div>
                     </Popup>
                     <input
-                        type="text"
+                        type={isShown ? "text" : "password"}
                         className="form-control"
                         id="password"
                         placeholder={'Enter password'}

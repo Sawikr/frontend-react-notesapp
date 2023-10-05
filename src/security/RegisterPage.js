@@ -10,6 +10,7 @@ const RegisterPage = () => {
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
     const[errors, setErrors] = useState(false);
+    const [isShown, setIsShown] = useState(false);
     const history = useHistory();
 
     const register = (e) => {
@@ -94,6 +95,7 @@ const RegisterPage = () => {
                         </div>
                     </Popup>
                     <input
+                        type={isShown ? "text" : "password"}
                         id="password"
                         className="form-control"
                         placeholder={'Enter password'}

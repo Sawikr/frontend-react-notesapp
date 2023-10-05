@@ -1,13 +1,18 @@
-import {Link, useLocation} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import {useState} from "react";
+import {clickInfoToken, isClickInfo} from "../service/AddService";
 
 const Info = () => {
     const [clickLink, setClickLink] = useState(false);
     const currentYear = new Date().getFullYear();
+    const history = useHistory();
 
     function handleClick() {
         console.log('Link clicked!');
         setClickLink(true);
+        clickInfoToken(true);
+        isClickInfo();
+        history.push("/info");
     }
 
     //Additional function

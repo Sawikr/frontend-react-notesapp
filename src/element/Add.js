@@ -1,37 +1,50 @@
 import {Link, useHistory} from "react-router-dom";
-import {isUserLoggedIn, logout} from "../service/LoginService";
+import AddService, {clickInfoToken} from "../service/AddService";
+
+export const clickCurrencyToken = (currency) => sessionStorage.setItem("currency", currency);
+
+export const getCurrencyToken = () => sessionStorage.getItem("currency");
+
+export const isClickCurrency = () => {
+    const token = getCurrencyToken();
+    if (token != null && token.match(false)) {
+        console.log("IsClickCurrency return false!");
+        return false;
+    } else
+        console.log("IsClickCurrency return true!");
+        return true;
+}
+
+export const clickWeatherToken = (weather) => sessionStorage.setItem("weather", weather);
+
+export const getWeatherToken = () => sessionStorage.getItem("weather");
+
+export const isClickWeather = () => {
+    const token = getWeatherToken();
+    if (token != null && token.match(false)) {
+        console.log("IsClickWeather return false!");
+        return false;
+    } else
+        console.log("IsClickWeather return true!");
+        return true;
+}
 
 const Add = () => {
-    const isAuth = isUserLoggedIn();
     const history = useHistory();
 
-    function handleLogout() {
-        logout();
-        history.push("/radoslaw-sawicki-frontend-react-notesapp");
-        window.location.reload();
-    }
-
-    function handleClickLogin() {
-        console.log('Link clicked!');
-        history.push("/radoslaw-sawicki-frontend-react-notesapp");
-        window.location.reload();
-    }
-
-    function handleClickRegister() {
-        console.log('Link clicked!');
-        history.push("/notes/auth/register");
-        window.location.reload();
-    }
-
     function handleClickCurrency() {
-        console.log('Link clicked!');
+        clickInfoToken(false);
+        clickCurrencyToken(true);
         history.push("/notes/nbp");
+        console.log('Clicked currency: ' + getCurrencyToken());
         window.location.reload();
     }
 
     function handleClickWeather() {
-        console.log('Link clicked!');
+        clickInfoToken(false);
+        clickWeatherToken(true);
         history.push("/notes/weather");
+        console.log('Clicked weather: ' + getWeatherToken());
         window.location.reload();
     }
 
@@ -42,18 +55,7 @@ const Add = () => {
                 <Link to="/notes/weather" className="ml-3" onClick={handleClickWeather}>Weather</Link>
             </div>
             <div>
-                {
-                    !isAuth &&
-                    <Link to="/notes/auth/register" className="ml-3" onClick={handleClickRegister}>Register</Link>
-                }
-                {
-                    !isAuth &&
-                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Login</Link>
-                }
-                {
-                    isAuth &&
-                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleLogout}>Logout</Link>
-                }
+                <AddService/>
             </div>
         </nav>
     );

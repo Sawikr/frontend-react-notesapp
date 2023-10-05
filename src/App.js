@@ -3,7 +3,6 @@ import {Route, Switch} from 'react-router-dom';
 import Navbar from "./element/Navbar";
 import NoteDetails from "./note/NoteDetails";
 import NotesList from './note/NotesList';
-import NotFound from './note/NotFound';
 import SendMail from "./mail/SendMail";
 import AddNote from "./note/AddNote";
 import Add from "./element/Add";
@@ -33,9 +32,9 @@ function App() {
                     <Route path="/notes/nbp" component={Currency} />
                     <Route path="/notes/edit/:id" component={AddNote}/>
                     <Route path="/notes/:id" component={NoteDetails} />
-                    <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
                     <Route path="/info" component={Copyright} />
-                    <Route path="*" component={NotFound} />
+                    <Route path="/radoslaw-sawicki-frontend-react-notesapp" component={LoginPage} />
+                    <Route path="*" component={LoginPage} />
                 </Switch>
             </div>
             <SpaceNavbar />
