@@ -51,6 +51,8 @@ const LoginPage = () => {
     async function login(e) {
         e.preventDefault();
 
+        alert("Logging in... Please wait for the server's response!");
+
         if (!usernameOrEmail || !password) {
             setErrors(true);
             return;

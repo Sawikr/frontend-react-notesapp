@@ -43,6 +43,7 @@ const AddService = () => {
 
     function handleLogout() {
         logout();
+        alert("Logged out successfully!");
         history.push("/radoslaw-sawicki-frontend-react-notesapp");
         window.location.reload();
     }

@@ -20,7 +20,7 @@ function Weather() {
 
     return (
         <div className="main-content">
-            <h4>Forecast</h4>
+            <h4>Weather forecast</h4>
             <Space/>
             <h8>City:</h8>
             <div className="mb-3">Poznań</div>

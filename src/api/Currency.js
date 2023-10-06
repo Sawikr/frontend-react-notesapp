@@ -32,7 +32,6 @@ function Currency() {
             })
     }, []);
 
-
     useEffect(() => {
         NotesService.getCurrencyCHF()
             .then(response => {
