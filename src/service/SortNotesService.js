@@ -30,7 +30,7 @@ const SortNotesService = (props) => {
                 .sort().reverse().map(note => (
                     <div key={note.id} className="notes-preview mt-3">
                         <Link to={`/notes/${note.id}`}>
-                            <h5 className="primary-color text-capitalize">{note.title}</h5>
+                            <h5 className="primary-color">{note.title}</h5>
                             <Moment fromNow>{note.updatedAt}</Moment>
                         </Link>
                     </div>
@@ -43,7 +43,7 @@ const SortNotesService = (props) => {
                 .sort().reverse().map(note => (
                     <div key={note.id} className="notes-preview mt-3">
                         <Link to={`/notes/${note.id}`}>
-                            <h5 className="primary-color text-capitalize">{note.title}</h5>
+                            <h5 className="primary-color">{note.title}</h5>
                             <Moment fromNow>{note.updatedAt}</Moment>
                         </Link>
                     </div>
