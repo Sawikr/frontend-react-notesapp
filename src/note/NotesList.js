@@ -40,6 +40,7 @@ const NotesList = () => {
                     <option value="all">All categories</option>
                     <option value="blogging">Blogging</option>
                     <option value="congregation">Congregation</option>
+                    <option value="circuit">Circuit</option>
                     <option value="meeting">Meeting</option>
                     <option value="programming">Programming</option>
                     <option value="other">Other</option>

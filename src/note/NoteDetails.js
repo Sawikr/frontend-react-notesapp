@@ -61,7 +61,7 @@ const NoteDetails = () => {
                         <div className="mb-3 font-italic metadata">
                             <Moment fromNow>{currentNote.updatedAt}</Moment>
                             <span className="text-capitalize">, </span>
-                            <Moment format="DD/MM/YYYY HH:mm" fromNow>{currentNote.updatedAt}</Moment>
+                            <Moment format="DD-MM-YYYY HH:mm" fromNow>{currentNote.updatedAt}</Moment>
                             <span className="text-capitalize">, {currentNote.category}</span>
                         </div>
                         <div className="mb-3">{currentNote.body}</div>
