@@ -23,9 +23,9 @@ const Copyright = () => {
                 <h6 className="text-center">Description:</h6>
                 <p></p>
                 <label>
-                    <h7 className="text-center" style={{fontStyle: 'italic'}}>Notes App is a REST API based application. This is an application for
+                    <x-h7 className="text-center" style={{fontStyle: 'italic'}}>Notes App is a REST API based application. This is an application for
                         creating, editing, deleting and emailing personal notes. The application also includes current
-                        exchange rates and weather forecast.</h7>
+                        exchange rates and weather forecast.</x-h7>
                 </label>
             </form>
             <Space/>
