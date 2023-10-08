@@ -46,18 +46,6 @@ const SendMail = () => {
                     console.log("An error occurred!", error);
                 })
         }
-
-        if (id) {
-            MailService.get(id)
-                .then(sendEmail => {
-                    setEmail(sendEmail.data.email);
-                    setTitle(sendEmail.data.title);
-                    setBody(sendEmail.data.body);
-                })
-                .catch(error => {
-                    console.log("An error occurred!", error);
-                })
-        }
     }, []);
 
     return (
