@@ -94,7 +94,7 @@ const LoginPage = () => {
                         </div>
                     </Popup>
                     <input 
-                        type="text" 
+                        type="text"
                         className="form-control"
                         id="user"
                         placeholder={'Enter user'}

@@ -22,16 +22,16 @@ function Weather() {
         <div className="main-content">
             <h4>Weather forecast</h4>
             <Space/>
-            <h8>City:</h8>
+            <x-h8>City:</x-h8>
             <div className="mb-3">Poznań</div>
-            <h8>Temperature:</h8>
+            <x-h8>Temperature:</x-h8>
             <div className="mb-3">{weather.temperature}</div>
-            <h8>Pressure:</h8>
+            <x-h8>Pressure:</x-h8>
             <div className="mb-3">{weather.pressure}</div>
-            <h8>Humidity:</h8>
+            <x-h8>Humidity:</x-h8>
             <div className="mb-3">{weather.humidity}</div>
-            <h8>Wind speed:</h8>
-            <div className="mb-3">{weather.windSpeed}</div><h8>Date:</h8>
+            <x-h8>Wind speed:</x-h8>
+            <div className="mb-3">{weather.windSpeed}</div><x-h8>Date:</x-h8>
             <div className="mb-3">
                 <Moment format="DD/MM/YYYY">{currentDate}</Moment>
             </div>

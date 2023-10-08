@@ -58,15 +58,15 @@ function Currency() {
         <div className="main-content">
             <h4>Currency of NBP</h4>
             <Space/>
-            <h8>EUR/PLN:</h8>
+            <x-h8>EUR/PLN:</x-h8>
             <div className="mb-3">{JSON.stringify(currencyEUR)}</div>
-            <h8>USD/PLN:</h8>
+            <x-h8>USD/PLN:</x-h8>
             <div className="mb-3">{JSON.stringify(currencyUSD)}</div>
-            <h8>CHF/PLN:</h8>
+            <x-h8>CHF/PLN:</x-h8>
             <div className="mb-3">{JSON.stringify(currencyCHF)}</div>
-            <h8>GBP/PLN:</h8>
+            <x-h8>GBP/PLN:</x-h8>
             <div className="mb-3">{JSON.stringify(currencyGBP)}</div>
-            <h8>Date:</h8>
+            <x-h8>Date:</x-h8>
             <div className="mb-3">
                 <Moment format="DD/MM/YYYY">{currentDate}</Moment>
             </div>
