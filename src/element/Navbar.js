@@ -21,7 +21,7 @@ const Navbar = () => {
         <nav className="navbar">
             <h2
                 title='Version 1. 0. 0.'
-                className="primary-color">Notes App
+                className="primary-color" style={{cursor: "help"}}>Notes App
             </h2>
          <div>
                 {

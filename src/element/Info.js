@@ -30,8 +30,8 @@ const Info = () => {
                 <div className="text-center">
                     {
                         !clickLink &&
-                        <Link to="/info" className="info primary-color font-italic" onClick={handleClick}>
-                            Copyright ©{currentYear} Radosław Sawicki</Link>
+                        <Link to="/info" className="info primary-color font-italic" title='Notes App info'
+                              onClick={handleClick}>Copyright ©{currentYear} Radosław Sawicki</Link>
                     }
                 </div>
             </div>

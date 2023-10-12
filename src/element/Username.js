@@ -12,7 +12,7 @@ const Username = () => {
                     isAuth &&
                     <div className="username">
                         Logged in:
-                        <span className="primary-color ml-1" title='Name of the logged in user'>{username}</span>
+                        <span className="primary-color ml-1" title='Name of the logged in user' style={{cursor: "help"}}>{username}</span>
                     </div>
                 }
             </div>
