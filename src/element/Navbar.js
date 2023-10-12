@@ -17,13 +17,17 @@ const Navbar = () => {
         window.location.reload();
     }
 
-    return (  
+    return (
         <nav className="navbar">
-            <h2 className="primary-color">Notes App</h2>
-            <div>
+            <h2
+                title='Version 1. 0. 0.'
+                className="primary-color">Notes App
+            </h2>
+         <div>
                 {
                     isAuth &&
-                    <Link to="/notes/list" onClick={handleClickHome}>Home</Link>
+                    <Link to="/notes/list" title='Note list home page'
+                          onClick={handleClickHome}>Home</Link>
                 }
                 {
                     isAuth &&
