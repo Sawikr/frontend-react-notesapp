@@ -5,7 +5,6 @@ import NotesService from '../service/NotesService';
 import Space from "../element/Space";
 import SortNotesService from "../service/SortNotesService";
 import {PropagateLoader} from "react-spinners";
-import {getLogoutToken} from "../service/AddService";
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -13,7 +12,6 @@ const NotesList = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
-    const isLogout = getLogoutToken();
 
     useEffect(() => {
         setLoading(true);
@@ -35,7 +33,7 @@ const NotesList = () => {
 
     return (
         <div className="main-content">
-            {loading && isLogout ? (
+            {loading ? (
                 <div className="loader-container">
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
