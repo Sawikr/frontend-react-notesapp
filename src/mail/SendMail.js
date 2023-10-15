@@ -4,17 +4,22 @@ import MailService from "../service/MailService";
 import NotesService from "../service/NotesService";
 import Popup from "reactjs-popup";
 import Space from "../element/Space";
+import {PropagateLoader} from "react-spinners";
 
 const SendMail = () => {
-    const[title, setTitle] = useState('');
-    const[body, setBody] = useState('');
-    const[email, setEmail] = useState('');
-    const[errors, setErrors] = useState(false);
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [email, setEmail] = useState('');
+    const [errors, setErrors] = useState(false);
+    const [loading, setLoading] = useState(false);
     const {id} = useParams();
     const history = useHistory();
 
     const sendMail = (e) => {
         e.preventDefault();
+
+        setLoading(true);
+
         if (!email || !title || !body) {
             setErrors(true);
             return;
@@ -26,6 +31,7 @@ const SendMail = () => {
                 .then(response => {
                     console.log(sendEmail);
                     console.log("Email sent successfully", response.data);
+                    setLoading(false);
                     alert("E-mail sent successfully to " + email + "!");
                     history.push("/notes/list");
                 })
@@ -49,6 +55,15 @@ const SendMail = () => {
     }, []);
 
     return (
+        <div className="create">
+            {loading ? (
+                <div className="loader-container">
+                    <div className="text-center">
+                        <PropagateLoader color={'#79589f'} size={20}/>
+                        <Space/>
+                    </div>
+                </div>
+            ) : (
             <div className="create">
                 <div className="text-center">
                     <h5>Send a Email</h5>
@@ -109,6 +124,8 @@ const SendMail = () => {
                 </form>
                 <Space/>
             </div>
+            )}
+        </div>
     );
 }
 

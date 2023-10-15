@@ -3,18 +3,23 @@ import RegisterService from "../service/RegisterService";
 import Popup from "reactjs-popup";
 import {useHistory} from "react-router-dom";
 import Space from "../element/Space";
+import {PropagateLoader} from "react-spinners";
 
 const RegisterPage = () => {
-    const[name, setName] = useState('');
-    const[username, setUsername] = useState('');
-    const[email, setEmail] = useState('');
-    const[password, setPassword] = useState('');
-    const[errors, setErrors] = useState(false);
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     const register = (e) => {
         e.preventDefault();
+
+        setLoading(true);
+
         if (!name || !username || !email || !password) {
             setErrors(true);
             return;
@@ -25,6 +30,7 @@ const RegisterPage = () => {
             .then(response => {
                 console.log(register);
                 console.log("Register sent successfully!", response.data);
+                setLoading(false);
                 alert("Register is successfully!");
                 history.push("/radoslaw-sawicki-frontend-react-notesapp");
             })
@@ -35,12 +41,21 @@ const RegisterPage = () => {
 
     return (
         <div className="login">
-            <div className="text-center">
+            {loading ? (
+                <div className="loader-container">
+                    <div className="text-center">
+                        <PropagateLoader color={'#79589f'} size={20}/>
+                        <Space/>
+                    </div>
+                </div>
+            ) : (
+            <div className="login">
+                <div className="text-center">
                 <h5>Register to Notes App</h5>
                 {!errors && <Space/>}
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
-            </div>
-            <form>
+                </div>
+                <form>
                 <div className="form-group">
                     <Popup trigger={<label htmlFor="name">Name: <sup>*</sup></label>}
                            position="right center">
@@ -108,7 +123,9 @@ const RegisterPage = () => {
                 <div className="text-center">
                     <button onClick={(e) => register(e)}>Register</button>
                 </div>
-            </form>
+                </form>
+            </div>
+            )}
         </div>
     );
 }

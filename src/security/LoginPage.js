@@ -4,6 +4,7 @@ import LoginService, {isUserLoggedIn, saveLoggedInUser} from "../service/LoginSe
 import Popup from 'reactjs-popup';
 import {storeToken} from "../service/LoginService";
 import Space from "../element/Space";
+import {PropagateLoader} from "react-spinners";
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -11,6 +12,7 @@ const LoginPage = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
 
@@ -52,6 +54,7 @@ const LoginPage = () => {
         e.preventDefault();
 
         alert("Logging in... Please wait for the server's response!");
+        setLoading(true);
 
         if (!usernameOrEmail || !password) {
             setErrors(true);
@@ -65,10 +68,9 @@ const LoginPage = () => {
                 const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
                 storeToken(token);
                 saveLoggedInUser(usernameOrEmail);
-
                 sendLogin();
                 sendList();
-
+                setLoading(false);
                 alert("Login is successfully!");
                 window.location.reload(false);
             })
@@ -80,50 +82,61 @@ const LoginPage = () => {
 
     return (
         <div className="login">
-            <div className="text-center">
-                <h5>Login to Notes App</h5>
-                {!errors && <Space/>}
-                {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
-            </div>
-            <form>
-                <div className="form-group">
-                    <Popup trigger={<label htmlFor="user">User or Email: <sup>*</sup></label>}
-                           position="right center">
-                        <div className="popup-body">
-                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
-                        </div>
-                    </Popup>
-                    <input 
-                        type="text"
-                        className="form-control"
-                        id="user"
-                        placeholder={'Enter user'}
-                        value={usernameOrEmail}
-                        onChange={(e) => setUsernameOrEmail(e.target.value)}
-                    />
+            {loading ? (
+                <div className="loader-container">
+                    <div className="text-center">
+                        <PropagateLoader color={'#79589f'} size={20}/>
+                        <Space/>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <Popup trigger={<label htmlFor="password">Password: <sup>*</sup></label>}
-                           position="right center">
-                        <div className="popup-body">
-                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
-                        </div>
-                    </Popup>
-                    <input
-                        type={isShown ? "text" : "password"}
-                        className="form-control"
-                        id="password"
-                        placeholder={'Enter password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}>
-                    </input>
-                </div>
-                <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
-                    <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
+            ) : (
+            <div className="login">
                 <div className="text-center">
-                    <button onClick={(e) => login(e)}>Login</button>
+                    <h5>Login to Notes App</h5>
+                    {!errors && <Space/>}
+                    {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
                 </div>
-            </form>
+                <form>
+                    <div className="form-group">
+                        <Popup trigger={<label htmlFor="user">User or Email: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="user"
+                            placeholder={'Enter user'}
+                            value={usernameOrEmail}
+                            onChange={(e) => setUsernameOrEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <Popup trigger={<label htmlFor="password">Password: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
+                        <input
+                            type={isShown ? "text" : "password"}
+                            className="form-control"
+                            id="password"
+                            placeholder={'Enter password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}>
+                        </input>
+                    </div>
+                    <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
+                        <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
+                    <div className="text-center">
+                        <button onClick={(e) => login(e)}>Login</button>
+                    </div>
+                </form>
+            </div>
+            )}
         </div>
     );
 }

@@ -2,19 +2,23 @@ import React, {useEffect, useState} from 'react';
 import NotesService from "../service/NotesService";
 import Space from "../element/Space";
 import Moment from "react-moment";
+import {PropagateLoader} from "react-spinners";
 
 function Currency() {
     const [currencyEUR, setCurrencyEUR] = useState([]);
     const [currencyUSD, setCurrencyUSD] = useState([]);
     const [currencyCHF, setCurrencyCHF] = useState([]);
     const [currencyGBP, setCurrencyGBP] = useState([]);
+    const [loading, setLoading] = useState(false);
     const currentDate = Date.now().valueOf();
 
     useEffect(() => {
+        setLoading(true);
         NotesService.getCurrencyEUR()
             .then(response => {
                 console.log('Printing response!', response.data);
                 setCurrencyEUR(response.data);
+                setLoading(false);
             })
             .catch(error => {
                 console.log('An error occurred!', error);
@@ -56,20 +60,31 @@ function Currency() {
 
     return (
         <div className="main-content">
-            <h4>Currency of NBP</h4>
-            <Space/>
-            <x-h8>EUR/PLN:</x-h8>
-            <div className="mb-3">{JSON.stringify(currencyEUR)}</div>
-            <x-h8>USD/PLN:</x-h8>
-            <div className="mb-3">{JSON.stringify(currencyUSD)}</div>
-            <x-h8>CHF/PLN:</x-h8>
-            <div className="mb-3">{JSON.stringify(currencyCHF)}</div>
-            <x-h8>GBP/PLN:</x-h8>
-            <div className="mb-3">{JSON.stringify(currencyGBP)}</div>
-            <x-h8>Date:</x-h8>
-            <div className="mb-3">
-                <Moment format="DD/MM/YYYY">{currentDate}</Moment>
+            {loading ? (
+                <div className="loader-container">
+                    <div className="text-center">
+                        <PropagateLoader color={'#79589f'} size={20}/>
+                        <Space/>
+                    </div>
+                </div>
+            ) : (
+            <div className="main-content">
+                <h4>Currency of NBP</h4>
+                <Space/>
+                <x-h8>EUR/PLN:</x-h8>
+                <div className="mb-3">{JSON.stringify(currencyEUR)}</div>
+                <x-h8>USD/PLN:</x-h8>
+                <div className="mb-3">{JSON.stringify(currencyUSD)}</div>
+                <x-h8>CHF/PLN:</x-h8>
+                <div className="mb-3">{JSON.stringify(currencyCHF)}</div>
+                <x-h8>GBP/PLN:</x-h8>
+                <div className="mb-3">{JSON.stringify(currencyGBP)}</div>
+                <x-h8>Date:</x-h8>
+                <div className="mb-3">
+                    <Moment format="DD/MM/YYYY">{currentDate}</Moment>
+                </div>
             </div>
+            )}
         </div>
     );
 }

@@ -4,9 +4,11 @@ import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from "../service/NotesService";
 import Moment from "react-moment";
 import Space from "../element/Space";
+import {PropagateLoader} from "react-spinners";
 
 const NoteDetails = () => {
-    const[currentNote, setCurrentNote] = useState('');
+    const [currentNote, setCurrentNote] = useState('');
+    const [loading, setLoading] = useState(false);
     const {id} = useParams();
     const history = useHistory();
     const isAuth = isUserLoggedIn();
@@ -27,9 +29,11 @@ const NoteDetails = () => {
     }, []);
 
     const handleDelete = () => {
+        setLoading(true);
         if (isAuth) {
             NotesService.remove(id)
                 .then(response => {
+                    setLoading(false);
                     alert("Note deleted successfully!");
                     history.push("/notes/list");
                 })
@@ -52,27 +56,38 @@ const NoteDetails = () => {
 
     return (
         <div className="note-details main-content">
-            {
-                currentNote &&
-                <div>
-                    <article>
-                        <h5 className="text-capitalize primary-color">{currentNote.title}</h5>
-                        <p></p>
-                        <div className="mb-3 font-italic metadata">
-                            <Moment fromNow>{currentNote.updatedAt}</Moment>
-                            <span className="text-capitalize">, </span>
-                            <Moment format="DD-MM-YYYY HH:mm" fromNow>{currentNote.updatedAt}</Moment>
-                            <span className="text-capitalize">, {currentNote.category}</span>
-                        </div>
-                        <div className="mb-3">{currentNote.body}</div>
-                    </article>
-                    <Space/>
-                    <button onClick={handleUpdate}>Edit</button>
-                    <button onClick={handleDelete} className="ml-3">Delete</button>
-                    <button onClick={handleSend} className="ml-3">Send</button>
+            {loading ? (
+                <div className="loader-container">
+                    <div className="text-center">
+                        <PropagateLoader color={'#79589f'} size={20}/>
+                        <Space/>
+                    </div>
                 </div>
-            }
-            <Space/>
+            ) : (
+            <div className="note-details main-content">
+                {
+                    currentNote &&
+                    <div>
+                        <article>
+                            <h5 className="text-capitalize primary-color">{currentNote.title}</h5>
+                            <p></p>
+                            <div className="mb-3 font-italic metadata">
+                                <Moment fromNow>{currentNote.updatedAt}</Moment>
+                                <span className="text-capitalize">, </span>
+                                <Moment format="DD-MM-YYYY HH:mm" fromNow>{currentNote.updatedAt}</Moment>
+                                <span className="text-capitalize">, {currentNote.category}</span>
+                            </div>
+                            <div className="mb-3">{currentNote.body}</div>
+                        </article>
+                        <Space/>
+                        <button onClick={handleUpdate}>Edit</button>
+                        <button onClick={handleDelete} className="ml-3">Delete</button>
+                        <button onClick={handleSend} className="ml-3">Send</button>
+                    </div>
+                    }
+                <Space/>
+            </div>
+            )}
         </div>
     );
 }

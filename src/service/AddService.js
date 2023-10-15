@@ -17,6 +17,20 @@ export const isClickInfo = () => {
         return true;
 }
 
+export const clickLogoutToken = (logout) => sessionStorage.setItem("logout", logout);
+
+export const getLogoutToken = () => sessionStorage.getItem("logout");
+
+export const isClickLogout = () => {
+    const token = getLogoutToken();
+    if (token != null && token.match(false)) {
+        console.log("IsClickLogout return false!");
+        return false;
+    } else
+        console.log("IsClickLogout return true!");
+    return true;
+}
+
 const AddService = () => {
     const [clickLogin, setClickLogin] = useState(false);
     const [clickRegister, setClickRegister] = useState(false);
@@ -41,7 +55,14 @@ const AddService = () => {
         history.push("/notes/auth/register");
     }
 
-    function handleLogout() {
+    const delay = ms => new Promise(
+        resolve => setTimeout(resolve, ms)
+    );
+
+    async function handleLogout() {
+        clickLogoutToken(true);
+        isClickLogout();
+        await delay(1000);
         logout();
         alert("Logged out successfully!");
         history.push("/radoslaw-sawicki-frontend-react-notesapp");
@@ -104,7 +125,7 @@ const AddService = () => {
 
     return (
         <>
-            {process()}
+           {process()}
         </>
     )
 }

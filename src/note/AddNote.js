@@ -4,20 +4,22 @@ import NotesService from "../service/NotesService";
 import LoginService, {isUserLoggedIn} from "../service/LoginService";
 import Popup from "reactjs-popup";
 import Space from "../element/Space";
+import {PropagateLoader} from "react-spinners";
 
 const AddNote = () => {
-    const[title, setTitle] = useState('');
-    const[body, setBody] = useState('');
-    const[category, setCategory] = useState('programming');
-    const[isLogin, setIsLogin] = useState(true);
-    const[listName, setListName] = useState('UserList');
-    const[errors, setErrors] = useState(false);
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [category, setCategory] = useState('programming');
+    const [isLogin, setIsLogin] = useState(true);
+    const [listName, setListName] = useState('UserList');
+    const [errors, setErrors] = useState(false);
+    const username = sessionStorage.getItem("authenticatedUser");
+    const [loginUser, setLoginUser] = useState(username);
+    const [loginName, setLoginName] = useState(username);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
-    const username = sessionStorage.getItem("authenticatedUser");
-    const[loginUser, setLoginUser] = useState(username);
-    const[loginName, setLoginName] = useState(username);
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -45,6 +47,9 @@ const AddNote = () => {
 
     const saveNote = (e) => {
         e.preventDefault();
+
+        setLoading(true);
+
         if (!title || !body) {
             setErrors(true);
             return;
@@ -56,6 +61,7 @@ const AddNote = () => {
                 .then(response => {
                     console.log(note);
                     console.log("Note updated successfully", response.data);
+                    setLoading(false);
                     alert("Note updated successfully!");
                     history.push("/notes/list");
                 })
@@ -71,6 +77,7 @@ const AddNote = () => {
                     alert("Note added successfully!");
                     sendLogin();
                     sendList();
+                    setLoading(false);
                     history.push("/notes/list");
                 })
                 .catch(error => {
@@ -91,7 +98,6 @@ const AddNote = () => {
                     setTitle(note.data.title);
                     setBody(note.data.body);
                     setCategory(note.data.category);
-
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);
@@ -101,64 +107,75 @@ const AddNote = () => {
 
     return (
         <div className="create">
-            <div className="text-center">
-                <h5>{id ? "Update a Note" : "Add a New Note"}</h5>
-                {!errors && <Space/>}
-                {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
-            </div>
-            <form>
-                <div className="form-group">
-                    <Popup trigger={<label htmlFor="title">Note Title: <sup>*</sup></label>}
-                           position="right center">
-                        <div className="popup-body">
-                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
-                        </div>
-                    </Popup>
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
+            {loading ? (
+                <div className="loader-container">
+                    <div className="text-center">
+                        <PropagateLoader color={'#79589f'} size={20}/>
+                        <Space/>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <Popup trigger={<label htmlFor="body">Note Description: <sup>*</sup></label>}
-                           position="right center">
-                        <div className="popup-body">
-                            <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
-                        </div>
-                    </Popup>
-                    <textarea 
-                        id="body"
-                        className="form-control"
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}>
-                    </textarea>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="category">Note Category:</label>
-                    <select
-                        id="category"
-                        className="form-control"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}>
-                        <option value="blogging">Blogging</option>
-                        <option value="congregation">Congregation</option>
-                        <option value="circuit">Circuit</option>
-                        <option value="meeting">Meeting</option>
-                        <option value="programming">Programming</option>
-                        <option value="other">Other</option>
-                        <option value="vacation">Vacation</option>
-                    </select>
-                </div>
-                <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
-                    <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
+            ) : (
+            <div className="create">
                 <div className="text-center">
-                    <button onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
+                    <h5>{id ? "Update a Note" : "Add a New Note"}</h5>
+                    {!errors && <Space/>}
+                    {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
                 </div>
-            </form>
+                <form>
+                    <div className="form-group">
+                        <Popup trigger={<label htmlFor="title">Note Title: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <Popup trigger={<label htmlFor="body">Note Description: <sup>*</sup></label>}
+                               position="right center">
+                            <div className="popup-body">
+                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
+                            </div>
+                        </Popup>
+                        <textarea
+                            id="body"
+                            className="form-control"
+                            value={body}
+                            onChange={(e) => setBody(e.target.value)}>
+                    </textarea>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="category">Note Category:</label>
+                        <select
+                            id="category"
+                            className="form-control"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}>
+                            <option value="blogging">Blogging</option>
+                            <option value="congregation">Congregation</option>
+                            <option value="circuit">Circuit</option>
+                            <option value="meeting">Meeting</option>
+                            <option value="programming">Programming</option>
+                            <option value="other">Other</option>
+                            <option value="vacation">Vacation</option>
+                        </select>
+                    </div>
+                    <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
+                        <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
+                    <div className="text-center">
+                        <button onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
+                    </div>
+                </form>
             <Space/>
+            </div>
+            )}
         </div>
     );
 }
