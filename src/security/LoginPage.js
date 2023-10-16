@@ -83,7 +83,7 @@ const LoginPage = () => {
     return (
         <div className="login">
             {loading ? (
-                <div className="loader-container">
+                <div className="loader-container" style={{marginTop: 130}}>
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
                         <Space/>

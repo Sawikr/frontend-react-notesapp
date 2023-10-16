@@ -34,7 +34,7 @@ const NotesList = () => {
     return (
         <div className="main-content">
             {loading ? (
-                <div className="loader-container">
+                <div className="loader-container" style={{marginTop: 70}}>
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
                         <Space/>

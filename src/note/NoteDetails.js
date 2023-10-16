@@ -14,10 +14,12 @@ const NoteDetails = () => {
     const isAuth = isUserLoggedIn();
 
     useEffect(() => {
+        setLoading(true);
         if (isAuth) {
             NotesService.get(id)
                 .then(note => {
                     setCurrentNote(note.data);
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
@@ -57,7 +59,7 @@ const NoteDetails = () => {
     return (
         <div className="note-details main-content">
             {loading ? (
-                <div className="loader-container">
+                <div className="loader-container" style={{marginTop: 70}}>
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
                         <Space/>
