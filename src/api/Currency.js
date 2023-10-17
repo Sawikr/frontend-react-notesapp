@@ -3,6 +3,7 @@ import NotesService from "../service/NotesService";
 import Space from "../element/Space";
 import Moment from "react-moment";
 import {PropagateLoader} from "react-spinners";
+import {isUserLoggedIn} from "../service/LoginService";
 
 function Currency() {
     const [currencyEUR, setCurrencyEUR] = useState([]);
@@ -11,6 +12,7 @@ function Currency() {
     const [currencyGBP, setCurrencyGBP] = useState([]);
     const [loading, setLoading] = useState(false);
     const currentDate = Date.now().valueOf();
+    const isAuth = isUserLoggedIn();
 
     useEffect(() => {
         setLoading(true);
@@ -60,12 +62,25 @@ function Currency() {
 
     return (
         <div className="main-content">
-            {loading ? (
-                <div className="loader-container">
-                    <div className="text-center">
-                        <PropagateLoader color={'#79589f'} size={20}/>
-                        <Space/>
-                    </div>
+            {
+            loading ? (
+                <div>
+                    {!isAuth &&
+                        <div className="loader-container" style={{marginTop: 137}}>
+                            <div className="text-center">
+                                <PropagateLoader color={'#79589f'} size={20}/>
+                                <Space/>
+                            </div>
+                        </div>
+                    }
+                    {isAuth &&
+                        <div className="loader-container" style={{marginTop: 77}}>
+                            <div className="text-center">
+                                <PropagateLoader color={'#79589f'} size={20}/>
+                                <Space/>
+                            </div>
+                        </div>
+                    }
                 </div>
             ) : (
             <div className="main-content">

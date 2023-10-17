@@ -48,17 +48,17 @@ const LoginPage = () => {
         } else {
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, []);
+    }, [loading]);
 
     async function login(e) {
         e.preventDefault();
 
-        alert("Logging in... Please wait for the server's response!");
-        setLoading(true);
-
         if (!usernameOrEmail || !password) {
             setErrors(true);
             return;
+        } else {
+            alert("Logging in... Please wait for the server's response!");
+            setLoading(true);
         }
 
         await LoginService.loginObj(usernameOrEmail, password)
@@ -81,9 +81,9 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="login">
+        <div className="main-content">
             {loading ? (
-                <div className="loader-container" style={{marginTop: 130}}>
+                <div className="loader-container" style={{marginTop: 137}}>
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
                         <Space/>
