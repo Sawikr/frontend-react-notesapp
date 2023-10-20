@@ -10,12 +10,11 @@ function Currency() {
     const [currencyUSD, setCurrencyUSD] = useState([]);
     const [currencyCHF, setCurrencyCHF] = useState([]);
     const [currencyGBP, setCurrencyGBP] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
 
     useEffect(() => {
-        setLoading(true);
         NotesService.getCurrencyEUR()
             .then(response => {
                 console.log('Printing response!', response.data);

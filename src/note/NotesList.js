@@ -9,12 +9,11 @@ import {PropagateLoader} from "react-spinners";
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
     const [category, setCategory] = useState('all');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
 
     useEffect(() => {
-        setLoading(true);
         if (isAuth) {
             NotesService.getAll()
                 .then(response => {
@@ -29,7 +28,7 @@ const NotesList = () => {
             alert("Log in first!");
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, []);
+    }, [loading]);
 
     return (
         <div className="main-content">

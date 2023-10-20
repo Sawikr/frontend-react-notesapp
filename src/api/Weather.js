@@ -7,12 +7,11 @@ import {isUserLoggedIn} from "../service/LoginService";
 
 function Weather() {
     const [weather, setWeather] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
 
     useEffect(() => {
-        setLoading(true);
         NotesService.getWeather()
             .then(response => {
                 console.log('Printing response!', response.data);
