@@ -57,7 +57,7 @@ const RegisterPage = () => {
                 </div>
                 <form>
                 <div className="form-group">
-                    <Popup trigger={<label htmlFor="name">Name: <sup>*</sup></label>}
+                    <Popup trigger={<label htmlFor="name" style={{cursor: 'pointer'}}>Name: <sup>*</sup></label>}
                            position="right center">
                         <div className="popup-body">
                             <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
@@ -73,7 +73,7 @@ const RegisterPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <Popup trigger={ <label htmlFor="body">Username: <sup>*</sup></label>}
+                    <Popup trigger={ <label htmlFor="body" style={{cursor: 'pointer'}}>Username: <sup>*</sup></label>}
                            position="right center">
                         <div className="popup-body">
                             <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
@@ -88,7 +88,7 @@ const RegisterPage = () => {
                     </input>
                 </div>
                 <div className="form-group">
-                    <Popup trigger={<label htmlFor="email">Email: <sup>*</sup></label>}
+                    <Popup trigger={<label htmlFor="email" style={{cursor: 'pointer'}}>Email: <sup>*</sup></label>}
                            position="right center">
                         <div className="popup-body">
                             <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
@@ -103,7 +103,7 @@ const RegisterPage = () => {
                     </input>
                 </div>
                 <div className="form-group">
-                    <Popup trigger={<label htmlFor="password">Password: <sup>*</sup></label>}
+                    <Popup trigger={<label htmlFor="password" style={{cursor: 'pointer'}}>Password: <sup>*</sup></label>}
                            position="right center">
                         <div className="popup-body">
                             <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>

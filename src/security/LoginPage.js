@@ -117,7 +117,7 @@ const LoginPage = () => {
                 </div>
                 <form>
                     <div className="form-group">
-                        <Popup trigger={<label htmlFor="user">User or Email: <sup>*</sup></label>}
+                        <Popup trigger={<label htmlFor="user" style={{cursor: 'pointer'}}>User or Email: <sup>*</sup></label>}
                                position="right center">
                             <div className="popup-body">
                                 <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
@@ -133,7 +133,7 @@ const LoginPage = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <Popup trigger={<label htmlFor="password">Password: <sup>*</sup></label>}
+                        <Popup trigger={<label htmlFor="password" style={{cursor: 'pointer'}}>Password: <sup>*</sup></label>}
                                position="right center">
                             <div className="popup-body">
                                 <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
