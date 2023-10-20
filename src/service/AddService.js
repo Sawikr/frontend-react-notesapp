@@ -84,7 +84,7 @@ const AddService = () => {
                 if (clickRegister || isCurrency || isWeather) {
                     message =
                         <>
-                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Login</Link>
+                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Log In</Link>
                         </>
                 }
                 else if (!clickRegister && isCurrency || isWeather )
@@ -98,7 +98,7 @@ const AddService = () => {
                 {
                     message =
                         <>
-                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Login</Link>
+                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Log In</Link>
                         </>
                 }
                 else {
@@ -117,7 +117,7 @@ const AddService = () => {
         } else {
             message =
                 <>
-                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleLogout}>Logout</Link>
+                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleLogout}>Log Out</Link>
                 </>
         }
         return message;

@@ -111,7 +111,7 @@ const LoginPage = () => {
             ) : (
             <div className="login">
                 <div className="text-center">
-                    <h5>Login to Notes App</h5>
+                    <h5>Log into Notes App</h5>
                     {!errors && <Space/>}
                     {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
                 </div>
@@ -151,7 +151,7 @@ const LoginPage = () => {
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                         <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                     <div className="text-center">
-                        <button onClick={(e) => login(e)}>Login</button>
+                        <button onClick={(e) => login(e)}>Log In</button>
                     </div>
                 </form>
             </div>
