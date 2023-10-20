@@ -18,11 +18,11 @@ const RegisterPage = () => {
     const register = (e) => {
         e.preventDefault();
 
-        setLoading(true);
-
         if (!name || !username || !email || !password) {
             setErrors(true);
             return;
+        } else {
+            setLoading(true);
         }
 
         const register = {name, username, email, password};

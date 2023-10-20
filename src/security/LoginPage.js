@@ -13,6 +13,9 @@ const LoginPage = () => {
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [start, setStart] = useState(false);
+    const [counter, setCounter] = useState(0);
+    let [interval, setInterval] = useState('');
     const history = useHistory();
     const isAuth = isUserLoggedIn();
 
@@ -46,12 +49,21 @@ const LoginPage = () => {
         if (isAuth) {
             history.push("/notes/list");
         } else {
-            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+            if (start) {
+                interval = setInterval(() => {
+                    login().then(r => console.log("Interval is working!"));
+                    setStart(false);
+                    setCounter(counter + 1);
+                    console.log("Counter is " + counter + "!")
+                }, 6000);
+            } else if (counter === 1) {
+                clearInterval(interval);
+            }
+            return () => clearInterval(interval);
         }
-    }, [loading]);
+    }, [isAuth, start]);
 
-    async function login(e) {
-        e.preventDefault();
+    async function login() {
 
         if (!usernameOrEmail || !password) {
             setErrors(true);
@@ -71,12 +83,19 @@ const LoginPage = () => {
                 sendLogin();
                 sendList();
                 setLoading(false);
+                setStart(false);
                 alert("Login is successfully!");
                 window.location.reload(false);
             })
             .catch(error => {
                 console.log("An error occurred!", error);
-                alert("Login is unsuccessfully. Check your username and password!");
+                if (counter === 0) {
+                    setStart(true);
+                } else if (counter === 1) {
+                    alert("Login is unsuccessfully. Check your username and password!");
+                    setStart(false);
+                    setLoading(false);
+                }
             })
     }
 
