@@ -17,7 +17,7 @@ const NotesList = () => {
         if (isAuth) {
             NotesService.getAll()
                 .then(response => {
-                    console.log('Printing response!', response.data);
+                    //console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
                 })

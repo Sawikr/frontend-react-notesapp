@@ -18,11 +18,11 @@ const SendMail = () => {
     const sendMail = (e) => {
         e.preventDefault();
 
-        setLoading(true);
-
         if (!email || !title || !body) {
             setErrors(true);
             return;
+        } else {
+            setLoading(true);
         }
 
         const sendEmail = {email, title, body, id};

@@ -12,6 +12,12 @@ const loginObj = (usernameOrEmail, password) => {
     return httpClient.post(BASE_URL + '/auth/login', {usernameOrEmail, password})
 };
 
+const getAllUsers = () =>
+    axios.get(BASE_URL + '/auth/user')
+
+const getUser = id =>
+    axios.get(BASE_URL + `/auth/user/${id}`)
+
 export const storeToken = (token) => localStorage.setItem("token", token);
 
 export const getToken = () => localStorage.getItem("token");
@@ -33,4 +39,4 @@ export const logout = () => {
 }
 
 // eslint-disable-next-line
-export default { sendLogin, sendList, loginObj, storeToken, getToken, saveLoggedInUser, isUserLoggedIn, logout };
+export default { sendLogin, sendList, loginObj, getAllUsers, getUser, storeToken, getToken, saveLoggedInUser, isUserLoggedIn, logout };

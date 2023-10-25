@@ -48,11 +48,11 @@ const AddNote = () => {
     const saveNote = (e) => {
         e.preventDefault();
 
-        setLoading(true);
-
         if (!title || !body) {
             setErrors(true);
             return;
+        } else {
+            setLoading(true);
         }
 
         const note = {title, body, category, loginUser, id};
