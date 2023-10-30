@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/radoslaw-sawicki-frontend-react-notesapp/static/css/main.6f9a424f.css",
-    "main.js": "/radoslaw-sawicki-frontend-react-notesapp/static/js/main.47f0af2f.js",
+    "main.css": "/radoslaw-sawicki-frontend-react-notesapp/static/css/main.3b81cc32.css",
+    "main.js": "/radoslaw-sawicki-frontend-react-notesapp/static/js/main.0e937da5.js",
     "index.html": "/radoslaw-sawicki-frontend-react-notesapp/index.html",
-    "main.6f9a424f.css.map": "/radoslaw-sawicki-frontend-react-notesapp/static/css/main.6f9a424f.css.map",
-    "main.47f0af2f.js.map": "/radoslaw-sawicki-frontend-react-notesapp/static/js/main.47f0af2f.js.map"
+    "main.3b81cc32.css.map": "/radoslaw-sawicki-frontend-react-notesapp/static/css/main.3b81cc32.css.map",
+    "main.0e937da5.js.map": "/radoslaw-sawicki-frontend-react-notesapp/static/js/main.0e937da5.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f9a424f.css",
-    "static/js/main.47f0af2f.js"
+    "static/css/main.3b81cc32.css",
+    "static/js/main.0e937da5.js"
   ]
 }
