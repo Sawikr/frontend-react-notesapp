@@ -5,6 +5,7 @@ import NotesService from '../service/NotesService';
 import Space from "../element/Space";
 import SortNotesService from "../service/SortNotesService";
 import {PropagateLoader} from "react-spinners";
+import {saveCategory} from "../service/CategoryService";
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -20,6 +21,7 @@ const NotesList = () => {
                     //console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
+                    saveCategory(category);
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
@@ -29,6 +31,11 @@ const NotesList = () => {
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
     }, [loading]);
+
+    function saveSelectedCategory() {
+        saveCategory(category);
+        console.log('Selected category is: ' + category + '!');
+    }
 
     return (
         <div className="main-content">
@@ -48,6 +55,7 @@ const NotesList = () => {
                             id="category"
                             className="main-category"
                             value={category}
+                            onClick={saveSelectedCategory}
                             onChange={(e) => setCategory(e.target.value)}>
                             <option value="all">All categories</option>
                             <option value="blogging">Blogging</option>

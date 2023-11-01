@@ -1,5 +1,6 @@
 import {Link, useHistory} from "react-router-dom";
 import {isUserLoggedIn} from "../service/LoginService";
+import SettingsMenu from "../menu/SettingsMenu";
 
 const Navbar = () => {
     const isAuth = isUserLoggedIn();
@@ -23,7 +24,7 @@ const Navbar = () => {
                 title='Version 1. 0. 0.'
                 className="primary-color" style={{cursor: "help"}}>Notes App
             </h2>
-         <div>
+            <div>
                 {
                     isAuth &&
                     <Link to="/notes/list" title='Note list home page'
@@ -32,6 +33,10 @@ const Navbar = () => {
                 {
                     isAuth &&
                     <Link to="/add" className="ml-3" onClick={handleClickNewNote}>New Note</Link>
+                }
+                {
+                    isAuth &&
+                    <SettingsMenu/>
                 }
             </div>
         </nav>

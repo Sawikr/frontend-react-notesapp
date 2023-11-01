@@ -55,11 +55,12 @@ const AddNote = () => {
             setLoading(true);
         }
 
-        const note = {title, body, category, loginUser, id};
+        const note = {id, title, body, category, loginUser};
+
         if (id && isAuth) {
-            NotesService.update(note)
+            NotesService.partialUpdate(note)
                 .then(response => {
-                    console.log(note);
+                    //console.log(note);
                     console.log("Note updated successfully", response.data);
                     setLoading(false);
                     alert("Note updated successfully!");
@@ -73,6 +74,7 @@ const AddNote = () => {
         } else if (isAuth) {
             NotesService.create(note)
                 .then(response => {
+                    console.log(note);
                     console.log("Note added successfully", response.data);
                     alert("Note added successfully!");
                     sendLogin();

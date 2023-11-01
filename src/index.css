@@ -163,3 +163,9 @@ button {
   margin: 70px;
   padding: 0;
 }
+
+.user-content {
+  max-width: 560px;
+  margin: auto;
+  padding: 0px;
+}
