@@ -35,6 +35,7 @@ const NoteDetails = () => {
         if (isAuth) {
             NotesService.remove(id)
                 .then(response => {
+                    console.log("Note deleted successfully: id: " + id);
                     setLoading(false);
                     alert("Note deleted successfully!");
                     history.push("/notes/list");
@@ -71,7 +72,7 @@ const NoteDetails = () => {
                     currentNote &&
                     <div>
                         <article>
-                            <h5 className="text-capitalize primary-color">{currentNote.title}</h5>
+                            <h5 className="primary-color">{currentNote.title}</h5>
                             <p></p>
                             <div className="mb-3 font-italic metadata">
                                 <Moment fromNow>{currentNote.updatedAt}</Moment>

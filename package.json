@@ -6,6 +6,10 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@internationalized/date": "^3.5.0",
+    "@js-joda/core": "^5.6.1",
+    "@js-joda/locale_en-us": "^4.8.11",
+    "@js-joda/timezone": "^2.18.2",
     "@mui/base": "^5.0.0-beta.21",
     "@mui/material": "^5.14.15",
     "@react-icons/all-files": "^4.1.0",
@@ -16,6 +20,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "classnames": "^2.3.2",
+    "iana-tz-data": "^2019.1.0",
     "moment": "^2.29.4",
     "primereact": "^10.0.2",
     "prop-types": "^15.6.2",
@@ -29,7 +34,8 @@
     "react-spinners": "^0.13.8",
     "react-transition-group": "^2.5.3",
     "reactjs-popup": "^2.0.6",
-    "web-vitals": "^1.1.0"
+    "web-vitals": "^1.1.0",
+    "zoned-date-time": "^1.1.0"
   },
   "scripts": {
     "predeploy": "npm run build",

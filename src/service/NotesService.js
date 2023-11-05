@@ -16,8 +16,8 @@ export const remove = id =>
 export const update = data =>
     axios.put(BASE_URL + '/notes', data)
 
-export const partialUpdate = data =>
-    axios.patch(BASE_URL + '/notes', data)
+export const updateNoteFields = (id, data) =>
+    axios.patch(BASE_URL + '/notes/' + id, data)
 
 export const getWeather = () =>
     axios.get(BASE_URL + '/notes/weather')
@@ -35,4 +35,4 @@ export const getCurrencyGBP = () =>
     axios.get(BASE_URL + '/notes/currency/gbp')
 
 // eslint-disable-next-line
-export default { getAll, create, get, remove, update, partialUpdate, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP };
+export default { getAll, create, get, remove, update, updateNoteFields, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP };

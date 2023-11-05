@@ -11,12 +11,13 @@ const AddNote = () => {
     const [body, setBody] = useState('');
     const [category, setCategory] = useState('programming');
     const [isLogin, setIsLogin] = useState(true);
-    const [listName, setListName] = useState('UserList');
-    const [errors, setErrors] = useState(false);
     const username = sessionStorage.getItem("authenticatedUser");
+    const [listName, setListName] = useState(username + 'List');
+    const [errors, setErrors] = useState(false);
     const [loginUser, setLoginUser] = useState(username);
     const [loginName, setLoginName] = useState(username);
     const [loading, setLoading] = useState(false);
+    const [updatedAt, setUpdatedAt] = useState(new Date());
     const history = useHistory();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
@@ -25,8 +26,8 @@ const AddNote = () => {
         const login = {loginName, isLogin};
         LoginService.sendLogin(login)
             .then(response => {
+                console.log("Login sent successfully:", response.data);
                 console.log(login);
-                console.log("Login sent successfully", response.data);
             })
             .catch(error => {
                 console.log("An error occurred!", error);
@@ -37,8 +38,8 @@ const AddNote = () => {
         const list = {listName};
         LoginService.sendList(list)
             .then(response => {
+                console.log("List sent successfully:", response.data);
                 console.log(list);
-                console.log("List sent successfully", response.data);
             })
             .catch(error => {
                 console.log("An error occurred!", error);
@@ -55,13 +56,17 @@ const AddNote = () => {
             setLoading(true);
         }
 
-        const note = {id, title, body, category, loginUser};
+        let currentDate = new Date(updatedAt.getTime());
+        setUpdatedAt(currentDate);
+
+        const note = {id, title, body, category, loginUser, updatedAt};
+        const noteFields = {title, body, category, updatedAt};
 
         if (id && isAuth) {
-            NotesService.partialUpdate(note)
+            NotesService.updateNoteFields(id, noteFields)
                 .then(response => {
-                    //console.log(note);
-                    console.log("Note updated successfully", response.data);
+                    console.log("Note updated successfully:", response.data);
+                    console.log(noteFields);
                     setLoading(false);
                     alert("Note updated successfully!");
                     history.push("/notes/list");
@@ -74,8 +79,8 @@ const AddNote = () => {
         } else if (isAuth) {
             NotesService.create(note)
                 .then(response => {
+                    console.log("Note added successfully:", response.data);
                     console.log(note);
-                    console.log("Note added successfully", response.data);
                     alert("Note added successfully!");
                     sendLogin();
                     sendList();

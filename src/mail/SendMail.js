@@ -29,8 +29,8 @@ const SendMail = () => {
         if (id) {
             MailService.send(sendEmail)
                 .then(response => {
+                    console.log("Email sent successfully:", response.data);
                     console.log(sendEmail);
-                    console.log("Email sent successfully", response.data);
                     setLoading(false);
                     alert("E-mail sent successfully to " + email + "!");
                     history.push("/notes/list");
