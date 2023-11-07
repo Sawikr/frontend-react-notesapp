@@ -6,11 +6,9 @@ import {MenuButton} from '@mui/base/MenuButton';
 import {Dropdown} from '@mui/base/Dropdown';
 import {BsGear} from 'react-icons/bs';
 import {logout} from '../service/LoginService';
-import {useState} from 'react';
 import {getCategory} from "../service/CategoryService";
 
 const SettingsMenu = () => {
-    const [category, setCategory] = useState('');
     const history = useHistory();
 
     const createHandleMenuClick = (menuItem) => {
@@ -33,8 +31,8 @@ const SettingsMenu = () => {
 
     return (
         <Dropdown>
-            <MenuButton className="TriggerButtonIntroduction text-right" style={{marginLeft: 5, marginRight: -10}}>
-                <BsGear/>
+            <MenuButton className="text-right" style={{marginLeft: 5, marginRight: -10, background: 'white'}}>
+                <BsGear className="TriggerButtonIntroduction" style={{fontSize: "1.2em"}}/>
             </MenuButton>
             <Menu
                 className="CustomMenuIntroduction"
@@ -55,7 +53,7 @@ const SettingsMenu = () => {
                     Log out
                 </MenuItem>
             </Menu>
-            <Styles />
+            <Styles/>
         </Dropdown>
     );
 }
@@ -64,9 +62,10 @@ function Styles() {
     return (
         <style>{`
         .CustomMenuIntroduction--listbox {
-          max-width: 150px;
+          max-width: 200px;
           padding: 10px;
           margin: 3px;
+          text-align: left;
           margin-left: -90px;
           border-radius: 5px;
           border-color: white;
@@ -106,27 +105,26 @@ function Styles() {
         .TriggerButtonIntroduction {
           margin: 0;
           font-family: "Ubuntu", serif;
-          color: #333;
           padding: 0 auto;
-          color: white;
           cursor: pointer;
           background: white;
-          color: black;
+          align-items: center;
         
           &:hover {
-            background: white;
-            border-color: white;
+            border-radius: 5px;
+            margin-bottom: 1px;
+            border: 1px solid #79589f;
           }
         
           &:active {
-            background: white;
+            border-color: #79589f;
           }
         
           &:focus-visible {
             outline: none;
           }
         }
-    
+        
         .CustomMenuIntroduction {
           z-index: 1;
         }

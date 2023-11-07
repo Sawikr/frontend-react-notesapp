@@ -30,7 +30,7 @@ const NotesList = () => {
             alert("Log in first!");
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, [loading]);
+    }, [loading, category]);
 
     function saveSelectedCategory() {
         saveCategory(category);
