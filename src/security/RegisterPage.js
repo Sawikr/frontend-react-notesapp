@@ -65,7 +65,7 @@ const RegisterPage = () => {
                     </Popup>
                     <input
                         type="text"
-                        className="form-control"
+                        className="input"
                         id="name"
                         placeholder={'Enter name'}
                         value={name}
@@ -81,7 +81,7 @@ const RegisterPage = () => {
                     </Popup>
                     <input
                         id="body"
-                        className="form-control"
+                        className="input"
                         placeholder={'Enter username'}
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}>
@@ -96,7 +96,7 @@ const RegisterPage = () => {
                     </Popup>
                     <input
                         id="email"
-                        className="form-control"
+                        className="input"
                         placeholder={'Enter email'}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}>
@@ -112,7 +112,7 @@ const RegisterPage = () => {
                     <input
                         type={isShown ? "text" : "password"}
                         id="password"
-                        className="form-control"
+                        className="input"
                         placeholder={'Enter password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}>

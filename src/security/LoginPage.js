@@ -100,7 +100,7 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="main-content">
+        <div className="login">
             {loading ? (
                 <div className="loader-container" style={{marginTop: 137}}>
                     <div className="text-center">
@@ -125,7 +125,7 @@ const LoginPage = () => {
                         </Popup>
                         <input
                             type="text"
-                            className="form-control"
+                            className="input"
                             id="user"
                             placeholder={'Enter user'}
                             value={usernameOrEmail}
@@ -141,7 +141,7 @@ const LoginPage = () => {
                         </Popup>
                         <input
                             type={isShown ? "text" : "password"}
-                            className="form-control"
+                            className="input"
                             id="password"
                             placeholder={'Enter password'}
                             value={password}
