@@ -138,7 +138,7 @@ const AddNote = () => {
                         </Popup>
                         <input
                             type="text"
-                            className="form-control"
+                            className="input"
                             id="title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -153,7 +153,7 @@ const AddNote = () => {
                         </Popup>
                         <textarea
                             id="body"
-                            className="form-control"
+                            className="textarea"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}>
                     </textarea>
@@ -162,7 +162,7 @@ const AddNote = () => {
                         <label htmlFor="category">Note Category:</label>
                         <select
                             id="category"
-                            className="form-control"
+                            className="select"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}>
                             <option value="blogging">Blogging</option>
@@ -177,7 +177,8 @@ const AddNote = () => {
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                         <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                     <div className="text-center">
-                        <button onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
+                        <button className="button-add"
+                            onClick={(e) => saveNote(e)}>{id ? "Update Note": "Add Note"}</button>
                     </div>
                 </form>
             <Space/>

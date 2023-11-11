@@ -83,9 +83,9 @@ const NoteDetails = () => {
                             <div className="mb-3">{currentNote.body}</div>
                         </article>
                         <Space/>
-                        <button onClick={handleUpdate}>Edit</button>
-                        <button onClick={handleDelete} className="ml-3">Delete</button>
-                        <button onClick={handleSend} className="ml-3">Send</button>
+                        <button className="button" onClick={handleUpdate}>Edit</button>
+                        <button className="button ml-3" onClick={handleDelete}>Delete</button>
+                        <button className="button ml-3" onClick={handleSend}>Send</button>
                     </div>
                     }
                 <Space/>

@@ -81,7 +81,7 @@ const SendMail = () => {
                         </Popup>
                         <input
                             type="text"
-                            className="form-control"
+                            className="input"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -96,7 +96,7 @@ const SendMail = () => {
                         </Popup>
                         <input
                             type="text"
-                            className="form-control"
+                            className="input"
                             id="title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -111,7 +111,7 @@ const SendMail = () => {
                         </Popup>
                         <textarea
                             id="body"
-                            className="form-control"
+                            className="textarea"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}>
                     </textarea>
@@ -119,7 +119,8 @@ const SendMail = () => {
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                         <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                     <div className="text-center">
-                        <button onClick={(e) => sendMail(e)}>Send Email</button>
+                        <button className="button-add"
+                            onClick={(e) => sendMail(e)}>Send Email</button>
                     </div>
                 </form>
                 <Space/>

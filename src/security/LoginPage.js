@@ -151,7 +151,7 @@ const LoginPage = () => {
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                         <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                     <div className="text-center">
-                        <button onClick={(e) => login(e)}>Log In</button>
+                        <button className="button" onClick={(e) => login(e)}>Log In</button>
                     </div>
                 </form>
             </div>
