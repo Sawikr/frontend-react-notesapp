@@ -5,6 +5,7 @@ import LoginService, {isUserLoggedIn} from "../service/LoginService";
 import Popup from "reactjs-popup";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
+import {getNewNoteToken} from "../service/AddNoteService";
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
@@ -21,6 +22,7 @@ const AddNote = () => {
     const history = useHistory();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
+    const newNote = getNewNoteToken();
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -76,7 +78,8 @@ const AddNote = () => {
                     alert("An error occurred!");
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
-        } else if (isAuth) {
+        }
+        else if (isAuth) {
             NotesService.create(note)
                 .then(response => {
                     console.log("Note added successfully:", response.data);
@@ -99,16 +102,21 @@ const AddNote = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (id) {
             NotesService.get(id)
                 .then(note => {
                     setTitle(note.data.title);
                     setBody(note.data.body);
                     setCategory(note.data.category);
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);
                 })
+        }
+        else if (newNote) {
+            setLoading(false);
         }
     }, []);
 

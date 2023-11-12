@@ -42,11 +42,13 @@ const SendMail = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (id) {
             NotesService.get(id)
                 .then(note => {
                     setTitle(note.data.title);
                     setBody(note.data.body);
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.log("An error occurred!", error);

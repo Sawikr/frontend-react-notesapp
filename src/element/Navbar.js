@@ -1,6 +1,7 @@
 import {Link, useHistory} from "react-router-dom";
 import {isUserLoggedIn} from "../service/LoginService";
 import SettingsMenu from "../menu/SettingsMenu";
+import {newNoteToken} from "../service/AddNoteService";
 
 const Navbar = () => {
     const isAuth = isUserLoggedIn();
@@ -13,6 +14,7 @@ const Navbar = () => {
     }
 
     function handleClickNewNote() {
+        newNoteToken(true);
         console.log('Link clicked!');
         history.push("/add");
         window.location.reload();

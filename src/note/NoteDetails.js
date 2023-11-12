@@ -5,6 +5,7 @@ import NotesService from "../service/NotesService";
 import Moment from "react-moment";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
+import {newNoteToken} from "../service/AddNoteService";
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');
@@ -50,10 +51,12 @@ const NoteDetails = () => {
     }
 
     const handleUpdate = () => {
+        newNoteToken(false);
         history.push(`/notes/edit/${id}`);
     }
 
     const handleSend = () => {
+        newNoteToken(false);
         history.push(`/notes/email/${id}`);
     }
 
