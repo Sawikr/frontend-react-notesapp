@@ -1,21 +1,37 @@
-import * as React from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {Menu} from '@mui/base/Menu';
 import {MenuItem, menuItemClasses} from '@mui/base/MenuItem';
 import {MenuButton} from '@mui/base/MenuButton';
+import CategoryService, {getCategory} from "../service/CategoryService";
 import {Dropdown} from '@mui/base/Dropdown';
 import {BsGear} from 'react-icons/bs';
 import {logout} from '../service/LoginService';
-import {getCategory} from "../service/CategoryService";
+import {useState} from "react";
 
 const SettingsMenu = () => {
+    let [categoryName, setCategoryName] = useState('');
     const history = useHistory();
+    const {id} = useParams();
 
     const createHandleMenuClick = (menuItem) => {
         if (menuItem === 'Set category') {
             return () => {
                 console.log(`Clicked on: ${menuItem}!`);
                 alert('Category set: ' + getCategory().toUpperCase() + '!');
+
+                categoryName = getCategory();
+                const category = {id, categoryName};
+
+                CategoryService.updateCategory(category)
+                    .then(response => {
+                        console.log("Category updated successfully:", response.data);
+                        console.log('Updated category is: ' + categoryName + '!');
+                        alert("Category updated successfully!");
+                    })
+                    .catch(error => {
+                        console.log('An error occurred!', error);
+                        alert("An error occurred!");
+                    })
             };
         }
         else if (menuItem === 'Log out') {

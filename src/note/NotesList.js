@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from '../service/NotesService';
+import CategoryService from '../service/CategoryService';
 import Space from "../element/Space";
 import SortNotesService from "../service/SortNotesService";
 import {PropagateLoader} from "react-spinners";
@@ -9,8 +10,8 @@ import {saveCategory} from "../service/CategoryService";
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
-    const [category, setCategory] = useState('all');
     const [loading, setLoading] = useState(true);
+    const [category, setCategory] = useState('');
     const history = useHistory();
     const isAuth = isUserLoggedIn();
 
@@ -21,6 +22,7 @@ const NotesList = () => {
                     //console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
+                    getSaveCategory();
                     saveCategory(category);
                 })
                 .catch(error => {
@@ -30,7 +32,25 @@ const NotesList = () => {
             alert("Log in first!");
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, [loading, category]);
+    }, [loading]);
+
+    function getSaveCategory() {
+        CategoryService.getAll()
+            .then(response => {
+                //console.log('Printing response!', response.data);
+                const foundCategory = response.data.findLast(obj => {
+                    return obj.categoryName;
+                });
+                if (foundCategory) {
+                    let category = foundCategory.categoryName;
+                    setCategory(category);
+                    console.log('Saved category is: ' + category + '!');
+                }
+            })
+            .catch(error => {
+                console.log('An error occurred!', error);
+            })
+    }
 
     function saveSelectedCategory() {
         saveCategory(category);
