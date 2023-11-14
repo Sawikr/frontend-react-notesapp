@@ -59,7 +59,7 @@ const SortNotesService = (props) => {
                 return (name.loginUser === checkLoggedInUser() || name.loginUser === loginEmail || name.loginUser === loginUsername)
                     && name.category === checkCategory(props.category)
             })
-                .sort().reverse().map(note => (
+                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map(note => (
                     <div key={note.id} className="notes-preview mt-3">
                         <Link to={`/notes/${note.id}`}>
                             <div style={{marginTop: 10}}>
@@ -78,7 +78,7 @@ const SortNotesService = (props) => {
 
             props.notes && props.notes.filter(name => {
                 return (name.loginUser === checkLoggedInUser() || name.loginUser === loginEmail || name.loginUser === loginUsername)})
-                .sort().reverse().map(note => (
+                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map(note => (
                     <div key={note.id} className="notes-preview mt-3">
                         <Link to={`/notes/${note.id}`}>
                             <div style={{marginTop: 10}}>
