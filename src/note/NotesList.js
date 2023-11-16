@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from '../service/NotesService';
-import CategoryService from '../service/CategoryService';
+import CategoryService, {getCategory} from '../service/CategoryService';
 import Space from "../element/Space";
 import SortNotesService from "../service/SortNotesService";
 import {PropagateLoader} from "react-spinners";
@@ -12,6 +12,8 @@ const NotesList = () => {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [category, setCategory] = useState('');
+    const username = sessionStorage.getItem("authenticatedUser");
+    const [loginUsername, setLoginUsername] = useState(username);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
 
@@ -38,14 +40,15 @@ const NotesList = () => {
         CategoryService.getAll()
             .then(response => {
                 //console.log('Printing response!', response.data);
-                const foundCategory = response.data.findLast(obj => {
-                    return obj.categoryName;
-                });
+                const foundCategory = response.data.filter(obj => {
+                    return obj.username === loginUsername
+                }).findLast(obj => {return obj}).categoryName;
                 if (foundCategory) {
-                    let category = foundCategory.categoryName;
-                    setCategory(category);
-                    console.log('Saved category is: ' + category + '!');
+                    setCategory(foundCategory);
+                    console.log('Saved category is: ' + foundCategory + '!');
                 }
+                else
+                    alert('Set the category of notes displayed!');
             })
             .catch(error => {
                 console.log('An error occurred!', error);

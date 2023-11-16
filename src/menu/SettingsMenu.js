@@ -10,6 +10,8 @@ import {useState} from "react";
 
 const SettingsMenu = () => {
     let [categoryName, setCategoryName] = useState('');
+    const loginUsername = sessionStorage.getItem("authenticatedUser");
+    let [username, setUsername] = useState(loginUsername);
     const history = useHistory();
     const {id} = useParams();
 
@@ -20,12 +22,12 @@ const SettingsMenu = () => {
                 alert('Category set: ' + getCategory().toUpperCase() + '!');
 
                 categoryName = getCategory();
-                const category = {id, categoryName};
+                const category = {id, categoryName, username};
 
-                CategoryService.updateCategory(category)
-                    .then(response => {
-                        console.log("Category updated successfully:", response.data);
+                CategoryService.createCategory(category)
+                    .then(() => {
                         console.log('Updated category is: ' + categoryName + '!');
+                        console.log('Updated username is: ' + username + '!');
                         alert("Category updated successfully!");
                     })
                     .catch(error => {

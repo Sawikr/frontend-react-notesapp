@@ -7,8 +7,8 @@ export const getAll = () =>
 export const get = id =>
     axios.get(BASE_URL + `/notes/category${id}`)
 
-export const updateCategory = data =>
-    axios.put(BASE_URL + '/notes/category', data)
+export const createCategory = data =>
+    axios.post(BASE_URL + '/notes/category', data)
 
 export const saveCategory = (category) => sessionStorage.setItem("category", category);
 
@@ -18,4 +18,4 @@ export const getCategory = () => {
 }
 
 // eslint-disable-next-line
-export default { getAll, get, updateCategory };
+export default { getAll, get, createCategory };

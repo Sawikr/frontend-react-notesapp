@@ -38,11 +38,13 @@ const SortNotesService = (props) => {
                     setLoginEmail(loginEmail);
                     console.log('Email is ' + loginEmail + '!');
                 }
-                if (foundEmail) {
+                else if (foundEmail) {
                     let loginUsername = foundEmail.username;
                     setLoginUsername(loginUsername);
                     console.log('Username is ' + loginUsername + '!');
                 }
+                else
+                    console.log('Username or email does not exist!');
                 //console.log(response);
             })
             .catch(error => {
