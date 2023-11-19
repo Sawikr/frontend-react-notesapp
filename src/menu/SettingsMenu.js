@@ -44,13 +44,13 @@ const SettingsMenu = () => {
                 if (noteCreatedDateIsTrue.match(true)) {
                     noteCreatingDateToken(false);
                     setNoteCreatedDateIsTrue(false);
-                    alert("Note creation date is set to " + getNoteCreatingDateToken() + "!");
+                    alert("Note creation date display disabled!");
                     window.location.reload();
                 }
                 if (noteCreatedDateIsTrue.match(false)) {
                     noteCreatingDateToken(true);
                     setNoteCreatedDateIsTrue(true);
-                    alert("Note creation date is set to " + getNoteCreatingDateToken() + "!");
+                    alert("Note creation date display enabled!");
                     window.location.reload();
                 }
                 console.log("Note creation date is set to " + getNoteCreatingDateToken() + "!");
