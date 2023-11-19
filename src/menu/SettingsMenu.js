@@ -6,7 +6,7 @@ import CategoryService, {getCategory} from "../service/CategoryService";
 import {Dropdown} from '@mui/base/Dropdown';
 import {BsGear} from 'react-icons/bs';
 import {logout} from '../service/LoginService';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {getNoteCreatingDateToken, noteCreatingDateToken} from "../service/NoteCreatingDateService";
 
 const SettingsMenu = () => {
@@ -41,13 +41,13 @@ const SettingsMenu = () => {
         else if (menuItem === 'Note creating date') {
             return () => {
                 console.log(`Clicked on: ${menuItem}!`);
-                if (noteCreatedDateIsTrue.match(true)) {
+                if (noteCreatedDateIsTrue === null || noteCreatedDateIsTrue.match(true)) {
                     noteCreatingDateToken(false);
                     setNoteCreatedDateIsTrue(false);
                     alert("Note creation date display disabled!");
                     window.location.reload();
                 }
-                if (noteCreatedDateIsTrue.match(false)) {
+                else if (noteCreatedDateIsTrue.match(false)) {
                     noteCreatingDateToken(true);
                     setNoteCreatedDateIsTrue(true);
                     alert("Note creation date display enabled!");
@@ -66,6 +66,9 @@ const SettingsMenu = () => {
             };
         };
     }
+
+    useEffect(() => {
+    }, [noteCreatedDateIsTrue])
 
     return (
         <Dropdown>

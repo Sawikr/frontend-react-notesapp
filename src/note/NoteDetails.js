@@ -17,7 +17,7 @@ const NoteDetails = () => {
     const isAuth = isUserLoggedIn();
 
     function isNote() {
-        if (getNoteCreatingDateToken().match(true)) {
+        if (getNoteCreatingDateToken() === null || getNoteCreatingDateToken().match(true)) {
             setNoteCreatedDate(true);
         }
         else {
