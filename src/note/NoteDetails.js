@@ -6,13 +6,25 @@ import Moment from "react-moment";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
 import {newNoteToken} from "../service/AddNoteService";
+import {getNoteCreatingDateToken} from "../service/NoteCreatingDateService";
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');
     const [loading, setLoading] = useState(false);
+    const [noteCreatedDate, setNoteCreatedDate] = useState(false);
     const {id} = useParams();
     const history = useHistory();
     const isAuth = isUserLoggedIn();
+
+    function isNote() {
+        if (getNoteCreatingDateToken().match(true)) {
+            setNoteCreatedDate(true);
+        }
+        else {
+            setNoteCreatedDate(false);
+        }
+        console.log("Note creation date is set to " + noteCreatedDate + "!");
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -21,6 +33,7 @@ const NoteDetails = () => {
                 .then(note => {
                     setCurrentNote(note.data);
                     setLoading(false);
+                    isNote();
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
@@ -29,7 +42,7 @@ const NoteDetails = () => {
                 alert("Log in first!");
                 history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, []);
+    }, [noteCreatedDate]);
 
     const handleDelete = () => {
         setLoading(true);
@@ -77,6 +90,12 @@ const NoteDetails = () => {
                         <article>
                             <h5 className="primary-color">{currentNote.title}</h5>
                             <p></p>
+                            {
+                                noteCreatedDate &&
+                                <div className="mb-3 font-italic metadata">
+                                    Note created: <Moment format="DD-MM-YYYY HH:mm">{currentNote.createdAt}</Moment>
+                                </div>
+                            }
                             <div className="mb-3 font-italic metadata">
                                 <Moment fromNow>{currentNote.updatedAt}</Moment>
                                 <span className="text-capitalize">, </span>

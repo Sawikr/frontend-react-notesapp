@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {isUserLoggedIn} from "../service/LoginService";
 import NotesService from '../service/NotesService';
-import CategoryService, {getCategory} from '../service/CategoryService';
+import CategoryService from '../service/CategoryService';
 import Space from "../element/Space";
 import SortNotesService from "../service/SortNotesService";
 import {PropagateLoader} from "react-spinners";

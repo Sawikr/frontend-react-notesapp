@@ -7,11 +7,13 @@ import {Dropdown} from '@mui/base/Dropdown';
 import {BsGear} from 'react-icons/bs';
 import {logout} from '../service/LoginService';
 import {useState} from "react";
+import {getNoteCreatingDateToken, noteCreatingDateToken} from "../service/NoteCreatingDateService";
 
 const SettingsMenu = () => {
     let [categoryName, setCategoryName] = useState('');
     const loginUsername = sessionStorage.getItem("authenticatedUser");
     let [username, setUsername] = useState(loginUsername);
+    let [noteCreatedDateIsTrue, setNoteCreatedDateIsTrue] = useState(getNoteCreatingDateToken());
     const history = useHistory();
     const {id} = useParams();
 
@@ -34,6 +36,24 @@ const SettingsMenu = () => {
                         console.log('An error occurred!', error);
                         alert("An error occurred!");
                     })
+            };
+        }
+        else if (menuItem === 'Note creating date') {
+            return () => {
+                console.log(`Clicked on: ${menuItem}!`);
+                if (noteCreatedDateIsTrue.match(true)) {
+                    noteCreatingDateToken(false);
+                    setNoteCreatedDateIsTrue(false);
+                    alert("Note creation date is set to " + getNoteCreatingDateToken() + "!");
+                    window.location.reload();
+                }
+                if (noteCreatedDateIsTrue.match(false)) {
+                    noteCreatingDateToken(true);
+                    setNoteCreatedDateIsTrue(true);
+                    alert("Note creation date is set to " + getNoteCreatingDateToken() + "!");
+                    window.location.reload();
+                }
+                console.log("Note creation date is set to " + getNoteCreatingDateToken() + "!");
             };
         }
         else if (menuItem === 'Log out') {
@@ -66,6 +86,12 @@ const SettingsMenu = () => {
                 </MenuItem>
                 <MenuItem
                     className="CustomMenuIntroduction--item"
+                    onClick={createHandleMenuClick('Note creating date')}
+                >
+                    Note creating date
+                </MenuItem>
+                <MenuItem
+                    className="CustomMenuIntroduction--item"
                     onClick={createHandleMenuClick('Log out')}
                 >
                     Log out
@@ -84,7 +110,7 @@ function Styles() {
           padding: 10px;
           margin: 3px;
           text-align: left;
-          margin-left: -90px;
+          margin-left: -140px;
           border-radius: 5px;
           border-color: white;
           overflow: auto;
