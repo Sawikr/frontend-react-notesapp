@@ -5,6 +5,7 @@ import NotesService from "../service/NotesService";
 import Popup from "reactjs-popup";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
+import Alert from "../alert/Alert";
 
 const SendMail = () => {
     const [title, setTitle] = useState('');
@@ -12,8 +13,11 @@ const SendMail = () => {
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [sentTrue, setSentTrue] = useState(false);
+    const [error, setError] = useState(false);
     const {id} = useParams();
     const history = useHistory();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const sendMail = (e) => {
         e.preventDefault();
@@ -28,15 +32,20 @@ const SendMail = () => {
         const sendEmail = {email, title, body, id};
         if (id) {
             MailService.send(sendEmail)
-                .then(response => {
+                .then(async response => {
                     console.log("Email sent successfully:", response.data);
                     console.log(sendEmail);
                     setLoading(false);
-                    alert("E-mail sent successfully to " + email + "!");
+                    //alert("E-mail sent successfully to " + email + "!");
+                    setSentTrue(true);
+                    await wait(3000);
                     history.push("/notes/list");
                 })
-                .catch(error => {
+                .catch(async error => {
                     console.log("An error occurred!", error);
+                    //alert("An error occurred!");
+                    setError(true);
+                    await wait(3000);
                 })
         }
     }
@@ -57,7 +66,25 @@ const SendMail = () => {
     }, []);
 
     return (
-        <div className="create">
+        <div className="main-content">
+            <div className="text-md-left">
+                {
+                    sentTrue &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>E-mail sent successfully to {email}!</div>
+                    </Alert>
+                }
+                {
+                    error &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>An error occurred!</div>
+                    </Alert>
+                }
+                {
+                    (sentTrue || error) &&
+                    <Space />
+                }
+            </div>
             {loading ? (
                 <div className="loader-container">
                     <div className="text-center">

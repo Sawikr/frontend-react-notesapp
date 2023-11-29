@@ -6,12 +6,17 @@ import Popup from "reactjs-popup";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
 import {getNewNoteToken} from "../service/AddNoteService";
+import Alert from "../alert/Alert";
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [category, setCategory] = useState('programming');
     const [isLogin, setIsLogin] = useState(true);
+    const [updatedTrue, setUpdatedTrue] = useState(false);
+    const [createdTrue, setCreatedTrue] = useState(false);
+    const [error, setError] = useState(false);
+    const [logFirst, setLogFirst] = useState(false);
     const username = sessionStorage.getItem("authenticatedUser");
     const [listName, setListName] = useState(username + 'List');
     const [errors, setErrors] = useState(false);
@@ -23,6 +28,7 @@ const AddNote = () => {
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
     const newNote = getNewNoteToken();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -48,7 +54,7 @@ const AddNote = () => {
             })
     }
 
-    const saveNote = (e) => {
+    const saveNote = async (e) => {
         e.preventDefault();
 
         if (!title || !body) {
@@ -66,37 +72,46 @@ const AddNote = () => {
 
         if (id && isAuth) {
             NotesService.updateNoteFields(id, noteFields)
-                .then(response => {
+                .then(async response => {
                     console.log("Note updated successfully:", response.data);
                     console.log(noteFields);
                     setLoading(false);
-                    alert("Note updated successfully!");
+                    //alert("Note updated successfully!");
+                    setUpdatedTrue(true);
+                    await wait(3000);
                     history.push("/notes/list");
                 })
-                .catch(error => {
+                .catch(async error => {
                     console.log("An error occurred!", error);
-                    alert("An error occurred!");
+                    //alert("An error occurred!");
+                    setError(true);
+                    await wait(3000);
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
-        }
-        else if (isAuth) {
+        } else if (isAuth) {
             NotesService.create(note)
-                .then(response => {
+                .then(async response => {
                     console.log("Note added successfully:", response.data);
                     console.log(note);
-                    alert("Note added successfully!");
+                    //alert("Note added successfully!");
+                    setCreatedTrue(true);
+                    await wait(3000);
                     sendLogin();
                     sendList();
                     setLoading(false);
                     history.push("/notes/list");
                 })
-                .catch(error => {
+                .catch(async error => {
                     console.log('An error occurred!', error);
-                    alert("An error occurred!");
+                    //alert("An error occurred!");
+                    setError(true);
+                    await wait(3000);
                     history.push("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         } else {
-            alert("Log in first!");
+            //alert("Log in first!");
+            setLogFirst(true);
+            await wait(3000);
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
     }
@@ -121,7 +136,37 @@ const AddNote = () => {
     }, []);
 
     return (
-        <div className="create">
+        <div className="main-content">
+            <div className="text-md-left">
+                {
+                    updatedTrue &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Note updated successfully!</div>
+                    </Alert>
+                }
+                {
+                    createdTrue &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Note added successfully!</div>
+                    </Alert>
+                }
+                {
+                    error &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>An error occurred!</div>
+                    </Alert>
+                }
+                {
+                    logFirst &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Log in first!</div>
+                    </Alert>
+                }
+                {
+                    (updatedTrue || createdTrue || error || logFirst) &&
+                    <Space />
+                }
+            </div>
             {loading ? (
                 <div className="loader-container">
                     <div className="text-center">

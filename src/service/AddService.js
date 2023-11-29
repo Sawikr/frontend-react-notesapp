@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Link, useHistory} from "react-router-dom";
-import {isUserLoggedIn, logout} from "./LoginService";
+import {isUserLoggedIn, logout, logoutToken} from "./LoginService";
 import {clickCurrencyToken, clickWeatherToken, isClickCurrency, isClickWeather} from "./ApiService";
 
 export const clickInfoToken = (token) => sessionStorage.setItem("token", token);
@@ -19,10 +19,10 @@ export const isClickInfo = () => {
 
 export const clickLogoutToken = (logout) => sessionStorage.setItem("logout", logout);
 
-export const getLogoutToken = () => sessionStorage.getItem("logout");
+export const getClickLogoutToken = () => sessionStorage.getItem("logout");
 
 export const isClickLogout = () => {
-    const token = getLogoutToken();
+    const token = getClickLogoutToken();
     if (token != null && token.match(false)) {
         console.log("IsClickLogout return false!");
         return false;
@@ -55,18 +55,10 @@ const AddService = () => {
         history.push("/notes/auth/register");
     }
 
-    const delay = ms => new Promise(
-        resolve => setTimeout(resolve, ms)
-    );
-
     async function handleLogout() {
         clickLogoutToken(true);
         isClickLogout();
-        await delay(1000);
-        logout();
-        alert("Logged out successfully!");
-        history.push("/radoslaw-sawicki-frontend-react-notesapp");
-        window.location.reload();
+        logoutToken(true);
     }
 
     useEffect(() => {
@@ -84,31 +76,29 @@ const AddService = () => {
                 if (clickRegister || isCurrency || isWeather) {
                     message =
                         <>
-                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Log In</Link>
+                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3"
+                                  onClick={handleClickLogin}>Log In</Link>
                         </>
-                }
-                else if (!clickRegister && isCurrency || isWeather )
-                {
+                } else if (!clickRegister && isCurrency || isWeather) {
                     message =
                         <>
-                            <Link to="/notes/auth/register" className="ml-3" onClick={handleClickRegister}>Register</Link>
+                            <Link to="/notes/auth/register" className="ml-3"
+                                  onClick={handleClickRegister}>Register</Link>
                         </>
-                }
-                else if (isCurrency || isWeather)
-                {
+                } else if (isCurrency || isWeather) {
                     message =
                         <>
-                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleClickLogin}>Log In</Link>
+                            <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3"
+                                  onClick={handleClickLogin}>Log In</Link>
                         </>
-                }
-                else {
+                } else {
                     message =
                         <>
-                            <Link to="/notes/auth/register" className="ml-3" onClick={handleClickRegister}>Register</Link>
+                            <Link to="/notes/auth/register" className="ml-3"
+                                  onClick={handleClickRegister}>Register</Link>
                         </>
                 }
-            }
-            else {
+            } else {
                 message =
                     <>
                         <Link to="/notes/auth/register" className="ml-3" onClick={handleClickRegister}>Register</Link>
@@ -117,7 +107,8 @@ const AddService = () => {
         } else {
             message =
                 <>
-                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleLogout}>Log Out</Link>
+                    <Link to="/radoslaw-sawicki-frontend-react-notesapp" className="ml-3" onClick={handleLogout}>Log
+                        Out</Link>
                 </>
         }
         return message;
@@ -125,7 +116,7 @@ const AddService = () => {
 
     return (
         <>
-           {process()}
+            {process()}
         </>
     )
 }

@@ -32,11 +32,16 @@ export const isUserLoggedIn = () => {
         return true;
 }
 
+export const logoutToken = (logoutToken) => localStorage.setItem("logoutToken", logoutToken);
+
+export const getLogoutToken = () => localStorage.getItem("logoutToken");
+
 export const logout = () => {
     clickInfoToken(false);
+    //logoutToken(true);
     localStorage.clear();
     sessionStorage.clear();
 }
 
 // eslint-disable-next-line
-export default { sendLogin, sendList, loginObj, getAllUsers, getUser, storeToken, getToken, saveLoggedInUser, isUserLoggedIn, logout };
+export default { sendLogin, sendList, loginObj, getAllUsers, getUser, storeToken, getToken, saveLoggedInUser, isUserLoggedIn, logout, logoutToken, getLogoutToken };

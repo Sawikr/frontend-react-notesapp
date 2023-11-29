@@ -17,5 +17,13 @@ export const getCategory = () => {
     return category = sessionStorage.getItem("category");
 }
 
+export const setCategoryToken = (setCategory) => sessionStorage.setItem("setCategory", setCategory);
+
+export const getSetCategoryToken = () => sessionStorage.getItem("setCategory");
+
+export const updatedCategoryToken = (updatedCategory) => sessionStorage.setItem("updatedCategory", updatedCategory);
+
+export const getUpdatedCategoryToken = () => sessionStorage.getItem("updatedCategory");
+
 // eslint-disable-next-line
 export default { getAll, get, createCategory };

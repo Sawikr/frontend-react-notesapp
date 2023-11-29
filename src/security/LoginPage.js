@@ -5,11 +5,15 @@ import Popup from 'reactjs-popup';
 import {storeToken} from "../service/LoginService";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
+import Alert from "../alert/Alert";
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLogin, setIsLogin] = useState(true);
+    const [loginTrue, setLoginTrue] = useState(false);
+    const [loginFalse, setLoginFalse] = useState(false);
+    const [loginProgress, setLoginProgress] = useState(false);
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -18,6 +22,7 @@ const LoginPage = () => {
     let [interval, setInterval] = useState('');
     const history = useHistory();
     const isAuth = isUserLoggedIn();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const sendLogin = () => {
         let loginName = usernameOrEmail;
@@ -45,7 +50,7 @@ const LoginPage = () => {
             })
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         if (isAuth) {
             history.push("/notes/list");
         } else {
@@ -56,26 +61,38 @@ const LoginPage = () => {
                     setCounter(counter + 1);
                     console.log("Counter is " + counter + "!")
                 }, 6000);
-            } else if (counter === 1) {
+            }
+            else if (counter === 2) {
                 clearInterval(interval);
+                setLoginFalse(true);
+                await wait(3000);
+                setLoginFalse(false);
+                window.location.reload(false);
             }
             return () => clearInterval(interval);
         }
-    }, [isAuth, start]);
+    }, [isAuth, start, loginFalse]);
 
     async function login() {
-
         if (!usernameOrEmail || !password) {
             setErrors(true);
             return;
         } else {
-            alert("Logging in... Please wait for the server's response!");
+            //alert("Logging in... Please wait for the server's response!");
             setLoading(true);
+            setLoginProgress(true);
+            await wait(3000);
+            setLoginProgress(false);
         }
 
         await LoginService.loginObj(usernameOrEmail, password)
-            .then((response) => {
-                console.log("LoginObj is successfully!", response.data);
+            .then(async (response) => {
+                setLoading(true);
+                console.log("Login is successfully!", response.data);
+                setLoginProgress(false);
+                setLoginTrue(true);
+                await wait(3000);
+                setLoginTrue(false);
 
                 const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
                 storeToken(token);
@@ -84,15 +101,14 @@ const LoginPage = () => {
                 sendList();
                 setLoading(false);
                 setStart(false);
-                alert("Login is successfully!");
                 window.location.reload(false);
             })
-            .catch(error => {
+            .catch(async error => {
                 console.log("An error occurred!", error);
                 if (counter === 0) {
                     setStart(true);
-                } else if (counter === 1) {
-                    alert("Login is unsuccessfully. Check your username and password!");
+                }
+                else if (counter === 1) {
                     setStart(false);
                     setLoading(false);
                 }
@@ -100,12 +116,36 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="login">
+        <div className="main-content">
             {loading ? (
-                <div className="loader-container" style={{marginTop: 137}}>
-                    <div className="text-center">
-                        <PropagateLoader color={'#79589f'} size={20}/>
-                        <Space/>
+                <div className="text-md-left">
+                    {
+                        (loginTrue || loginFalse || loginProgress) &&
+                        <Space />
+                    }
+                    {
+                        loginTrue &&
+                        <Alert type="info">
+                            <div style={{color: '#79589f'}}>Login is successfully!</div>
+                        </Alert>
+                    }
+                    {
+                        loginFalse &&
+                        <Alert type="info">
+                            <div style={{color: '#79589f'}}>Login is unsuccessfully. Check your login details!</div>
+                        </Alert>
+                    }
+                    {
+                        loginProgress &&
+                        <Alert type="info">
+                            <div style={{color: '#79589f'}}>Logging in... Please wait for the server's response!</div>
+                        </Alert>
+                    }
+                    <div className="loader-container" style={{marginTop: 137}}>
+                        <div className="text-center">
+                            <PropagateLoader color={'#79589f'} size={20}/>
+                            <Space/>
+                        </div>
                     </div>
                 </div>
             ) : (

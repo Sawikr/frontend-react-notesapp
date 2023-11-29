@@ -4,16 +4,20 @@ import Popup from "reactjs-popup";
 import {useHistory} from "react-router-dom";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
+import Alert from "../alert/Alert";
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [registerTrue, setRegisterTrue] = useState(false);
+    const [error, setError] = useState(false);
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const register = (e) => {
         e.preventDefault();
@@ -27,27 +31,50 @@ const RegisterPage = () => {
 
         const register = {name, username, email, password};
         RegisterService.register(register)
-            .then(response => {
+            .then(async response => {
                 console.log(register);
                 console.log("Register sent successfully!", response.data);
                 setLoading(false);
-                alert("Register is successfully!");
+                //alert("Register is successfully!");
+                setRegisterTrue(true);
+                await wait(3000);
                 history.push("/radoslaw-sawicki-frontend-react-notesapp");
             })
-            .catch(error => {
+            .catch(async error => {
                 console.log("An error occurred!", error);
+                //alert("An error occurred!");
+                setError(true);
+                await wait(3000);
             })
     }
 
     return (
-        <div className="login">
+        <div className="main-content">
             {loading ? (
+            <div className="text-md-left">
+                {
+                    (registerTrue || error) &&
+                    <Space />
+                }
+                {
+                    registerTrue &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Register is successfully!</div>
+                    </Alert>
+                }
+                {
+                    error &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>An error occurred!</div>
+                    </Alert>
+                }
                 <div className="loader-container" style={{marginTop: 130}}>
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
                         <Space/>
                     </div>
                 </div>
+            </div>
             ) : (
             <div className="login">
                 <div className="text-center">
