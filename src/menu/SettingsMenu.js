@@ -1,17 +1,17 @@
-import {useParams} from "react-router-dom";
+import {useParams} from 'react-router-dom';
 import {Menu} from '@mui/base/Menu';
 import {MenuItem, menuItemClasses} from '@mui/base/MenuItem';
 import {MenuButton} from '@mui/base/MenuButton';
-import CategoryService, {getCategory, setCategoryToken, updatedCategoryToken} from "../service/CategoryService";
+import CategoryService, {getCategory, setCategoryToken, updatedCategoryToken} from '../service/CategoryService';
 import {Dropdown} from '@mui/base/Dropdown';
 import {BsGear} from 'react-icons/bs';
 import {logoutToken} from '../service/LoginService';
-import {useEffect, useState} from "react";
-import {getNoteCreatingDateToken, noteCreatingDateToken} from "../service/NoteCreatingDateService";
+import {useState} from 'react';
+import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 
 const SettingsMenu = () => {
     let [categoryName, setCategoryName] = useState('');
-    const loginUsername = sessionStorage.getItem("authenticatedUser");
+    const loginUsername = sessionStorage.getItem('authenticatedUser');
     let [username, setUsername] = useState(loginUsername);
     let [noteCreatedDateIsTrue, setNoteCreatedDateIsTrue] = useState(getNoteCreatingDateToken());
     const [updatedCategory, setUpdatedCategory] = useState(false);
@@ -34,7 +34,7 @@ const SettingsMenu = () => {
                         console.log('Updated username is: ' + username + '!');
                         //alert("Category updated successfully!");
                         await notesList();
-                        console.log("createCategory: " + updatedCategory);
+                        //console.log('createCategory: ' + updatedCategory);
                     })
                     .catch(error => {
                         console.log('An error occurred!', error);
@@ -48,16 +48,16 @@ const SettingsMenu = () => {
                 if (noteCreatedDateIsTrue === null || noteCreatedDateIsTrue.match(false)) {
                     noteCreatingDateToken(true);
                     setNoteCreatedDateIsTrue(true);
-                    alert("Note creation date display enabled!");
+                    alert('Note creation date display enabled!');
                     window.location.reload();
                 }
                 else if (noteCreatedDateIsTrue.match(true)) {
                     noteCreatingDateToken(false);
                     setNoteCreatedDateIsTrue(false);
-                    alert("Note creation date display disabled!");
+                    alert('Note creation date display disabled!');
                     window.location.reload();
                 }
-                console.log("Note creation date is set to " + getNoteCreatingDateToken() + "!");
+                console.log('Note creation date is set to ' + getNoteCreatingDateToken() + '!');
             };
         }
         else if (menuItem === 'Log out') {
@@ -70,6 +70,7 @@ const SettingsMenu = () => {
 
     async function notesList() {
         updatedCategoryToken(true);
+        setUpdatedCategory(true);
         window.location.reload();
     }
 
@@ -77,9 +78,6 @@ const SettingsMenu = () => {
         logoutToken(true);
         window.location.reload();
     }
-
-    useEffect(() => {
-    }, [noteCreatedDateIsTrue])
 
     return (
         <Dropdown>

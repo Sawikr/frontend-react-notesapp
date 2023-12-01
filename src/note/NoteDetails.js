@@ -8,6 +8,7 @@ import {PropagateLoader} from "react-spinners";
 import {newNoteToken} from "../service/AddNoteService";
 import {getNoteCreatingDateToken} from "../service/NoteCreatingDateService";
 import Alert from "../alert/Alert";
+import {navbarToken} from "../service/NavbarService";
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');
@@ -53,6 +54,7 @@ const NoteDetails = () => {
 
     const handleDelete = async () => {
         setLoading(true);
+        navbarToken(true);
         if (isAuth) {
             NotesService.remove(id)
                 .then(async response => {
@@ -79,11 +81,13 @@ const NoteDetails = () => {
 
     const handleUpdate = () => {
         newNoteToken(false);
+        navbarToken(true);
         history.push(`/notes/edit/${id}`);
     }
 
     const handleSend = () => {
         newNoteToken(false);
+        navbarToken(true);
         history.push(`/notes/email/${id}`);
     }
 
