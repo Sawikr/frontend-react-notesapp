@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {Menu} from '@mui/base/Menu';
 import {MenuItem, menuItemClasses} from '@mui/base/MenuItem';
 import {MenuButton} from '@mui/base/MenuButton';
@@ -15,6 +15,7 @@ const SettingsMenu = () => {
     let [username, setUsername] = useState(loginUsername);
     let [noteCreatedDateIsTrue, setNoteCreatedDateIsTrue] = useState(getNoteCreatingDateToken());
     const [updatedCategory, setUpdatedCategory] = useState(false);
+    const history = useHistory();
     const {id} = useParams();
 
     const createHandleMenuClick = (menuItem) => {
@@ -76,6 +77,7 @@ const SettingsMenu = () => {
 
     async function logoutForm() {
         logoutToken(true);
+        history.push("/notes/list");
         window.location.reload();
     }
 

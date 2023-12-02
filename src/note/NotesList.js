@@ -82,8 +82,8 @@ const NotesList = () => {
                         setLogoutForm(true);
                         await wait(3000);
                         setLogoutForm(false);
-                        await logout();
                         setLoading(true);
+                        await logout();
                         //alert("Logged out successfully!");
                         history.push('/radoslaw-sawicki-frontend-react-notesapp');
                         window.location.reload();
