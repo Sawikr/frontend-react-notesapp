@@ -1,14 +1,14 @@
-import {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
-import {isUserLoggedIn} from "../service/LoginService";
-import NotesService from "../service/NotesService";
-import Moment from "react-moment";
-import Space from "../element/Space";
-import {PropagateLoader} from "react-spinners";
-import {newNoteToken} from "../service/AddNoteService";
-import {getNoteCreatingDateToken} from "../service/NoteCreatingDateService";
-import Alert from "../alert/Alert";
-import {navbarToken} from "../service/NavbarService";
+import {useEffect, useState} from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import {isUserLoggedIn} from '../service/LoginService';
+import NotesService from '../service/NotesService';
+import Moment from 'react-moment';
+import Space from '../element/Space';
+import {PropagateLoader} from 'react-spinners';
+import {newNoteToken} from '../service/AddNoteService';
+import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
+import Alert from '../alert/Alert';
+import {navbarToken} from '../service/NavbarService';
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');
@@ -17,9 +17,12 @@ const NoteDetails = () => {
     const [deletedTrue, setDeletedTrue] = useState(false);
     const [error, setError] = useState(false);
     const [logFirst, setLogFirst] = useState(false);
+    const [noteCreatingDateTrue, setNoteCreatingDateTrue] = useState(false);
+    const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
     const {id} = useParams();
     const history = useHistory();
     const isAuth = isUserLoggedIn();
+    let isNoteCreatingDateToken = getNoteCreatingDateToken();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     function isNote() {
@@ -29,17 +32,33 @@ const NoteDetails = () => {
         else {
             setNoteCreatedDate(true);
         }
-        console.log("Note creation date is set to " + noteCreatedDate + "!");
+        console.log('Note creation date is set to ' + noteCreatedDate + '!');
     }
 
     useEffect(async () => {
         setLoading(true);
+        if (isNoteCreatingDateToken === null) {
+            noteCreatingDateToken(false);
+        }
+
         if (isAuth) {
+            isNoteCreatingDateToken = getNoteCreatingDateToken();
             NotesService.get(id)
-                .then(note => {
+                .then(async note => {
                     setCurrentNote(note.data);
                     setLoading(false);
                     isNote();
+
+                    if (isNoteCreatingDateToken.match(true)) {
+                        setNoteCreatingDateFalse(true);
+                        await wait(3000);
+                        setNoteCreatingDateFalse(false);
+                    }
+                    else if (isNoteCreatingDateToken.match(false)) {
+                        setNoteCreatingDateTrue(true);
+                        await wait(3000);
+                        setNoteCreatingDateTrue(false);
+                    }
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
@@ -50,7 +69,7 @@ const NoteDetails = () => {
             await wait(3000);
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, [noteCreatedDate]);
+    }, [isNoteCreatingDateToken]);
 
     const handleDelete = async () => {
         setLoading(true);
@@ -58,7 +77,7 @@ const NoteDetails = () => {
         if (isAuth) {
             NotesService.remove(id)
                 .then(async response => {
-                    console.log("Note deleted successfully: id: " + id);
+                    console.log('Note deleted successfully: id: ' + id);
                     setLoading(false);
                     //alert("Note deleted successfully!");
                     setDeletedTrue(true);
@@ -111,6 +130,22 @@ const NoteDetails = () => {
                     <Alert type="info">
                         <div style={{color: '#79589f'}}>Log in first!</div>
                     </Alert>
+                }
+                {
+                    noteCreatingDateTrue &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Note creation date display disabled!</div>
+                    </Alert>
+                }
+                {
+                    noteCreatingDateFalse &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Note creation date display enabled!</div>
+                    </Alert>
+                }
+                {
+                    (deletedTrue || error || logFirst || noteCreatingDateTrue || noteCreatingDateFalse) &&
+                    <Space />
                 }
             </div>
             {loading ? (

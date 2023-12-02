@@ -1,12 +1,12 @@
-import {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
-import NotesService from "../service/NotesService";
-import LoginService, {isUserLoggedIn} from "../service/LoginService";
-import Popup from "reactjs-popup";
-import Space from "../element/Space";
-import {PropagateLoader} from "react-spinners";
-import {getNewNoteToken} from "../service/AddNoteService";
-import Alert from "../alert/Alert";
+import {useEffect, useState} from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import NotesService from '../service/NotesService';
+import LoginService, {isUserLoggedIn} from '../service/LoginService';
+import Popup from 'reactjs-popup';
+import Space from '../element/Space';
+import {PropagateLoader} from 'react-spinners';
+import {getNewNoteToken} from '../service/AddNoteService';
+import Alert from '../alert/Alert';
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
@@ -17,7 +17,7 @@ const AddNote = () => {
     const [createdTrue, setCreatedTrue] = useState(false);
     const [error, setError] = useState(false);
     const [logFirst, setLogFirst] = useState(false);
-    const username = sessionStorage.getItem("authenticatedUser");
+    const username = sessionStorage.getItem('authenticatedUser');
     const [listName, setListName] = useState(username + 'List');
     const [errors, setErrors] = useState(false);
     const [loginUser, setLoginUser] = useState(username);
@@ -34,11 +34,11 @@ const AddNote = () => {
         const login = {loginName, isLogin};
         LoginService.sendLogin(login)
             .then(response => {
-                console.log("Login sent successfully:", response.data);
+                console.log('Login sent successfully:', response.data);
                 console.log(login);
             })
             .catch(error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
             })
     }
 
@@ -46,11 +46,11 @@ const AddNote = () => {
         const list = {listName};
         LoginService.sendList(list)
             .then(response => {
-                console.log("List sent successfully:", response.data);
+                console.log('List sent successfully:', response.data);
                 console.log(list);
             })
             .catch(error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
             })
     }
 
@@ -73,7 +73,7 @@ const AddNote = () => {
         if (id && isAuth) {
             NotesService.updateNoteFields(id, noteFields)
                 .then(async response => {
-                    console.log("Note updated successfully:", response.data);
+                    console.log('Note updated successfully:', response.data);
                     console.log(noteFields);
                     setLoading(false);
                     //alert("Note updated successfully!");
@@ -82,7 +82,7 @@ const AddNote = () => {
                     history.push("/notes/list");
                 })
                 .catch(async error => {
-                    console.log("An error occurred!", error);
+                    console.log('An error occurred!', error);
                     //alert("An error occurred!");
                     setError(true);
                     await wait(3000);
@@ -91,7 +91,7 @@ const AddNote = () => {
         } else if (isAuth) {
             NotesService.create(note)
                 .then(async response => {
-                    console.log("Note added successfully:", response.data);
+                    console.log('Note added successfully:', response.data);
                     console.log(note);
                     //alert("Note added successfully!");
                     setCreatedTrue(true);
@@ -116,21 +116,20 @@ const AddNote = () => {
         }
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         setLoading(true);
         if (id) {
             NotesService.get(id)
-                .then(note => {
+                .then(async note => {
                     setTitle(note.data.title);
                     setBody(note.data.body);
                     setCategory(note.data.category);
                     setLoading(false);
                 })
                 .catch(error => {
-                    console.log("An error occurred!", error);
+                    console.log('An error occurred!', error);
                 })
-        }
-        else if (newNote) {
+        } else if (newNote) {
             setLoading(false);
         }
     }, []);
