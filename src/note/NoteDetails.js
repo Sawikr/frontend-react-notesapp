@@ -9,8 +9,8 @@ import {newNoteToken} from '../service/AddNoteService';
 import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');

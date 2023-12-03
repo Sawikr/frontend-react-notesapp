@@ -7,8 +7,8 @@ import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import {getNewNoteToken} from '../service/AddNoteService';
 import Alert from '../alert/Alert';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const AddNote = () => {
     const [title, setTitle] = useState('');

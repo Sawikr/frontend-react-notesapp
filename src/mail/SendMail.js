@@ -1,13 +1,13 @@
-import {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
-import MailService from "../service/MailService";
-import NotesService from "../service/NotesService";
-import Popup from "reactjs-popup";
-import Space from "../element/Space";
-import {PropagateLoader} from "react-spinners";
-import Alert from "../alert/Alert";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {useEffect, useState} from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import MailService from '../service/MailService';
+import NotesService from '../service/NotesService';
+import Popup from 'reactjs-popup';
+import Space from '../element/Space';
+import {PropagateLoader} from 'react-spinners';
+import Alert from '../alert/Alert';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const SendMail = () => {
     const [title, setTitle] = useState('');
@@ -35,7 +35,7 @@ const SendMail = () => {
         if (id) {
             MailService.send(sendEmail)
                 .then(async response => {
-                    console.log("Email sent successfully:", response.data);
+                    console.log('Email sent successfully:', response.data);
                     console.log(sendEmail);
                     setLoading(false);
                     //alert("E-mail sent successfully to " + email + "!");
@@ -44,7 +44,7 @@ const SendMail = () => {
                     history.push("/notes/list");
                 })
                 .catch(async error => {
-                    console.log("An error occurred!", error);
+                    console.log('An error occurred!', error);
                     //alert("An error occurred!");
                     setError(true);
                     await wait(3000);
@@ -62,7 +62,7 @@ const SendMail = () => {
                     setLoading(false);
                 })
                 .catch(error => {
-                    console.log("An error occurred!", error);
+                    console.log('An error occurred!', error);
                 })
         }
     }, []);

@@ -2,12 +2,12 @@ import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import LoginService, {isUserLoggedIn, saveLoggedInUser} from "../service/LoginService";
 import Popup from 'reactjs-popup';
-import {storeToken} from "../service/LoginService";
-import Space from "../element/Space";
-import {PropagateLoader} from "react-spinners";
-import Alert from "../alert/Alert";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {storeToken} from '../service/LoginService';
+import Space from '../element/Space';
+import {PropagateLoader} from 'react-spinners';
+import Alert from '../alert/Alert';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -32,10 +32,10 @@ const LoginPage = () => {
         LoginService.sendLogin(login)
             .then(response => {
                 console.log(login);
-                console.log("Login sent successfully", response.data);
+                console.log('Login sent successfully', response.data);
             })
             .catch(error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
             })
     }
 
@@ -45,10 +45,10 @@ const LoginPage = () => {
         LoginService.sendList(list)
             .then(response => {
                 console.log(list);
-                console.log("List sent successfully", response.data);
+                console.log('List sent successfully', response.data);
             })
             .catch(error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
             })
     }
 
@@ -58,13 +58,13 @@ const LoginPage = () => {
         } else {
             if (start) {
                 interval = setInterval(() => {
-                    login().then(r => console.log("Interval is working!"));
+                    login().then(r => console.log('Interval is working!'));
                     setStart(false);
                     setCounter(counter + 1);
-                    console.log("Counter is " + counter + "!")
+                    console.log('Counter is ' + counter + '!')
                 }, 6000);
             }
-            else if (counter === 2) {
+            else if (counter === 3) {
                 clearInterval(interval);
                 setLoginFalse(true);
                 await wait(3000);
@@ -90,7 +90,7 @@ const LoginPage = () => {
         await LoginService.loginObj(usernameOrEmail, password)
             .then(async (response) => {
                 setLoading(true);
-                console.log("Login is successfully!", response.data);
+                console.log('Login is successfully!', response.data);
                 setLoginProgress(false);
                 setLoginTrue(true);
                 await wait(3000);
@@ -106,7 +106,7 @@ const LoginPage = () => {
                 window.location.reload(false);
             })
             .catch(async error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
                 if (counter === 0) {
                     setStart(true);
                 }

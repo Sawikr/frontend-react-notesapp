@@ -1,12 +1,12 @@
-import {useState} from "react";
-import RegisterService from "../service/RegisterService";
-import Popup from "reactjs-popup";
-import {useHistory} from "react-router-dom";
-import Space from "../element/Space";
-import {PropagateLoader} from "react-spinners";
-import Alert from "../alert/Alert";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamation} from "@fortawesome/free-solid-svg-icons";
+import {useState} from 'react';
+import RegisterService from '../service/RegisterService';
+import Popup from 'reactjs-popup';
+import {useHistory} from 'react-router-dom';
+import Space from '../element/Space';
+import {PropagateLoader} from 'react-spinners';
+import Alert from '../alert/Alert';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -35,7 +35,7 @@ const RegisterPage = () => {
         RegisterService.register(register)
             .then(async response => {
                 console.log(register);
-                console.log("Register sent successfully!", response.data);
+                console.log('Register sent successfully!', response.data);
                 setLoading(false);
                 //alert("Register is successfully!");
                 setRegisterTrue(true);
@@ -43,7 +43,7 @@ const RegisterPage = () => {
                 history.push("/radoslaw-sawicki-frontend-react-notesapp");
             })
             .catch(async error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
                 //alert("An error occurred!");
                 setError(true);
                 await wait(3000);
