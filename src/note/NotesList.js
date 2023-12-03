@@ -59,6 +59,7 @@ const NotesList = () => {
                     setLoading(false);
 
                     if (isLogout.match(false)) {
+                        isHome = getNavbarToken();
                         if (isUpdatedCategory.match(true) && counter === 0) {
                             setCounter(1);
                             setUpdatedCategory(true);
@@ -68,6 +69,7 @@ const NotesList = () => {
                             await wait(3000);
                             setNewCategory(false);
                             updatedCategoryToken(false);
+                            navbarToken(false);
                         }
                         if (isUpdatedCategory.match(false) && counter === 2) {
                             if (isHome.match(false)) {
@@ -75,8 +77,6 @@ const NotesList = () => {
                                 await wait(5000);
                                 setNewCategory(false);
                                 setCounter(1);
-                            } else {
-                                navbarToken(false);
                             }
                         }
                     }
@@ -87,7 +87,7 @@ const NotesList = () => {
                         setLoading(true);
                         await logout();
                         //alert("Logged out successfully!");
-                        history.push('/radoslaw-sawicki-frontend-react-notesapp');
+                        history.push("/radoslaw-sawicki-frontend-react-notesapp");
                         window.location.reload();
                     }
                 })
@@ -99,7 +99,7 @@ const NotesList = () => {
             //alert("Log in first!");
             setLogFirst(true);
             await wait(4500);
-            history.push('/radoslaw-sawicki-frontend-react-notesapp');
+            history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
 
     }, [loading, isLogout, isUpdatedCategory, counter]);

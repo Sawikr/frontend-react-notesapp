@@ -8,7 +8,7 @@ import {PropagateLoader} from 'react-spinners';
 import {newNoteToken} from '../service/AddNoteService';
 import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import Alert from '../alert/Alert';
-import {navbarToken} from '../service/NavbarService';
+import {getNavbarToken, navbarToken} from '../service/NavbarService';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
@@ -25,6 +25,7 @@ const NoteDetails = () => {
     const history = useHistory();
     const isAuth = isUserLoggedIn();
     let isNoteCreatingDateToken = getNoteCreatingDateToken();
+    let isHome = getNavbarToken();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     function isNote() {
@@ -42,9 +43,13 @@ const NoteDetails = () => {
         if (isNoteCreatingDateToken === null) {
             noteCreatingDateToken(false);
         }
+        if (isHome === null) {
+            navbarToken(false);
+        }
 
         if (isAuth) {
             isNoteCreatingDateToken = getNoteCreatingDateToken();
+            isHome = getNavbarToken();
             NotesService.get(id)
                 .then(async note => {
                     setCurrentNote(note.data);
@@ -52,14 +57,22 @@ const NoteDetails = () => {
                     isNote();
 
                     if (isNoteCreatingDateToken.match(true)) {
-                        setNoteCreatingDateFalse(true);
-                        await wait(3000);
-                        setNoteCreatingDateFalse(false);
+                        isHome = getNavbarToken();
+                        if (isHome.match(false)) {
+                            setNoteCreatingDateFalse(true);
+                            await wait(3000);
+                            setNoteCreatingDateFalse(false);
+                        }
+                        navbarToken(false);
                     }
                     else if (isNoteCreatingDateToken.match(false)) {
-                        setNoteCreatingDateTrue(true);
-                        await wait(3000);
-                        setNoteCreatingDateTrue(false);
+                        isHome = getNavbarToken();
+                        if (isHome.match(false)) {
+                            setNoteCreatingDateTrue(true);
+                            await wait(3000);
+                            setNoteCreatingDateTrue(false);
+                        }
+                        navbarToken(false);
                     }
                 })
                 .catch(error => {
