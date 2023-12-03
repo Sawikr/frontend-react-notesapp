@@ -9,6 +9,8 @@ import {newNoteToken} from '../service/AddNoteService';
 import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamation} from "@fortawesome/free-solid-svg-icons";
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');
@@ -122,13 +124,19 @@ const NoteDetails = () => {
                 {
                     error &&
                     <Alert type="info">
-                        <div style={{color: '#79589f'}}>An error occurred!</div>
+                        <div>
+                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <span className="ml-1" style={{color: '#79589f'}}> An error occurred!</span>
+                        </div>
                     </Alert>
                 }
                 {
                     logFirst &&
                     <Alert type="info">
-                        <div style={{color: '#79589f'}}>Log in first!</div>
+                        <div>
+                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <span className="ml-1" style={{color: '#79589f'}}> Log in first!</span>
+                        </div>
                     </Alert>
                 }
                 {

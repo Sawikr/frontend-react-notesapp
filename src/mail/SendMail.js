@@ -6,6 +6,8 @@ import Popup from "reactjs-popup";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
 import Alert from "../alert/Alert";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamation} from "@fortawesome/free-solid-svg-icons";
 
 const SendMail = () => {
     const [title, setTitle] = useState('');
@@ -77,7 +79,10 @@ const SendMail = () => {
                 {
                     error &&
                     <Alert type="info">
-                        <div style={{color: '#79589f'}}>An error occurred!</div>
+                        <div>
+                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <span className="ml-1" style={{color: '#79589f'}}> An error occurred!</span>
+                        </div>
                     </Alert>
                 }
                 {

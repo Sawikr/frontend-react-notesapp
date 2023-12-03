@@ -6,6 +6,8 @@ import {storeToken} from "../service/LoginService";
 import Space from "../element/Space";
 import {PropagateLoader} from "react-spinners";
 import Alert from "../alert/Alert";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamation} from "@fortawesome/free-solid-svg-icons";
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -126,19 +128,28 @@ const LoginPage = () => {
                     {
                         loginTrue &&
                         <Alert type="info">
-                            <div style={{color: '#79589f'}}>Login is successfully!</div>
+                            <div>
+                                <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                                <span className="ml-1" style={{color: '#79589f'}}> Login is successfully!</span>
+                            </div>
                         </Alert>
                     }
                     {
                         loginFalse &&
                         <Alert type="info">
-                            <div style={{color: '#79589f'}}>Login is unsuccessfully. Check your login details!</div>
+                            <div>
+                                <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                                <span className="ml-1" style={{color: '#79589f'}}> Login is unsuccessfully. Check your login details!</span>
+                            </div>
                         </Alert>
                     }
                     {
                         loginProgress &&
                         <Alert type="info">
-                            <div style={{color: '#79589f'}}>Logging in... Please wait for the server's response!</div>
+                            <div>
+                                <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                                <span className="ml-1" style={{color: '#79589f'}}> Logging in... Please wait for the server's response!</span>
+                            </div>
                         </Alert>
                     }
                     <div className="loader-container" style={{marginTop: 137}}>
