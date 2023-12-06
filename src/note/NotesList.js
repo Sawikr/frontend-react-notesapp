@@ -9,8 +9,6 @@ import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {useOnceEffect} from '../config/UseDevEffect';
 import {getNavbarToken, navbarToken} from '../service/NavbarService';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -145,7 +143,7 @@ const NotesList = () => {
                     categoryTrue &&
                     <Alert type="info">
                         <div>
-                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
                             <span className="ml-1" style={{color: '#79589f'}}> Set the category of notes displayed!</span>
                         </div>
                     </Alert>
@@ -154,7 +152,7 @@ const NotesList = () => {
                     error || errorUpdatedCategory &&
                     <Alert type="info">
                         <div>
-                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
                             <span className="ml-1" style={{color: '#79589f'}}> An error occurred!</span>
                         </div>
                     </Alert>
@@ -163,7 +161,7 @@ const NotesList = () => {
                     logFirst &&
                     <Alert type="info">
                         <div>
-                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
                             <span className="ml-1" style={{color: '#79589f'}}> Log in first!</span>
                         </div>
                     </Alert>
@@ -186,7 +184,7 @@ const NotesList = () => {
                     logoutForm &&
                     <Alert type="info">
                         <div>
-                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
                             <span className="ml-1" style={{color: '#79589f'}}> Logged out successfully!</span>
                         </div>
                     </Alert>

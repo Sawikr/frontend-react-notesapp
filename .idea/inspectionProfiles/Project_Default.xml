@@ -9,7 +9,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="9">
+          <list size="12">
             <item index="0" class="java.lang.String" itemvalue="parse" />
             <item index="1" class="java.lang.String" itemvalue="moment" />
             <item index="2" class="java.lang.String" itemvalue="format" />
@@ -19,6 +19,9 @@
             <item index="6" class="java.lang.String" itemvalue="togglemask" />
             <item index="7" class="java.lang.String" itemvalue="autocomplete" />
             <item index="8" class="java.lang.String" itemvalue="styles" />
+            <item index="9" class="java.lang.String" itemvalue="beat" />
+            <item index="10" class="java.lang.String" itemvalue="size" />
+            <item index="11" class="java.lang.String" itemvalue="border" />
           </list>
         </value>
       </option>

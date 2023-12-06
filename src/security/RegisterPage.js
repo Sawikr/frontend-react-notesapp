@@ -5,8 +5,6 @@ import {useHistory} from 'react-router-dom';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExclamation} from '@fortawesome/free-solid-svg-icons';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -62,7 +60,7 @@ const RegisterPage = () => {
                     registerTrue &&
                     <Alert type="info">
                         <div>
-                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
                             <span className="ml-1" style={{color: '#79589f'}}> Register is successfully!</span>
                         </div>
                     </Alert>
@@ -71,7 +69,7 @@ const RegisterPage = () => {
                     error &&
                     <Alert type="info">
                         <div>
-                            <FontAwesomeIcon icon={faExclamation} beat style={{marginBottom: -4}} size="1x" border/>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
                             <span className="ml-1" style={{color: '#79589f'}}> An error occurred!</span>
                         </div>
                     </Alert>
