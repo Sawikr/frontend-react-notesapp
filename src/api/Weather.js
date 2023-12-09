@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import NotesService from "../service/NotesService";
-import Space from "../element/Space";
-import Moment from "react-moment";
-import {PropagateLoader} from "react-spinners";
-import {isUserLoggedIn} from "../service/LoginService";
+import NotesService from '../service/NotesService';
+import Space from '../element/Space';
+import Moment from 'react-moment';
+import {PropagateLoader} from 'react-spinners';
+import {isUserLoggedIn} from '../service/LoginService';
 
 function Weather() {
     const [weather, setWeather] = useState([]);
@@ -46,7 +46,7 @@ function Weather() {
                 </div>
             ) : (
             <div className="main-content">
-                <h4>Weather forecast</h4>
+                <h4>Weather Forecast</h4>
                 <Space/>
                 <x-h8>City:</x-h8>
                 <div className="mb-3">Poznań</div>

@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
-import {Link, useHistory} from "react-router-dom";
-import {isUserLoggedIn, logout, logoutToken} from "./LoginService";
-import {clickCurrencyToken, clickWeatherToken, isClickCurrency, isClickWeather} from "./ApiService";
+import {useEffect, useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import {isUserLoggedIn, logout, logoutToken} from './LoginService';
+import {clickCurrencyToken, clickWeatherToken, isClickCurrency, isClickWeather} from './ApiService';
 
 export const clickInfoToken = (token) => sessionStorage.setItem("token", token);
 

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import NotesService from "../service/NotesService";
-import Space from "../element/Space";
-import Moment from "react-moment";
-import {PropagateLoader} from "react-spinners";
-import {isUserLoggedIn} from "../service/LoginService";
+import NotesService from '../service/NotesService';
+import Space from '../element/Space';
+import Moment from 'react-moment';
+import {PropagateLoader} from 'react-spinners';
+import {isUserLoggedIn} from '../service/LoginService';
 
 function Currency() {
     const [currencyEUR, setCurrencyEUR] = useState([]);
@@ -83,7 +83,7 @@ function Currency() {
                 </div>
             ) : (
             <div className="main-content">
-                <h4>Currency of NBP</h4>
+                <h4>Currency Rates</h4>
                 <Space/>
                 <x-h8>EUR/PLN:</x-h8>
                 <div className="mb-3">{JSON.stringify(currencyEUR)}</div>

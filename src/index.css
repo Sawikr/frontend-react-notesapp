@@ -277,3 +277,20 @@ select:hover {
   margin: auto;
   padding: 0;
 }
+
+/* services */
+.services {
+  padding: 0;
+  display: inline;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.services {
+  color: black;
+}
+
+.services a:hover {
+  text-decoration: none;
+  color: #79589f;
+}

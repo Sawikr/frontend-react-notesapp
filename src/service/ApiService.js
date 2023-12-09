@@ -1,5 +1,7 @@
-import {Link, useHistory} from "react-router-dom";
-import {clickInfoToken} from "./AddService";
+import {Link, useHistory} from 'react-router-dom';
+import {clickInfoToken} from './AddService';
+import Space from '../element/Space';
+import {useState} from 'react';
 
 export const clickCurrencyToken = (currency) => sessionStorage.setItem("currency", currency);
 
@@ -8,10 +10,10 @@ export const getCurrencyToken = () => sessionStorage.getItem("currency");
 export const isClickCurrency = () => {
     const token = getCurrencyToken();
     if (token != null && token.match(false)) {
-        console.log("IsClickCurrency return false!");
+        console.log('IsClickCurrency return false!');
         return false;
     } else
-        console.log("IsClickCurrency return true!");
+        console.log('IsClickCurrency return true!');
     return true;
 }
 
@@ -22,16 +24,23 @@ export const getWeatherToken = () => sessionStorage.getItem("weather");
 export const isClickWeather = () => {
     const token = getWeatherToken();
     if (token != null && token.match(false)) {
-        console.log("IsClickWeather return false!");
+        console.log('IsClickWeather return false!');
         return false;
     } else
-        console.log("IsClickWeather return true!");
+        console.log('IsClickWeather return true!');
     return true;
 }
 
-const ApiService = () => {
-
+const ApiService = (props) => {
+    const [active, setActive] = useState(false);
     const history = useHistory();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
+    const handleClick = async () => {
+        setActive(!active);
+        await wait(6000);
+        setActive(false);
+    };
 
     function handleClickCurrency() {
         clickInfoToken(false);
@@ -50,10 +59,27 @@ const ApiService = () => {
     }
 
     return (
-        <div>
-            <Link to="/notes/nbp" onClick={handleClickCurrency}>Currency NBP</Link>
-            <Link to="/notes/weather" className="ml-3" onClick={handleClickWeather}>Weather</Link>
-        </div>
+        <nav>
+            <div
+                onClick={props.handleClick}
+            >
+                <a
+                    className="services"
+                    onClick={handleClick}
+                    style={{color: active ? "#79589f" : active}}
+                >
+                    Services
+                </a>
+            </div>
+            {
+                props.isOpen &&
+                <div>
+                    <Space/>
+                    <Link to="/notes/nbp" onClick={handleClickCurrency}>Currency Rates</Link>
+                    <Link to="/notes/weather" className="ml-3" onClick={handleClickWeather}>Weather Forecast</Link>
+                </div>
+            }
+        </nav>
     )
 }
 
