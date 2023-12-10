@@ -22,10 +22,13 @@ const NotesList = () => {
     const [newCategory, setNewCategory] = useState(false);
     const [updatedCategory, setUpdatedCategory] = useState(false);
     const [errorUpdatedCategory] = useState(false);
+    const [loginProgress, setLoginProgress] = useState(false);
     let [isUpdatedCategory, setIsUpdatedCategory] = useState(getUpdatedCategoryToken());
     let [isLogout, setIsLogout] = useState(getLogoutToken());
     const [logoutForm, setLogoutForm] = useState(false);
     const [counter, setCounter] = useState(0);
+    const [start, setStart] = useState(false);
+    let [interval, setInterval] = useState('');
     const history = useHistory();
     const isAuth = isUserLoggedIn();
     let isHome = getNavbarToken();
@@ -55,6 +58,7 @@ const NotesList = () => {
                     //console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
+                    setStart(false);
 
                     if (isLogout.match(false)) {
                         isHome = getNavbarToken();
@@ -89,8 +93,31 @@ const NotesList = () => {
                         window.location.reload();
                     }
                 })
-                .catch(error => {
+                .catch(async error => {
                     console.log('An error occurred!', error);
+                    setStart(true);
+                    setLoginProgress(true);
+                    await wait(3000);
+                    setLoginProgress(false);
+
+                    if (start === true) {
+                        interval = setInterval(async () => {
+                            NotesService.getAll().then(r => console.log('Interval is working!'));
+                            setStart(false);
+                            setCounter(counter + 1);
+                            console.log('Counter is ' + counter + '!');
+                            setLoginProgress(true);
+                            await wait(3000);
+                            setLoginProgress(false);
+                        }, 3000);
+                    }
+                    else if (counter === 0 || counter === 1 || counter === 2) {
+                        setStart(true);
+                    }
+                    else if (counter === 3) {
+                        clearInterval(interval);
+                        window.location.reload(false);
+                    }
                 })
         }
         else {
@@ -100,7 +127,7 @@ const NotesList = () => {
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
 
-    }, [loading, isLogout, isUpdatedCategory, counter]);
+    }, [loading, isLogout, isUpdatedCategory, counter, start]);
 
     async function getSaveCategory() {
         CategoryService.getAll()
@@ -190,7 +217,16 @@ const NotesList = () => {
                     </Alert>
                 }
                 {
-                    (categoryTrue || error || errorUpdatedCategory || logFirst || newCategory || updatedCategory || logoutForm) &&
+                    loginProgress &&
+                    <Alert type="info">
+                        <div>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
+                            <span className="ml-1" style={{color: '#79589f'}}> Logging in... Please wait for the server's response!</span>
+                        </div>
+                    </Alert>
+                }
+                {
+                    (categoryTrue || error || errorUpdatedCategory || logFirst || newCategory || updatedCategory || logoutForm || loginProgress) &&
                     <Space />
                 }
             </div>
@@ -218,6 +254,7 @@ const NotesList = () => {
                             <option value="congregation">Congregation</option>
                             <option value="circuit">Circuit</option>
                             <option value="meeting">Meeting</option>
+                            <option value="talk">Public talk</option>
                             <option value="programming">Programming</option>
                             <option value="other">Other</option>
                             <option value="vacation">Vacation</option>

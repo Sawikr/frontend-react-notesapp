@@ -17,8 +17,12 @@ const NoteDetails = () => {
     const [deletedTrue, setDeletedTrue] = useState(false);
     const [error, setError] = useState(false);
     const [logFirst, setLogFirst] = useState(false);
+    const [loginProgress, setLoginProgress] = useState(false);
     const [noteCreatingDateTrue, setNoteCreatingDateTrue] = useState(false);
     const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
+    const [counter, setCounter] = useState(0);
+    const [start, setStart] = useState(false);
+    let [interval, setInterval] = useState('');
     const {id} = useParams();
     const history = useHistory();
     const isAuth = isUserLoggedIn();
@@ -52,6 +56,7 @@ const NoteDetails = () => {
                 .then(async note => {
                     setCurrentNote(note.data);
                     setLoading(false);
+                    setStart(false);
                     isNote();
 
                     if (isNoteCreatingDateToken.match(true)) {
@@ -73,8 +78,32 @@ const NoteDetails = () => {
                         navbarToken(false);
                     }
                 })
-                .catch(error => {
+                .catch(async error => {
                     console.log('An error occurred!', error);
+                    navbarToken(true);
+                    setStart(true);
+                    setLoginProgress(true);
+                    await wait(3000);
+                    setLoginProgress(false);
+
+                    if (start === true) {
+                        interval = setInterval(async () => {
+                            NotesService.get(id).then(r => console.log('Interval is working!'));
+                            setStart(false);
+                            setCounter(counter + 1);
+                            console.log('Counter is ' + counter + '!');
+                            setLoginProgress(true);
+                            await wait(3000);
+                            setLoginProgress(false);
+                        }, 3000);
+                    }
+                    else if (counter === 0 || counter === 1 || counter === 2) {
+                        setStart(true);
+                    }
+                    else if (counter === 3) {
+                        clearInterval(interval);
+                        window.location.reload(false);
+                    }
                 })
         } else {
             //alert("Log in first!");
@@ -82,7 +111,7 @@ const NoteDetails = () => {
             await wait(3000);
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
-    }, [isNoteCreatingDateToken]);
+    }, [isNoteCreatingDateToken, counter, start]);
 
     const handleDelete = async () => {
         setLoading(true);
@@ -163,7 +192,16 @@ const NoteDetails = () => {
                     </Alert>
                 }
                 {
-                    (deletedTrue || error || logFirst || noteCreatingDateTrue || noteCreatingDateFalse) &&
+                    loginProgress &&
+                    <Alert type="info">
+                        <div>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
+                            <span className="ml-1" style={{color: '#79589f'}}> Logging in... Please wait for the server's response!</span>
+                        </div>
+                    </Alert>
+                }
+                {
+                    (deletedTrue || error || logFirst || noteCreatingDateTrue || noteCreatingDateFalse || loginProgress) &&
                     <Space />
                 }
             </div>

@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
-import LoginService, {isUserLoggedIn, saveLoggedInUser} from "../service/LoginService";
+import {useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import LoginService, {isUserLoggedIn, saveLoggedInUser} from '../service/LoginService';
 import Popup from 'reactjs-popup';
 import {storeToken} from '../service/LoginService';
 import Space from '../element/Space';
