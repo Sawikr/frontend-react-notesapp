@@ -37,7 +37,6 @@ const NoteDetails = () => {
         else {
             setNoteCreatedDate(true);
         }
-        console.log('Note creation date is set to ' + noteCreatedDate + '!');
     }
 
     useEffect(async () => {
@@ -50,6 +49,12 @@ const NoteDetails = () => {
         }
 
         if (isAuth) {
+            if (start) {
+                setLoginProgress(true);
+                await wait(3000);
+                setLoginProgress(false);
+            }
+
             isNoteCreatingDateToken = getNoteCreatingDateToken();
             isHome = getNavbarToken();
             NotesService.get(id)
@@ -77,24 +82,22 @@ const NoteDetails = () => {
                         }
                         navbarToken(false);
                     }
+                    //throw error;
                 })
                 .catch(async error => {
                     console.log('An error occurred!', error);
-                    navbarToken(true);
                     setStart(true);
                     setLoginProgress(true);
                     await wait(3000);
                     setLoginProgress(false);
+                    navbarToken(true);
 
                     if (start === true) {
                         interval = setInterval(async () => {
-                            NotesService.get(id).then(r => console.log('Interval is working!'));
+                            NotesService.get(id).then(r => console.log('Interval worked!'));
                             setStart(false);
                             setCounter(counter + 1);
                             console.log('Counter is ' + counter + '!');
-                            setLoginProgress(true);
-                            await wait(3000);
-                            setLoginProgress(false);
                         }, 3000);
                     }
                     else if (counter === 0 || counter === 1 || counter === 2) {

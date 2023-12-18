@@ -7,7 +7,7 @@ import {Dropdown} from '@mui/base/Dropdown';
 import {BsGear} from 'react-icons/bs';
 import {logoutToken} from '../service/LoginService';
 import {useState} from 'react';
-import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
+import {getNoteCreatingDateToken, noteCreatingDateClickToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 
 const SettingsMenu = () => {
     let [categoryName, setCategoryName] = useState('');
@@ -45,6 +45,7 @@ const SettingsMenu = () => {
         }
         else if (menuItem === 'Note creating date') {
             return () => {
+                noteCreatingDateClickToken(true);
                 console.log(`Clicked on: ${menuItem}!`);
                 if (noteCreatedDateIsTrue === null || noteCreatedDateIsTrue.match(false)) {
                     noteCreatingDateToken(true);

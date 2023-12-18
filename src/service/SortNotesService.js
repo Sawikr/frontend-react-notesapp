@@ -52,6 +52,34 @@ const SortNotesService = (props) => {
             })
     }, []);
 
+    function notesDisplay(note) {
+        return <>
+            {
+                props.noteCreatedDate &&
+                <div className="navbar">
+                    <span className="notes-display-one font-italic">Note created: </span>
+                    <Moment className="notes-display-two" fromNow>{note.createdAt}</Moment>
+                    <Moment className="notes-display-three" format="DD-MM-YYYY" fromNow>{note.createdAt}</Moment>
+                </div>
+            }
+            {
+                props.noteCreatedDate &&
+                <div className="navbar">
+                    <span className="notes-display-one font-italic">Note updated: </span>
+                    <Moment className="notes-display-two" fromNow>{note.updatedAt}</Moment>
+                    <Moment className="notes-display-three" format="DD-MM-YYYY" fromNow>{note.updatedAt}</Moment>
+                </div>
+            }
+            {
+                !props.noteCreatedDate &&
+                <div className="navbar">
+                    <Moment fromNow>{note.updatedAt}</Moment>
+                    <Moment format="DD-MM-YYYY" fromNow>{note.updatedAt}</Moment>
+                </div>
+            }
+        </>;
+    }
+
     return (
         <div>
         {
@@ -67,10 +95,7 @@ const SortNotesService = (props) => {
                             <div style={{marginTop: 10}}>
                                 <h5 className="primary-color" style={{marginLeft: 15}}>{note.title}</h5>
                             </div>
-                            <div className="navbar">
-                                <Moment fromNow>{note.updatedAt}</Moment>
-                                <Moment format="DD-MM-YYYY" fromNow>{note.updatedAt}</Moment>
-                            </div>
+                            {notesDisplay(note)}
                         </Link>
                     </div>
                 ))
@@ -86,10 +111,7 @@ const SortNotesService = (props) => {
                             <div style={{marginTop: 10}}>
                                 <h5 className="primary-color" style={{marginLeft: 15}}>{note.title}</h5>
                             </div>
-                            <div className="navbar">
-                                <Moment fromNow>{note.updatedAt}</Moment>
-                                <Moment format="DD-MM-YYYY" fromNow>{note.updatedAt}</Moment>
-                            </div>
+                            {notesDisplay(note)}
                         </Link>
                     </div>
                 ))

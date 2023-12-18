@@ -294,3 +294,16 @@ select:hover {
   text-decoration: none;
   color: #79589f;
 }
+
+/* notes display */
+.notes-display-one {
+  flex: 0.9;
+}
+
+.notes-display-two {
+  flex: 2;
+}
+
+.notes-display-three {
+  flex: available;
+}

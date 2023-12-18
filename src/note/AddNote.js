@@ -227,6 +227,7 @@ const AddNote = () => {
                             <option value="congregation">Congregation</option>
                             <option value="circuit">Circuit</option>
                             <option value="meeting">Meeting</option>
+                            <option value="talk">Public talk</option>
                             <option value="programming">Programming</option>
                             <option value="other">Other</option>
                             <option value="vacation">Vacation</option>

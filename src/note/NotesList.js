@@ -9,6 +9,7 @@ import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {useOnceEffect} from '../config/UseDevEffect';
 import {getNavbarToken, navbarToken} from '../service/NavbarService';
+import {getNoteCreatingDateClickToken, getNoteCreatingDateToken, noteCreatingDateClickToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -19,6 +20,7 @@ const NotesList = () => {
     const [categoryTrue, setCategoryTrue] = useState(false);
     const [logFirst, setLogFirst] = useState(false);
     const [error, setError] = useState(false);
+    const [showedError, setShowedError] = useState(false);
     const [newCategory, setNewCategory] = useState(false);
     const [updatedCategory, setUpdatedCategory] = useState(false);
     const [errorUpdatedCategory] = useState(false);
@@ -29,9 +31,14 @@ const NotesList = () => {
     const [counter, setCounter] = useState(0);
     const [start, setStart] = useState(false);
     let [interval, setInterval] = useState('');
+    const [noteCreatingDateTrue, setNoteCreatingDateTrue] = useState(false);
+    const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
     const history = useHistory();
     const isAuth = isUserLoggedIn();
     let isHome = getNavbarToken();
+    let isNoteCreatingDateToken = getNoteCreatingDateToken();
+    let isNoteCreatingDateClickToken = getNoteCreatingDateClickToken();
+    const [noteCreatedDate, setNoteCreatedDate] = useState(false);
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     useOnceEffect (async () => {
@@ -48,17 +55,45 @@ const NotesList = () => {
         if (isHome === null) {
             navbarToken(false);
         }
+        if (isNoteCreatingDateToken === null) {
+            noteCreatingDateToken(false);
+        }
+        if (isNoteCreatingDateClickToken === null) {
+            noteCreatingDateClickToken(false);
+        }
 
         if (isAuth) {
+            if (showedError) {
+                setCategory(await getSaveCategory());
+            }
+
+            if (start) {
+                setLoginProgress(true);
+                await wait(3000);
+                setLoginProgress(false);
+            }
+
             isLogout = getLogoutToken();
             isUpdatedCategory = getUpdatedCategoryToken();
             isHome = getNavbarToken();
+            isNoteCreatingDateToken = getNoteCreatingDateToken();
+            isNoteCreatingDateClickToken = getNoteCreatingDateClickToken();
+
             NotesService.getAll()
                 .then(async response => {
                     //console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
+                    setShowedError(false);
                     setStart(false);
+                    noteCreatingDateClickToken(false);
+
+                    if (isNoteCreatingDateToken.match(true)) {
+                        setNoteCreatedDate(true);
+                    }
+                    else {
+                        setNoteCreatedDate(false);
+                    }
 
                     if (isLogout.match(false)) {
                         isHome = getNavbarToken();
@@ -73,12 +108,44 @@ const NotesList = () => {
                             updatedCategoryToken(false);
                             navbarToken(false);
                         }
-                        if (isUpdatedCategory.match(false) && counter === 2) {
+                        else if (isUpdatedCategory.match(false) && counter === 2) {
                             if (isHome.match(false)) {
                                 setNewCategory(true);
                                 await wait(5000);
                                 setNewCategory(false);
                                 setCounter(1);
+                                if (isNoteCreatingDateToken.match(true)) {
+                                    setNoteCreatingDateFalse(true);
+                                    await wait(4500);
+                                    setNoteCreatingDateFalse(false);
+                                }
+                                else if (isNoteCreatingDateToken.match(false)) {
+                                    setNoteCreatingDateTrue(true);
+                                    await wait(4500);
+                                    setNoteCreatingDateTrue(false);
+                                }
+                                navbarToken(true);
+                            }
+                        }
+
+                        if (isNoteCreatingDateClickToken.match(true)) {
+                            if (isNoteCreatingDateToken.match(true)) {
+                                if (counter === 2) {
+                                    setNoteCreatingDateFalse(true);
+                                    await wait(4500);
+                                    setNoteCreatingDateFalse(false);
+                                    setNoteCreatedDate(true);
+                                    setCounter(1);
+                                }
+                            }
+                            else {
+                                if (counter === 2) {
+                                    setNoteCreatingDateTrue(true);
+                                    await wait(4500);
+                                    setNoteCreatingDateTrue(false);
+                                    setNoteCreatedDate(false);
+                                    setCounter(1);
+                                }
                             }
                         }
                     }
@@ -92,23 +159,22 @@ const NotesList = () => {
                         history.push("/radoslaw-sawicki-frontend-react-notesapp");
                         window.location.reload();
                     }
+                    //throw error;
                 })
                 .catch(async error => {
                     console.log('An error occurred!', error);
                     setStart(true);
+                    setShowedError(true);
                     setLoginProgress(true);
                     await wait(3000);
                     setLoginProgress(false);
 
                     if (start === true) {
                         interval = setInterval(async () => {
-                            NotesService.getAll().then(r => console.log('Interval is working!'));
+                            NotesService.getAll().then(r => console.log('Interval worked!'));
                             setStart(false);
                             setCounter(counter + 1);
                             console.log('Counter is ' + counter + '!');
-                            setLoginProgress(true);
-                            await wait(3000);
-                            setLoginProgress(false);
                         }, 3000);
                     }
                     else if (counter === 0 || counter === 1 || counter === 2) {
@@ -127,7 +193,7 @@ const NotesList = () => {
             history.push("/radoslaw-sawicki-frontend-react-notesapp");
         }
 
-    }, [loading, isLogout, isUpdatedCategory, counter, start]);
+    }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken]);
 
     async function getSaveCategory() {
         CategoryService.getAll()
@@ -140,6 +206,7 @@ const NotesList = () => {
                 if (foundCategory) {
                     setCategory(foundCategory);
                     console.log('Saved category is: ' + foundCategory + '!');
+                    console.log('Note creation date is: ' + isNoteCreatingDateToken + '!');
                     return category;
                 }
                 else {
@@ -217,6 +284,18 @@ const NotesList = () => {
                     </Alert>
                 }
                 {
+                    noteCreatingDateTrue &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Note creation date display disabled!</div>
+                    </Alert>
+                }
+                {
+                    noteCreatingDateFalse &&
+                    <Alert type="info">
+                        <div style={{color: '#79589f'}}>Note creation date display enabled!</div>
+                    </Alert>
+                }
+                {
                     loginProgress &&
                     <Alert type="info">
                         <div>
@@ -226,7 +305,8 @@ const NotesList = () => {
                     </Alert>
                 }
                 {
-                    (categoryTrue || error || errorUpdatedCategory || logFirst || newCategory || updatedCategory || logoutForm || loginProgress) &&
+                    (categoryTrue || error || errorUpdatedCategory || logFirst || newCategory || updatedCategory || logoutForm ||
+                        noteCreatingDateTrue || noteCreatingDateFalse || loginProgress) &&
                     <Space />
                 }
             </div>
@@ -265,6 +345,7 @@ const NotesList = () => {
                             <SortNotesService
                                 notes={notes}
                                 category={category}
+                                noteCreatedDate={noteCreatedDate}
                             />
                         }
                     </div>

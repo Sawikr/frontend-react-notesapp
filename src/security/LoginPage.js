@@ -6,6 +6,7 @@ import {storeToken} from '../service/LoginService';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
+import Modal from "@mui/material/Modal";
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -56,7 +57,7 @@ const LoginPage = () => {
         } else {
             if (start) {
                 interval = setInterval(() => {
-                    login().then(r => console.log('Interval is working!'));
+                    login().then(r => console.log('Interval worked!'));
                     setStart(false);
                     setCounter(counter + 1);
                     console.log('Counter is ' + counter + '!')
