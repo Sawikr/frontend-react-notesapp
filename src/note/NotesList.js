@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
-import CategoryService, {getUpdatedCategoryToken, saveCategory, updatedCategoryToken} from '../service/CategoryService';
+import CategoryService, {getSelectCategory, getUpdatedCategoryToken, saveCategory, updatedCategoryToken} from '../service/CategoryService';
 import Space from '../element/Space';
 import SortNotesService from '../service/SortNotesService';
 import {PropagateLoader} from 'react-spinners';
@@ -55,11 +55,11 @@ const NotesList = () => {
         if (isHome === null) {
             navbarToken(false);
         }
-        if (isNoteCreatingDateToken === null) {
-            noteCreatingDateToken(false);
-        }
         if (isNoteCreatingDateClickToken === null) {
             noteCreatingDateClickToken(false);
+        }
+        if (isNoteCreatingDateToken === null) {
+            noteCreatingDateToken(false);
         }
 
         if (isAuth) {
@@ -72,12 +72,6 @@ const NotesList = () => {
                 await wait(3000);
                 setLoginProgress(false);
             }
-
-            isLogout = getLogoutToken();
-            isUpdatedCategory = getUpdatedCategoryToken();
-            isHome = getNavbarToken();
-            isNoteCreatingDateToken = getNoteCreatingDateToken();
-            isNoteCreatingDateClickToken = getNoteCreatingDateClickToken();
 
             NotesService.getAll()
                 .then(async response => {
@@ -329,15 +323,7 @@ const NotesList = () => {
                             value={category}
                             onClick={saveSelectedCategory}
                             onChange={(e) => setCategory(e.target.value)}>
-                            <option value="all">All categories</option>
-                            <option value="blogging">Blogging</option>
-                            <option value="congregation">Congregation</option>
-                            <option value="circuit">Circuit</option>
-                            <option value="meeting">Meeting</option>
-                            <option value="talk">Public talk</option>
-                            <option value="programming">Programming</option>
-                            <option value="other">Other</option>
-                            <option value="vacation">Vacation</option>
+                            {getSelectCategory()}
                         </select>
                     </div>
                     <div className="notes-list mt-4">

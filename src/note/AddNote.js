@@ -7,6 +7,7 @@ import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import {getNewNoteToken} from '../service/AddNoteService';
 import Alert from '../alert/Alert';
+import {getSelectCategory} from '../service/CategoryService';
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
@@ -223,14 +224,7 @@ const AddNote = () => {
                             className="select"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}>
-                            <option value="blogging">Blogging</option>
-                            <option value="congregation">Congregation</option>
-                            <option value="circuit">Circuit</option>
-                            <option value="meeting">Meeting</option>
-                            <option value="talk">Public talk</option>
-                            <option value="programming">Programming</option>
-                            <option value="other">Other</option>
-                            <option value="vacation">Vacation</option>
+                            {getSelectCategory()}
                         </select>
                     </div>
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>

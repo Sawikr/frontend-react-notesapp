@@ -1,5 +1,5 @@
-import axios from "axios";
-import {BASE_URL} from "../http-common";
+import axios from 'axios';
+import {BASE_URL} from '../http-common';
 
 export const getAll = () =>
     axios.get(BASE_URL + '/notes/category')
@@ -24,6 +24,20 @@ export const getSetCategoryToken = () => sessionStorage.getItem("setCategory");
 export const updatedCategoryToken = (updatedCategory) => sessionStorage.setItem("updatedCategory", updatedCategory);
 
 export const getUpdatedCategoryToken = () => sessionStorage.getItem("updatedCategory");
+
+export function getSelectCategory() {
+    return <>
+        <option value="all">All categories</option>
+        <option value="blogging">Blogging</option>
+        <option value="congregation">Congregation</option>
+        <option value="circuit">Circuit</option>
+        <option value="meeting">Meeting</option>
+        <option value="talk">Public talk</option>
+        <option value="programming">Programming</option>
+        <option value="other">Other</option>
+        <option value="vacation">Vacation</option>
+    </>;
+}
 
 // eslint-disable-next-line
 export default { getAll, get, createCategory };

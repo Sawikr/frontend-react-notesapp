@@ -56,7 +56,7 @@ const SortNotesService = (props) => {
         return <>
             {
                 props.noteCreatedDate &&
-                <div className="navbar">
+                <div className="navbar" style={{fontSize: 14}}>
                     <span className="notes-display-one font-italic">Note created: </span>
                     <Moment className="notes-display-two" fromNow>{note.createdAt}</Moment>
                     <Moment className="notes-display-three" format="DD-MM-YYYY" fromNow>{note.createdAt}</Moment>
@@ -64,7 +64,7 @@ const SortNotesService = (props) => {
             }
             {
                 props.noteCreatedDate &&
-                <div className="navbar">
+                <div className="navbar" style={{fontSize: 14}}>
                     <span className="notes-display-one font-italic">Note updated: </span>
                     <Moment className="notes-display-two" fromNow>{note.updatedAt}</Moment>
                     <Moment className="notes-display-three" format="DD-MM-YYYY" fromNow>{note.updatedAt}</Moment>

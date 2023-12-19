@@ -297,7 +297,7 @@ select:hover {
 
 /* notes display */
 .notes-display-one {
-  flex: 0.9;
+  flex: 0.75;
 }
 
 .notes-display-two {
