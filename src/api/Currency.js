@@ -4,6 +4,8 @@ import Space from '../element/Space';
 import Moment from 'react-moment';
 import {PropagateLoader} from 'react-spinners';
 import {isUserLoggedIn} from '../service/LoginService';
+import {navbarToken} from '../service/NavbarService';
+import {useHistory} from 'react-router-dom';
 
 function Currency() {
     const [currencyEUR, setCurrencyEUR] = useState([]);
@@ -11,15 +13,29 @@ function Currency() {
     const [currencyCHF, setCurrencyCHF] = useState([]);
     const [currencyGBP, setCurrencyGBP] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showReturnButton, setShowReturnButton] = useState(false);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
+    const history = useHistory();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
+    function returnButton() {
+        navbarToken(true);
+        history.goBack();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
+    }
 
     useEffect(() => {
         NotesService.getCurrencyEUR()
-            .then(response => {
+            .then(async response => {
                 console.log('Printing response!', response.data);
                 setCurrencyEUR(response.data);
                 setLoading(false);
+                await showButton();
             })
             .catch(error => {
                 console.log('An error occurred!', error);
@@ -99,6 +115,14 @@ function Currency() {
                 </div>
             </div>
             )}
+            {
+                showReturnButton &&
+                <button
+                    title='Back to previous page'
+                    style={{background: "white"}} onClick={returnButton}>
+                    <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                </button>
+            }
         </div>
     );
 }

@@ -8,6 +8,7 @@ import {PropagateLoader} from 'react-spinners';
 import {getNewNoteToken} from '../service/AddNoteService';
 import Alert from '../alert/Alert';
 import {getSelectCategory} from '../service/CategoryService';
+import {navbarToken} from "../service/NavbarService";
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
@@ -25,11 +26,22 @@ const AddNote = () => {
     const [loginName, setLoginName] = useState(username);
     const [loading, setLoading] = useState(false);
     const [updatedAt, setUpdatedAt] = useState(new Date());
+    const [showReturnButton, setShowReturnButton] = useState(false);
     const history = useHistory();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
     const newNote = getNewNoteToken();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
+    function returnButton() {
+        navbarToken(true);
+        history.goBack();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
+    }
 
     const sendLogin = () => {
         const login = {loginName, isLogin};
@@ -126,6 +138,7 @@ const AddNote = () => {
                     setBody(note.data.body);
                     setCategory(note.data.category);
                     setLoading(false);
+                    await showButton();
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
@@ -237,6 +250,16 @@ const AddNote = () => {
             <Space/>
             </div>
             )}
+            <div className="detail-container">
+                {
+                    showReturnButton &&
+                    <button
+                        title='Back to previous page'
+                        style={{background: "white"}} onClick={returnButton}>
+                        <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                    </button>
+                }
+            </div>
         </div>
     );
 }

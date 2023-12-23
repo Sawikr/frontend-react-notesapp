@@ -5,6 +5,8 @@ import {useHistory} from 'react-router-dom';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
+import {navbarToken} from '../service/NavbarService';
+import {useEffect} from 'react';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -16,6 +18,7 @@ const RegisterPage = () => {
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showReturnButton, setShowReturnButton] = useState(false);
     const history = useHistory();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
@@ -46,6 +49,21 @@ const RegisterPage = () => {
                 setError(true);
                 await wait(3000);
             })
+    }
+
+    useEffect(async () => {
+        await showButton();
+    });
+
+    function returnButton() {
+        navbarToken(true);
+        history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        window.location.reload();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
     }
 
     return (
@@ -159,6 +177,16 @@ const RegisterPage = () => {
                 </form>
             </div>
             )}
+            <div className="detail-container">
+            {
+                showReturnButton &&
+                <button
+                    title='Back to previous page'
+                    style={{background: "white"}} onClick={returnButton}>
+                    <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                </button>
+            }
+        </div>
         </div>
     );
 }

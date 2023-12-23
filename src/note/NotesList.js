@@ -10,6 +10,7 @@ import Alert from '../alert/Alert';
 import {useOnceEffect} from '../config/UseDevEffect';
 import {getNavbarToken, navbarToken} from '../service/NavbarService';
 import {getNoteCreatingDateClickToken, getNoteCreatingDateToken, noteCreatingDateClickToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
+import {clickInfoToken, getClickInfoToken} from '../service/AddService';
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -38,6 +39,7 @@ const NotesList = () => {
     let isHome = getNavbarToken();
     let isNoteCreatingDateToken = getNoteCreatingDateToken();
     let isNoteCreatingDateClickToken = getNoteCreatingDateClickToken();
+    let isClickInfo = getClickInfoToken();
     const [noteCreatedDate, setNoteCreatedDate] = useState(false);
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
@@ -65,6 +67,13 @@ const NotesList = () => {
         if (isAuth) {
             if (showedError) {
                 setCategory(await getSaveCategory());
+            }
+
+            if (isClickInfo === null) {
+                clickInfoToken(false);
+            }
+            else if (isClickInfo.match(true)) {
+                window.location.reload();
             }
 
             if (start) {

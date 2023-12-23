@@ -4,19 +4,35 @@ import Space from '../element/Space';
 import Moment from 'react-moment';
 import {PropagateLoader} from 'react-spinners';
 import {isUserLoggedIn} from '../service/LoginService';
+import {navbarToken} from '../service/NavbarService';
+import {useHistory} from 'react-router-dom';
 
 function Weather() {
     const [weather, setWeather] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showReturnButton, setShowReturnButton] = useState(false);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
+    const history = useHistory();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
+    function returnButton() {
+        navbarToken(true);
+        history.goBack();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
+    }
 
     useEffect(() => {
         NotesService.getWeather()
-            .then(response => {
+            .then(async response => {
                 console.log('Printing response!', response.data);
                 setWeather(response.data);
                 setLoading(false);
+                await showButton();
             })
             .catch(error => {
                 console.log('An error occurred!', error);
@@ -63,6 +79,14 @@ function Weather() {
                 </div>
             </div>
             )}
+            {
+                showReturnButton &&
+                <button
+                    title='Back to previous page'
+                    style={{background: "white"}} onClick={returnButton}>
+                    <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                </button>
+            }
         </div>
     );
 }

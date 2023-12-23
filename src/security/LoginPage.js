@@ -6,6 +6,7 @@ import {storeToken} from '../service/LoginService';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
+import {clickInfoToken, getClickInfoToken} from "../service/AddService";
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -22,6 +23,7 @@ const LoginPage = () => {
     let [interval, setInterval] = useState('');
     const history = useHistory();
     const isAuth = isUserLoggedIn();
+    let isClickInfo = getClickInfoToken();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const sendLogin = () => {
@@ -51,6 +53,13 @@ const LoginPage = () => {
     }
 
     useEffect(async () => {
+        if (isClickInfo === null) {
+            clickInfoToken(false);
+        }
+        else if (isClickInfo.match(true)) {
+            window.location.reload();
+        }
+
         if (isAuth) {
             history.push("/notes/list");
         } else {

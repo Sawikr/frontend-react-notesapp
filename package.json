@@ -27,6 +27,7 @@
     "classnames": "^2.3.2",
     "iana-tz-data": "^2019.1.0",
     "moment": "^2.29.4",
+    "next-images": "^1.8.5",
     "primereact": "^10.0.2",
     "prop-types": "^15.6.2",
     "react": "^17.0.1",

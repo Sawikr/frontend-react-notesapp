@@ -6,6 +6,7 @@ import Popup from 'reactjs-popup';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
+import {navbarToken} from "../service/NavbarService";
 
 const SendMail = () => {
     const [title, setTitle] = useState('');
@@ -15,9 +16,20 @@ const SendMail = () => {
     const [loading, setLoading] = useState(false);
     const [sentTrue, setSentTrue] = useState(false);
     const [error, setError] = useState(false);
+    const [showReturnButton, setShowReturnButton] = useState(false);
     const {id} = useParams();
     const history = useHistory();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
+    function returnButton() {
+        navbarToken(true);
+        history.goBack();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
+    }
 
     const sendMail = (e) => {
         e.preventDefault();
@@ -54,10 +66,11 @@ const SendMail = () => {
         setLoading(true);
         if (id) {
             NotesService.get(id)
-                .then(note => {
+                .then(async note => {
                     setTitle(note.data.title);
                     setBody(note.data.body);
                     setLoading(false);
+                    await showButton();
                 })
                 .catch(error => {
                     console.log('An error occurred!', error);
@@ -158,6 +171,16 @@ const SendMail = () => {
                 <Space/>
             </div>
             )}
+            <div className="detail-container">
+                {
+                    showReturnButton &&
+                    <button
+                        title='Back to previous page'
+                        style={{background: "white"}} onClick={returnButton}>
+                        <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                    </button>
+                }
+            </div>
         </div>
     );
 }

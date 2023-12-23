@@ -1,11 +1,12 @@
 import React from 'react';
-import logo from '../assets/launcherWeb.ico'
+import logo from '../assets/launcherWeb.ico';
+import {Image} from 'primereact/image';
 
 function InfoLogo() {
     console.log(logo);
     return (
         <div>
-            <img src={logo} alt='Notes App logo' height={22} width={22}/>
+            <Image src={logo} alt='Notes App logo' height={22} width={22} layout="responsive"/>
         </div>
     );
 }

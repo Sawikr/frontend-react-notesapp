@@ -1,9 +1,31 @@
-import Space from "./Space";
-import Logo from "../image/Logo";
+import Space from './Space';
+import Logo from '../image/Logo';
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {navbarToken} from '../service/NavbarService';
+import {useEffect} from 'react';
+import {clickInfoToken} from '../service/AddService';
 
 const Copyright = () => {
-
+    const [showReturnButton, setShowReturnButton] = useState(false);
     const currentYear = new Date().getFullYear();
+    const history = useHistory();
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
+    function returnButton() {
+        navbarToken(true);
+        clickInfoToken(true);
+        history.goBack();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
+    }
+
+    useEffect(async () => {
+        await showButton();
+    });
 
     return (
         <div className="main-content">
@@ -32,6 +54,14 @@ const Copyright = () => {
                 </label>
             </form>
             <Space/>
+            {
+                showReturnButton &&
+                <button
+                    title='Back to previous page'
+                    style={{background: "white"}} onClick={returnButton}>
+                    <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                </button>
+            }
         </div>
     )
 }

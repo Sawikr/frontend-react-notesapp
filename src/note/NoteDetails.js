@@ -22,6 +22,7 @@ const NoteDetails = () => {
     const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
     const [counter, setCounter] = useState(0);
     const [start, setStart] = useState(false);
+    const [showReturnButton, setShowReturnButton] = useState(false);
     let [interval, setInterval] = useState('');
     const {id} = useParams();
     const history = useHistory();
@@ -41,6 +42,7 @@ const NoteDetails = () => {
 
     useEffect(async () => {
         setLoading(true);
+        setShowReturnButton(false);
         if (isNoteCreatingDateToken === null) {
             noteCreatingDateToken(false);
         }
@@ -63,6 +65,7 @@ const NoteDetails = () => {
                     setLoading(false);
                     setStart(false);
                     isNote();
+                    await showButton();
 
                     if (isNoteCreatingDateToken.match(true)) {
                         isHome = getNavbarToken();
@@ -153,6 +156,16 @@ const NoteDetails = () => {
         newNoteToken(false);
         navbarToken(true);
         history.push(`/notes/email/${id}`);
+    }
+
+    function returnButton() {
+        navbarToken(true);
+        history.goBack();
+    }
+
+    async function showButton() {
+        await wait(3000);
+        setShowReturnButton(true);
     }
 
     return (
@@ -256,6 +269,14 @@ const NoteDetails = () => {
             </div>
             </div>
             )}
+            {
+                showReturnButton &&
+                <button
+                    title='Back to previous page'
+                    style={{background: "white"}} onClick={returnButton}>
+                    <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                </button>
+            }
         </div>
     );
 }
