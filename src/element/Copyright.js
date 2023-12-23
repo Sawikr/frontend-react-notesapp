@@ -1,4 +1,5 @@
 import Space from "./Space";
+import Logo from "../image/Logo";
 
 const Copyright = () => {
 
@@ -11,6 +12,8 @@ const Copyright = () => {
                     <span className="primary-color ml-1">Copyright</span>
                     : ©{currentYear} Radosław Sawicki
                 </h6>
+                <Space/>
+                <Logo/>
                 <Space/>
                 <h6 className="text-center">
                     <span className="primary-color ml-1">Notes App</span>

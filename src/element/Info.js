@@ -1,6 +1,9 @@
-import {Link, useHistory, useLocation} from "react-router-dom";
-import {useState} from "react";
-import {clickInfoToken, isClickInfo} from "../service/AddService";
+import {Link, useHistory, useLocation} from 'react-router-dom';
+import {useState} from 'react';
+import {clickInfoToken, isClickInfo} from '../service/AddService';
+import React from 'react';
+import InfoLogo from '../image/InfoLogo';
+import LazyLoad from 'react-lazyload';
 
 const Info = () => {
     const [clickLink, setClickLink] = useState(false);
@@ -25,14 +28,25 @@ const Info = () => {
 
     return (
         <nav>
+            <p/>
             <div className="info">
-                <p></p>
-                <div className="text-center">
-                    {
-                        !clickLink &&
-                        <Link to="/info" className="info primary-color font-italic" title='Notes App info'
-                              onClick={handleClick}>Copyright ©{currentYear} Radosław Sawicki</Link>
-                    }
+                <div className="info-logo">
+                    <div className="info-logo-one">
+                        {
+                            !clickLink &&
+                            <LazyLoad>
+                                <InfoLogo/>
+                            </LazyLoad>
+                        }
+                    </div>
+                    <div className="info-logo-two">
+                        {
+                            !clickLink &&
+                            <Link to="/info" className="primary-color font-italic" title='Notes App info'
+                                  onClick={handleClick}>Copyright ©{currentYear} Radosław Sawicki
+                            </Link>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

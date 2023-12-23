@@ -171,10 +171,12 @@ select:hover {
 
 /* info */
 .info {
-  padding: 0;
-  display: inline;
+  display: flex;
   align-items: center;
-  max-width: 600px;
+  text-align: center;
+  vertical-align: center;
+  max-width: available;
+  margin: auto;
   font-size: 13px;
 }
 
@@ -185,6 +187,24 @@ select:hover {
 .info a:hover {
   text-decoration: none;
   color: black;
+}
+
+.info-logo {
+  display: block;
+  max-width: 600px;
+  margin: auto;
+  justify-content: center;
+  vertical-align: center;
+}
+
+.info-logo-one {
+  flex: 1;
+  margin-top: -4px;
+  margin-bottom: 4px;
+}
+
+.info-logo-two {
+  flex: auto;
 }
 
 .space {
@@ -255,7 +275,7 @@ select:hover {
 .main-category {
   max-width: 140px;
   padding: 8px;
-  margin: 0px auto;
+  margin: 0 auto;
   border-radius: 5px;
   border-color: white;
   background: #f4f4f4;
@@ -264,12 +284,25 @@ select:hover {
   outline-color: white;
 }
 
+.detail-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 0;
+}
+
 /* spinner */
 .loader-container {
   height: 100px;
   max-width: 400px;
   margin: 70px;
-  padding: 0;
+}
+
+.loader {
+  margin: auto;
+}
+
+.loader-one {
+  height: 100px;
 }
 
 .user-content {

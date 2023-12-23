@@ -217,6 +217,7 @@ const NoteDetails = () => {
                 </div>
             ) : (
             <div className="note-details main-content">
+                <div className="detail-container">
                 {
                     currentNote &&
                     <div>
@@ -252,6 +253,7 @@ const NoteDetails = () => {
                     </div>
                     }
                 <Space/>
+            </div>
             </div>
             )}
         </div>

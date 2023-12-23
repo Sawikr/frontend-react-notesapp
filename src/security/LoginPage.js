@@ -6,7 +6,6 @@ import {storeToken} from '../service/LoginService';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
-import Modal from "@mui/material/Modal";
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -118,8 +117,7 @@ const LoginPage = () => {
 
     return (
         <div className="main-content">
-            {loading ? (
-                <div className="text-md-left">
+                <div className="text-left">
                     {
                         (loginTrue || loginFalse || loginProgress) &&
                         <Space />
@@ -151,13 +149,14 @@ const LoginPage = () => {
                             </div>
                         </Alert>
                     }
+                </div>
+                {loading ? (
                     <div className="loader-container" style={{marginTop: 137}}>
                         <div className="text-center">
                             <PropagateLoader color={'#79589f'} size={20}/>
                             <Space/>
                         </div>
                     </div>
-                </div>
             ) : (
             <div className="login">
                 <div className="text-center">

@@ -1,7 +1,7 @@
-import {Link} from "react-router-dom";
-import Moment from "react-moment";
-import {useEffect, useState} from "react";
-import LoginService from "./LoginService";
+import {Link} from 'react-router-dom';
+import Moment from 'react-moment';
+import {useEffect, useState} from 'react';
+import LoginService from './LoginService';
 
 const SortNotesService = (props) => {
     const [loginEmail, setLoginEmail] = useState('');
