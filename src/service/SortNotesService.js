@@ -93,7 +93,7 @@ const SortNotesService = (props) => {
                     <div key={note.id} className="notes-preview mt-3">
                         <Link to={`/notes/${note.id}`}>
                             <div style={{marginTop: 10}}>
-                                <h5 className="primary-color" style={{marginLeft: 15}}>{note.title}</h5>
+                                <h5 className="notes-primary-color" style={{marginLeft: 15}}>{note.title}</h5>
                             </div>
                             {notesDisplay(note)}
                         </Link>
@@ -109,7 +109,7 @@ const SortNotesService = (props) => {
                     <div key={note.id} className="notes-preview mt-3">
                         <Link to={`/notes/${note.id}`}>
                             <div style={{marginTop: 10}}>
-                                <h5 className="primary-color" style={{marginLeft: 15}}>{note.title}</h5>
+                                <h5 className="notes-primary-color" style={{marginLeft: 15}}>{note.title}</h5>
                             </div>
                             {notesDisplay(note)}
                         </Link>

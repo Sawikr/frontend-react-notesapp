@@ -66,7 +66,7 @@ const ApiService = (props) => {
                 <a
                     className="services"
                     onClick={handleClick}
-                    style={{color: active ? "#79589f" : active}}
+                    style={{color: active ? "#79589f" : active, fontSize: 16}}
                 >
                     Services
                 </a>

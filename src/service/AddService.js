@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import {isUserLoggedIn, logout, logoutToken} from './LoginService';
+import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from './LoginService';
 import {clickCurrencyToken, clickWeatherToken, isClickCurrency, isClickWeather} from './ApiService';
 
 export const clickInfoToken = (token) => sessionStorage.setItem("token", token);
@@ -34,7 +34,9 @@ export const isClickLogout = () => {
 const AddService = () => {
     const [clickLogin, setClickLogin] = useState(false);
     const [clickRegister, setClickRegister] = useState(false);
+    const [logout, setLogout] = useState(false);
     const isAuth = isUserLoggedIn();
+    let isLogout = getLogoutToken();
     const isCurrency = isClickCurrency();
     const isWeather = isClickWeather();
     const history = useHistory();
@@ -55,9 +57,8 @@ const AddService = () => {
         history.push("/notes/auth/register");
     }
 
-    async function handleLogout() {
+    function handleLogout() {
         clickLogoutToken(true);
-        isClickLogout();
         logoutToken(true);
     }
 
@@ -67,7 +68,11 @@ const AddService = () => {
         clickWeatherToken(false);
         setClickRegister(false);
         setClickLogin(false);
-    }, []);
+
+        isLogout = getLogoutToken();
+        setLogout(isLogout);
+        console.log('AddService-logout: ' + logout);
+    }, [isLogout]);
 
     function process() {
         let message;
@@ -98,7 +103,8 @@ const AddService = () => {
                                   onClick={handleClickRegister}>Register</Link>
                         </>
                 }
-            } else {
+            }
+            else if (logout === true) {
                 message =
                     <>
                         <Link to="/notes/auth/register" className="ml-3" onClick={handleClickRegister}>Register</Link>
@@ -115,9 +121,10 @@ const AddService = () => {
     }
 
     return (
-        <>
+        <div
+            style={{fontSize: 16}}>
             {process()}
-        </>
+        </div>
     )
 }
 

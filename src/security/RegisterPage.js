@@ -178,15 +178,15 @@ const RegisterPage = () => {
             </div>
             )}
             <div className="detail-container">
-            {
-                showReturnButton &&
-                <button
-                    title='Back to previous page'
-                    style={{background: "white"}} onClick={returnButton}>
-                    <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
-                </button>
-            }
-        </div>
+                {
+                    showReturnButton &&
+                    <button
+                        title='Back to previous page'
+                        style={{background: "white"}} onClick={returnButton}>
+                        <i className="fa-solid fa-arrow-turn-down fa-rotate-90 fa-lg" style={{color: "#79589f"}}/>
+                    </button>
+                }
+            </div>
         </div>
     );
 }

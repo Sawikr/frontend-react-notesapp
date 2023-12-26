@@ -1,12 +1,11 @@
 import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import LoginService, {isUserLoggedIn, saveLoggedInUser} from '../service/LoginService';
+import LoginService, {isUserLoggedIn, saveLoggedInUser, storeToken} from '../service/LoginService';
 import Popup from 'reactjs-popup';
-import {storeToken} from '../service/LoginService';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
-import {clickInfoToken, getClickInfoToken} from "../service/AddService";
+import {clickInfoToken, getClickInfoToken} from '../service/AddService';
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');

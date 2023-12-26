@@ -127,6 +127,10 @@ select:hover {
   color: #79589f;
 }
 
+.notes-primary-color {
+  color: #79589f;
+}
+
 .info-color {
   color: black;
 }
@@ -290,6 +294,12 @@ select:hover {
   padding: 0;
 }
 
+.detail-container-one {
+  max-width: 500px;
+  margin: auto;
+  padding: 0;
+}
+
 /* spinner */
 .loader-container {
   height: 100px;
@@ -339,4 +349,121 @@ select:hover {
 
 .notes-display-three {
   flex: available;
+}
+
+/* @media */
+@media (max-width: 436px) {
+  .input {
+    display: flex;
+    max-width: 330px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .label {
+    display: flex;
+    max-width: 330px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .textarea {
+    display: flex;
+    width: 330px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .select {
+    display: flex;
+    width: 330px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .main-content {
+    max-width: 370px;
+    margin: 10px auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .login {
+    max-width: 370px;
+    margin: 10px auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .detail-container {
+    display: flex;
+    max-width: 330px;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    margin-left: -10px;
+    justify-content: left;
+  }
+}
+
+@media (max-width: 436px) {
+  .detail-container-one {
+    display: flex;
+    max-width: 330px;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    margin-left: -10px;
+    justify-content: left;
+  }
+}
+
+@media (max-width: 436px) {
+  .loader-container {
+    display: flex;
+    width: 175px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 436px) {
+  .notes-display-one {
+    flex: 1.1;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 436px) {
+  .notes-display-two {
+    flex: 1.2;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 436px) {
+  .notes-display-three {
+    flex: available;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 436px) {
+  .notes-list {
+    flex: available;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+}@media (max-width: 436px) {
+  .notes-primary-color {
+    font-size: 16px;
+  }
 }

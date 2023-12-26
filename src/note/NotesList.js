@@ -84,7 +84,7 @@ const NotesList = () => {
 
             NotesService.getAll()
                 .then(async response => {
-                    //console.log('Printing response!', response.data);
+                    console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
                     setShowedError(false);

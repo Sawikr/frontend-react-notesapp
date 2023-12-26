@@ -38,7 +38,6 @@ export const getLogoutToken = () => localStorage.getItem("logoutToken");
 
 export const logout = () => {
     clickInfoToken(false);
-    //logoutToken(true);
     localStorage.clear();
     sessionStorage.clear();
 }
