@@ -5,7 +5,7 @@ function Logo() {
     console.log(logo);
     return (
         <div>
-            <img src={logo} alt='Notes App logo' height={100} width={100}/>
+            <img src={logo} alt='Notes App logo' height={100} width={100} loading="lazy"/>
         </div>
     );
 }

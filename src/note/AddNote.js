@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import NotesService from '../service/NotesService';
 import LoginService, {isUserLoggedIn} from '../service/LoginService';
 import Popup from 'reactjs-popup';
@@ -8,7 +8,8 @@ import {PropagateLoader} from 'react-spinners';
 import {getNewNoteToken} from '../service/AddNoteService';
 import Alert from '../alert/Alert';
 import {getSelectCategory} from '../service/CategoryService';
-import {navbarToken} from "../service/NavbarService";
+import {navbarToken} from '../service/NavbarService';
+import {useNavigate} from 'react-router';
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
@@ -27,7 +28,7 @@ const AddNote = () => {
     const [loading, setLoading] = useState(false);
     const [updatedAt, setUpdatedAt] = useState(new Date());
     const [showReturnButton, setShowReturnButton] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
     const newNote = getNewNoteToken();
@@ -35,7 +36,7 @@ const AddNote = () => {
 
     function returnButton() {
         navbarToken(true);
-        history.goBack();
+        navigate(-1);
     }
 
     async function showButton() {
@@ -92,14 +93,14 @@ const AddNote = () => {
                     //alert("Note updated successfully!");
                     setUpdatedTrue(true);
                     await wait(3000);
-                    history.push("/notes/list");
+                    navigate("/notes/list");
                 })
                 .catch(async error => {
                     console.log('An error occurred!', error);
                     //alert("An error occurred!");
                     setError(true);
                     await wait(3000);
-                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                    navigate("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         } else if (isAuth) {
             NotesService.create(note)
@@ -112,24 +113,24 @@ const AddNote = () => {
                     sendLogin();
                     sendList();
                     setLoading(false);
-                    history.push("/notes/list");
+                    navigate("/notes/list");
                 })
                 .catch(async error => {
                     console.log('An error occurred!', error);
                     //alert("An error occurred!");
                     setError(true);
                     await wait(3000);
-                    history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                    navigate("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         } else {
             //alert("Log in first!");
             setLogFirst(true);
             await wait(3000);
-            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+            navigate("/radoslaw-sawicki-frontend-react-notesapp");
         }
     }
 
-    useEffect(async () => {
+    function getNote() {
         setLoading(true);
         if (id) {
             NotesService.get(id)
@@ -146,6 +147,10 @@ const AddNote = () => {
         } else if (newNote) {
             setLoading(false);
         }
+    }
+
+    useEffect(() => {
+        getNote();
     }, []);
 
     return (

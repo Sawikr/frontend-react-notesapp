@@ -1,17 +1,19 @@
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {isUserLoggedIn} from '../service/LoginService';
 import SettingsMenu from '../menu/SettingsMenu';
 import {newNoteToken} from '../service/AddNoteService';
 import {navbarToken} from '../service/NavbarService';
+import {useNavigate} from 'react-router';
 
 const Navbar = () => {
     const isAuth = isUserLoggedIn();
-    const history = useHistory();
+    //const history = useHistory();
+    const navigate = useNavigate();
 
     function handleClickHome() {
         console.log('Home is clicked!');
         navbarToken(true);
-        history.push("/notes/list");
+        navigate("/notes/list");
         window.location.reload();
     }
 
@@ -19,7 +21,7 @@ const Navbar = () => {
         newNoteToken(true);
         console.log('New Note is clicked!');
         navbarToken(true);
-        history.push("/add");
+        navigate("/add");
         window.location.reload();
     }
 

@@ -230,11 +230,16 @@ select:hover {
   background: #f4f4f4;
   display: block;
   padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #f2f2f2;
 }
 
 .notes-preview a:hover {
   background: #e4e4e4;
   text-decoration: none;
+  /*border-color: #79589f;*/
+  box-shadow: 0 4px 0 rgba(121, 88, 159, 0.35);
+  outline: none;
 }
 
 /* note details */
@@ -349,6 +354,15 @@ select:hover {
 
 .notes-display-three {
   flex: available;
+}
+
+.check-password {
+  background: white;
+  color: #79589f;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  cursor: pointer;
+  font-size: 13px;
 }
 
 /* @media */

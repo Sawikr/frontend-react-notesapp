@@ -1,12 +1,12 @@
 import {useState} from 'react';
 import RegisterService from '../service/RegisterService';
 import Popup from 'reactjs-popup';
-import {useHistory} from 'react-router-dom';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
 import {useEffect} from 'react';
+import {useNavigate} from 'react-router';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -19,7 +19,7 @@ const RegisterPage = () => {
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showReturnButton, setShowReturnButton] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const register = (e) => {
@@ -41,7 +41,7 @@ const RegisterPage = () => {
                 //alert("Register is successfully!");
                 setRegisterTrue(true);
                 await wait(3000);
-                history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                navigate("/radoslaw-sawicki-frontend-react-notesapp");
             })
             .catch(async error => {
                 console.log('An error occurred!', error);
@@ -51,13 +51,13 @@ const RegisterPage = () => {
             })
     }
 
-    useEffect(async () => {
-        await showButton();
+    useEffect(() => {
+        showButton().then(r => r);
     });
 
     function returnButton() {
         navbarToken(true);
-        history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        navigate("/radoslaw-sawicki-frontend-react-notesapp");
         window.location.reload();
     }
 

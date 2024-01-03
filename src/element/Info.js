@@ -1,21 +1,21 @@
-import {Link, useHistory, useLocation} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {useState} from 'react';
 import {clickInfoToken, isClickInfo} from '../service/AddService';
 import React from 'react';
 import InfoLogo from '../image/InfoLogo';
-import LazyLoad from 'react-lazyload';
+import {useNavigate} from 'react-router';
 
 const Info = () => {
     const [clickLink, setClickLink] = useState(false);
     const currentYear = new Date().getFullYear();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function handleClick() {
         console.log('Link clicked!');
         setClickLink(true);
         clickInfoToken(true);
         isClickInfo();
-        history.push("/info");
+        navigate("/info");
     }
 
     //Additional function
@@ -34,9 +34,7 @@ const Info = () => {
                     <div className="info-logo-one">
                         {
                             !clickLink &&
-                            <LazyLoad>
-                                <InfoLogo/>
-                            </LazyLoad>
+                            <InfoLogo/>
                         }
                     </div>
                     <div className="info-logo-two">

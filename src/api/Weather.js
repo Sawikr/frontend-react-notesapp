@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import {PropagateLoader} from 'react-spinners';
 import {isUserLoggedIn} from '../service/LoginService';
 import {navbarToken} from '../service/NavbarService';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 
 function Weather() {
     const [weather, setWeather] = useState([]);
@@ -13,12 +13,13 @@ function Weather() {
     const [showReturnButton, setShowReturnButton] = useState(false);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
-    const history = useHistory();
+    const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     function returnButton() {
         navbarToken(true);
-        history.goBack();
+        //history.goBack();
+        navigate(-2);
     }
 
     async function showButton() {
@@ -26,7 +27,7 @@ function Weather() {
         setShowReturnButton(true);
     }
 
-    useEffect(() => {
+    function getWeather() {
         NotesService.getWeather()
             .then(async response => {
                 console.log('Printing response!', response.data);
@@ -37,6 +38,10 @@ function Weather() {
             .catch(error => {
                 console.log('An error occurred!', error);
             })
+    }
+
+    useEffect(() => {
+        getWeather();
     }, []);
 
     return (

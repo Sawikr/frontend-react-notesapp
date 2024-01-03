@@ -1,21 +1,21 @@
 import Space from './Space';
 import Logo from '../image/Logo';
 import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
 import {navbarToken} from '../service/NavbarService';
 import {useEffect} from 'react';
 import {clickInfoToken} from '../service/AddService';
+import {useNavigate} from 'react-router';
 
 const Copyright = () => {
     const [showReturnButton, setShowReturnButton] = useState(false);
     const currentYear = new Date().getFullYear();
-    const history = useHistory();
+    const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     function returnButton() {
         navbarToken(true);
         clickInfoToken(true);
-        history.goBack();
+        navigate(-2);
     }
 
     async function showButton() {
@@ -23,8 +23,8 @@ const Copyright = () => {
         setShowReturnButton(true);
     }
 
-    useEffect(async () => {
-        await showButton();
+    useEffect(() => {
+        showButton().then(r => r);
     });
 
     return (
@@ -46,7 +46,7 @@ const Copyright = () => {
                 <Space/>
                 <Space/>
                 <h6 className="text-center">Description:</h6>
-                <p></p>
+                <p> </p>
                 <label>
                     <x-h7 className="text-center" style={{fontStyle: 'italic'}}>Notes App is a REST API based application. This is an application for
                         creating, editing, deleting and emailing personal notes. The application also includes current

@@ -6,7 +6,7 @@ function InfoLogo() {
     console.log(logo);
     return (
         <div>
-            <Image src={logo} alt='Notes App logo' height={22} width={22} layout="responsive"/>
+            <Image src={logo} alt='Notes App logo' height={22} width={22} layout="responsive" loading="lazy"/>
         </div>
     );
 }

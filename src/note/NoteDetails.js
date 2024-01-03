@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {isUserLoggedIn} from '../service/LoginService';
 import NotesService from '../service/NotesService';
 import Moment from 'react-moment';
@@ -9,6 +9,7 @@ import {newNoteToken} from '../service/AddNoteService';
 import {getNoteCreatingDateToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import Alert from '../alert/Alert';
 import {getNavbarToken, navbarToken} from '../service/NavbarService';
+import {useNavigate} from 'react-router';
 
 const NoteDetails = () => {
     const [currentNote, setCurrentNote] = useState('');
@@ -25,7 +26,7 @@ const NoteDetails = () => {
     const [showReturnButton, setShowReturnButton] = useState(false);
     let [interval, setInterval] = useState('');
     const {id} = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
     let isNoteCreatingDateToken = getNoteCreatingDateToken();
     let isHome = getNavbarToken();
@@ -40,7 +41,7 @@ const NoteDetails = () => {
         }
     }
 
-    useEffect(async () => {
+    async function getNoteDetails() {
         setLoading(true);
         setShowReturnButton(false);
         if (isNoteCreatingDateToken === null) {
@@ -75,8 +76,7 @@ const NoteDetails = () => {
                             setNoteCreatingDateFalse(false);
                         }
                         navbarToken(false);
-                    }
-                    else if (isNoteCreatingDateToken.match(false)) {
+                    } else if (isNoteCreatingDateToken.match(false)) {
                         isHome = getNavbarToken();
                         if (isHome.match(false)) {
                             setNoteCreatingDateTrue(true);
@@ -102,11 +102,9 @@ const NoteDetails = () => {
                             setCounter(counter + 1);
                             console.log('Counter is ' + counter + '!');
                         }, 3000);
-                    }
-                    else if (counter === 0 || counter === 1 || counter === 2) {
+                    } else if (counter === 0 || counter === 1 || counter === 2) {
                         setStart(true);
-                    }
-                    else if (counter === 3) {
+                    } else if (counter === 3) {
                         clearInterval(interval);
                         window.location.reload(false);
                     }
@@ -115,8 +113,12 @@ const NoteDetails = () => {
             //alert("Log in first!");
             setLogFirst(true);
             await wait(3000);
-            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+            navigate("/radoslaw-sawicki-frontend-react-notesapp");
         }
+    }
+
+    useEffect(() => {
+        getNoteDetails().then(r => r);
     }, [isNoteCreatingDateToken, counter, start]);
 
     const handleDelete = async () => {
@@ -130,7 +132,7 @@ const NoteDetails = () => {
                     //alert("Note deleted successfully!");
                     setDeletedTrue(true);
                     await wait(3000);
-                    history.push("/notes/list");
+                    navigate("/notes/list");
                 })
                 .catch(async error => {
                     console.log('An error occurred!', error);
@@ -142,25 +144,25 @@ const NoteDetails = () => {
             //alert("Log in first!");
             setLogFirst(true);
             await wait(3000);
-            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+            navigate("/radoslaw-sawicki-frontend-react-notesapp");
         }
     }
 
     const handleUpdate = () => {
         newNoteToken(false);
         navbarToken(true);
-        history.push(`/notes/edit/${id}`);
+        navigate(`/notes/edit/${id}`);
     }
 
     const handleSend = () => {
         newNoteToken(false);
         navbarToken(true);
-        history.push(`/notes/email/${id}`);
+        navigate(`/notes/email/${id}`);
     }
 
     function returnButton() {
         navbarToken(true);
-        history.goBack();
+        navigate(-1);
     }
 
     async function showButton() {

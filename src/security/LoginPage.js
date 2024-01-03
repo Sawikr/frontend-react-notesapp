@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import LoginService, {isUserLoggedIn, saveLoggedInUser, storeToken} from '../service/LoginService';
+import LoginService, {getLogoutToken, isUserLoggedIn, logoutToken, saveLoggedInUser, storeToken} from '../service/LoginService';
 import Popup from 'reactjs-popup';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {clickInfoToken, getClickInfoToken} from '../service/AddService';
+import {useNavigate} from 'react-router';
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -20,9 +20,11 @@ const LoginPage = () => {
     const [start, setStart] = useState(false);
     const [counter, setCounter] = useState(0);
     let [interval, setInterval] = useState('');
-    const history = useHistory();
+    let [showCheckPassword, setShowCheckPassword] = useState(false);
+    const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
     let isClickInfo = getClickInfoToken();
+    let isLogout = getLogoutToken();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const sendLogin = () => {
@@ -51,35 +53,48 @@ const LoginPage = () => {
             })
     }
 
-    useEffect(async () => {
+    async function fetchData() {
+        setShowCheckPassword(false);
         if (isClickInfo === null) {
             clickInfoToken(false);
-        }
-        else if (isClickInfo.match(true)) {
+        } else if (isClickInfo.match(true)) {
             window.location.reload();
         }
 
+        if (isLogout === null) {
+            logoutToken(false);
+        } else if (isLogout.match(true)) {
+            setShowCheckPassword(true);
+            // console.log(showCheckPassword);
+        }
+
         if (isAuth) {
-            history.push("/notes/list");
+            navigate("/notes/list");
         } else {
             if (start) {
                 interval = setInterval(() => {
-                    login().then(r => console.log('Interval worked!'));
+                    login().then(r => {
+                        logoutToken(true);
+                        console.log('Interval worked!');
+                    })
                     setStart(false);
                     setCounter(counter + 1);
                     console.log('Counter is ' + counter + '!')
                 }, 6000);
-            }
-            else if (counter === 3) {
+            } else if (counter === 3) {
                 clearInterval(interval);
                 setLoginFalse(true);
                 await wait(3000);
                 setLoginFalse(false);
-                window.location.reload(false);
+                window.location.reload();
             }
             return () => clearInterval(interval);
         }
-    }, [isAuth, start, loginFalse]);
+    }
+
+    useEffect(() => {
+        fetchData().then(r => r);
+    }, [isAuth, start, loginFalse, showCheckPassword]);
 
     async function login() {
         if (!usernameOrEmail || !password) {
@@ -105,6 +120,7 @@ const LoginPage = () => {
                 const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
                 storeToken(token);
                 saveLoggedInUser(usernameOrEmail);
+                logoutToken(false);
                 sendLogin();
                 sendList();
                 setLoading(false);
@@ -118,9 +134,12 @@ const LoginPage = () => {
                 }
                 else if (counter === 1) {
                     setStart(false);
-                    setLoading(false);
                 }
             })
+    }
+
+    function checkPassword() {
+        navigate("/password");
     }
 
     return (
@@ -210,6 +229,12 @@ const LoginPage = () => {
                     <div className="text-center">
                         <button className="button" onClick={(e) => login(e)}>Log In</button>
                     </div>
+                    {
+                        showCheckPassword &&
+                        <div className="text-center">
+                            <button className="check-password" onClick={(e) => checkPassword()}>Forgot password?</button>
+                        </div>
+                    }
                 </form>
             </div>
             )}

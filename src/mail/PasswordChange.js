@@ -1,24 +1,28 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import MailService from '../service/MailService';
-import NotesService from '../service/NotesService';
 import Popup from 'reactjs-popup';
 import Space from '../element/Space';
 import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
 import {useNavigate} from 'react-router';
+import * as React from 'react';
+import {POST} from './SendMessage';
 
-const SendMail = () => {
+const PasswordChange = () => {
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginUsername, setLoginUsername] = useState('');
+    const [checkUsernameOrEmail, setCheckUsernameOrEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [email, setEmail] = useState('');
+    const [error, setError] = useState(false);
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [sentTrue, setSentTrue] = useState(false);
-    const [error, setError] = useState(false);
     const [showReturnButton, setShowReturnButton] = useState(false);
-    const {id} = useParams();
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
@@ -32,53 +36,36 @@ const SendMail = () => {
         setShowReturnButton(true);
     }
 
-    const sendMail = (e) => {
-        if (!email || !title || !body) {
+    async function sendMessage() {
+        const res = await fetch("/api/email", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({email: email}),
+        });
+        console.log(res);
+    };
+
+    const sendMessageIfUsernameOrEmailExists = async () => {
+        if (!email) {
             setErrors(true);
             return;
         } else {
             setLoading(true);
         }
 
-        const sendEmail = {email, title, body, id};
-        if (id) {
-            MailService.send(sendEmail)
-                .then(async response => {
-                    console.log('Email sent successfully:', response.data);
-                    console.log(sendEmail);
-                    setLoading(false);
-                    //alert("E-mail sent successfully to " + email + "!");
-                    setSentTrue(true);
-                    await wait(3000);
-                    navigate("/notes/list");
-                })
-                .catch(async error => {
-                    console.log('An error occurred!', error);
-                    //alert("An error occurred!");
-                    setError(true);
-                    await wait(3000);
-                })
-        }
-    }
-
-    function getNoteToSend() {
-        setLoading(true);
-        if (id) {
-            NotesService.get(id)
-                .then(async note => {
-                    setTitle(note.data.title);
-                    setBody(note.data.body);
-                    setLoading(false);
-                    await showButton();
-                })
-                .catch(error => {
-                    console.log('An error occurred!', error);
-                })
-        }
+        await sendMessage();
+        setLoading(false);
+        setSentTrue(true);
+        await wait(3000);
+        setSentTrue(false);
+        console.log('Send email!');
     }
 
     useEffect(() => {
-        getNoteToSend();
+        setLoading(false);
+        showButton().then(r => r);
     }, []);
 
     return (
@@ -99,13 +86,9 @@ const SendMail = () => {
                         </div>
                     </Alert>
                 }
-                {
-                    (sentTrue || error) &&
-                    <Space />
-                }
             </div>
             {loading ? (
-                <div className="loader-container">
+                <div className="loader-container" style={{marginTop: 137}}>
                     <div className="text-center">
                         <PropagateLoader color={'#79589f'} size={20}/>
                         <Space/>
@@ -114,6 +97,7 @@ const SendMail = () => {
             ) : (
             <div className="create">
                 <div className="text-center">
+                    <Space/>
                     <h5>Send a Email</h5>
                     {!errors && <Space/>}
                     {errors &&
@@ -135,40 +119,11 @@ const SendMail = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
-                        <Popup trigger={<label htmlFor="title">Note Title: <sup>*</sup></label>}
-                               position="right center">
-                            <div className="popup-body">
-                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
-                            </div>
-                        </Popup>
-                        <input
-                            type="text"
-                            className="input"
-                            id="title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <Popup trigger={<label htmlFor="body">Note Description: <sup>*</sup></label>}
-                               position="right center">
-                            <div className="popup-body">
-                                <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
-                            </div>
-                        </Popup>
-                        <textarea
-                            id="body"
-                            className="textarea"
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}>
-                    </textarea>
-                    </div>
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                         <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                     <div className="text-center">
                         <button className="button-add"
-                            onClick={(e) => sendMail()}>Send Email</button>
+                            onClick={(e) => sendMessageIfUsernameOrEmailExists(e)}>Send Email</button>
                     </div>
                 </form>
                 <Space/>
@@ -188,4 +143,4 @@ const SendMail = () => {
     );
 }
 
-export default SendMail;
+export default PasswordChange;

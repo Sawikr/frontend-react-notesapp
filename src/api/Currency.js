@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 import {PropagateLoader} from 'react-spinners';
 import {isUserLoggedIn} from '../service/LoginService';
 import {navbarToken} from '../service/NavbarService';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 
 function Currency() {
     const [currencyEUR, setCurrencyEUR] = useState([]);
@@ -16,12 +16,12 @@ function Currency() {
     const [showReturnButton, setShowReturnButton] = useState(false);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
-    const history = useHistory();
+    const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     function returnButton() {
         navbarToken(true);
-        history.goBack();
+        navigate(-2);
     }
 
     async function showButton() {
@@ -29,7 +29,7 @@ function Currency() {
         setShowReturnButton(true);
     }
 
-    useEffect(() => {
+    function getCurrencyEUR() {
         NotesService.getCurrencyEUR()
             .then(async response => {
                 console.log('Printing response!', response.data);
@@ -40,9 +40,9 @@ function Currency() {
             .catch(error => {
                 console.log('An error occurred!', error);
             })
-    }, []);
+    }
 
-    useEffect(() => {
+    function getCurrencyUSD() {
         NotesService.getCurrencyUSD()
             .then(response => {
                 console.log('Printing response!', response.data);
@@ -51,9 +51,9 @@ function Currency() {
             .catch(error => {
                 console.log('An error occurred!', error);
             })
-    }, []);
+    }
 
-    useEffect(() => {
+    function getCurrencyCHF() {
         NotesService.getCurrencyCHF()
             .then(response => {
                 console.log('Printing response!', response.data);
@@ -62,9 +62,9 @@ function Currency() {
             .catch(error => {
                 console.log('An error occurred!', error);
             })
-    }, []);
+    }
 
-    useEffect(() => {
+    function getCurrencyGBP() {
         NotesService.getCurrencyGBP()
             .then(response => {
                 console.log('Printing response!', response.data);
@@ -73,6 +73,13 @@ function Currency() {
             .catch(error => {
                 console.log('An error occurred!', error);
             })
+    }
+
+    useEffect(() => {
+        getCurrencyEUR();
+        getCurrencyUSD();
+        getCurrencyCHF();
+        getCurrencyGBP();
     }, []);
 
     return (

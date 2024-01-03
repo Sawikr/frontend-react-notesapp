@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from './LoginService';
 import {clickCurrencyToken, clickWeatherToken, isClickCurrency, isClickWeather} from './ApiService';
+import {useNavigate} from 'react-router';
 
 export const clickInfoToken = (token) => sessionStorage.setItem("token", token);
 
@@ -39,13 +40,14 @@ const AddService = () => {
     let isLogout = getLogoutToken();
     const isCurrency = isClickCurrency();
     const isWeather = isClickWeather();
-    const history = useHistory();
+    //const history = useHistory();
+    const navigate = useNavigate();
 
     function handleClickLogin() {
         console.log('Link clicked!');
         setClickLogin(true);
         clickInfoToken(false);
-        history.push("/radoslaw-sawicki-frontend-react-notesapp");
+        navigate("/radoslaw-sawicki-frontend-react-notesapp");
         window.location.reload();
     }
 
@@ -54,7 +56,7 @@ const AddService = () => {
         setClickRegister(true);
         setClickLogin(false);
         clickInfoToken(false);
-        history.push("/notes/auth/register");
+        navigate("/notes/auth/register");
     }
 
     function handleLogout() {
@@ -71,7 +73,7 @@ const AddService = () => {
 
         isLogout = getLogoutToken();
         setLogout(isLogout);
-        console.log('AddService-logout: ' + logout);
+        //console.log('AddService-logout: ' + logout);
     }, [isLogout]);
 
     function process() {

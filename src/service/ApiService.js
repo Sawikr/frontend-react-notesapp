@@ -1,7 +1,8 @@
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {clickInfoToken} from './AddService';
 import Space from '../element/Space';
 import {useState} from 'react';
+import {useNavigate} from 'react-router';
 
 export const clickCurrencyToken = (currency) => sessionStorage.setItem("currency", currency);
 
@@ -33,7 +34,8 @@ export const isClickWeather = () => {
 
 const ApiService = (props) => {
     const [active, setActive] = useState(false);
-    const history = useHistory();
+    //const history = useHistory();
+    const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     const handleClick = async () => {
@@ -45,7 +47,7 @@ const ApiService = (props) => {
     function handleClickCurrency() {
         clickInfoToken(false);
         clickCurrencyToken(true);
-        history.push("/notes/nbp");
+        navigate("/notes/nbp");
         console.log('Clicked currency: ' + getCurrencyToken());
         window.location.reload();
     }
@@ -53,7 +55,7 @@ const ApiService = (props) => {
     function handleClickWeather() {
         clickInfoToken(false);
         clickWeatherToken(true);
-        history.push("/notes/weather");
+        navigate("/notes/weather");
         console.log('Clicked weather: ' + getWeatherToken());
         window.location.reload();
     }

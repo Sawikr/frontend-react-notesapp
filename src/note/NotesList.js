@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {useHistory} from 'react-router-dom';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
 import CategoryService, {getSelectCategory, getUpdatedCategoryToken, saveCategory, updatedCategoryToken} from '../service/CategoryService';
@@ -11,6 +10,7 @@ import {useOnceEffect} from '../config/UseDevEffect';
 import {getNavbarToken, navbarToken} from '../service/NavbarService';
 import {getNoteCreatingDateClickToken, getNoteCreatingDateToken, noteCreatingDateClickToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import {clickInfoToken, getClickInfoToken} from '../service/AddService';
+import {useNavigate} from 'react-router';
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -34,7 +34,7 @@ const NotesList = () => {
     let [interval, setInterval] = useState('');
     const [noteCreatingDateTrue, setNoteCreatingDateTrue] = useState(false);
     const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
     let isHome = getNavbarToken();
     let isNoteCreatingDateToken = getNoteCreatingDateToken();
@@ -43,7 +43,7 @@ const NotesList = () => {
     const [noteCreatedDate, setNoteCreatedDate] = useState(false);
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
-    useOnceEffect (async () => {
+    async function getNotesList() {
         if (category === null) {
             setCategory(await getSaveCategory());
             setCounter(2);
@@ -71,8 +71,7 @@ const NotesList = () => {
 
             if (isClickInfo === null) {
                 clickInfoToken(false);
-            }
-            else if (isClickInfo.match(true)) {
+            } else if (isClickInfo.match(true)) {
                 window.location.reload();
             }
 
@@ -84,7 +83,7 @@ const NotesList = () => {
 
             NotesService.getAll()
                 .then(async response => {
-                    console.log('Printing response!', response.data);
+                    //console.log('Printing response!', response.data);
                     setNotes(response.data);
                     setLoading(false);
                     setShowedError(false);
@@ -93,8 +92,7 @@ const NotesList = () => {
 
                     if (isNoteCreatingDateToken.match(true)) {
                         setNoteCreatedDate(true);
-                    }
-                    else {
+                    } else {
                         setNoteCreatedDate(false);
                     }
 
@@ -110,8 +108,7 @@ const NotesList = () => {
                             setNewCategory(false);
                             updatedCategoryToken(false);
                             navbarToken(false);
-                        }
-                        else if (isUpdatedCategory.match(false) && counter === 2) {
+                        } else if (isUpdatedCategory.match(false) && counter === 2) {
                             if (isHome.match(false)) {
                                 setNewCategory(true);
                                 await wait(5000);
@@ -121,8 +118,7 @@ const NotesList = () => {
                                     setNoteCreatingDateFalse(true);
                                     await wait(4500);
                                     setNoteCreatingDateFalse(false);
-                                }
-                                else if (isNoteCreatingDateToken.match(false)) {
+                                } else if (isNoteCreatingDateToken.match(false)) {
                                     setNoteCreatingDateTrue(true);
                                     await wait(4500);
                                     setNoteCreatingDateTrue(false);
@@ -140,8 +136,7 @@ const NotesList = () => {
                                     setNoteCreatedDate(true);
                                     setCounter(1);
                                 }
-                            }
-                            else {
+                            } else {
                                 if (counter === 2) {
                                     setNoteCreatingDateTrue(true);
                                     await wait(4500);
@@ -151,15 +146,14 @@ const NotesList = () => {
                                 }
                             }
                         }
-                    }
-                    else if (isLogout.match(true)) {
+                    } else if (isLogout.match(true)) {
                         setLogoutForm(true);
                         await wait(3000);
                         setLogoutForm(false);
                         setLoading(true);
                         await logout();
                         //alert("Logged out successfully!");
-                        history.push("/radoslaw-sawicki-frontend-react-notesapp");
+                        navigate("/radoslaw-sawicki-frontend-react-notesapp");
                         window.location.reload();
                     }
                     //throw error;
@@ -179,23 +173,23 @@ const NotesList = () => {
                             setCounter(counter + 1);
                             console.log('Counter is ' + counter + '!');
                         }, 3000);
-                    }
-                    else if (counter === 0 || counter === 1 || counter === 2) {
+                    } else if (counter === 0 || counter === 1 || counter === 2) {
                         setStart(true);
-                    }
-                    else if (counter === 3) {
+                    } else if (counter === 3) {
                         clearInterval(interval);
-                        window.location.reload(false);
+                        window.location.reload();
                     }
                 })
-        }
-        else {
+        } else {
             //alert("Log in first!");
             setLogFirst(true);
             await wait(4500);
-            history.push("/radoslaw-sawicki-frontend-react-notesapp");
+            navigate("/radoslaw-sawicki-frontend-react-notesapp");
         }
+    }
 
+    useOnceEffect (() => {
+        getNotesList().then(r => r);
     }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken]);
 
     async function getSaveCategory() {
