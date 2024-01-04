@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const {userFirstname} = request.json();
     const {data, error} = await resend.emails.send({
         from: 'contact@notesapp.pl',
-        to: email,
+        to: 'sawikr10@gmail.com',
         subject: 'Reset password in NotesApp',
         react: NotesAppResetPasswordEmail({userFirstname})
     });
