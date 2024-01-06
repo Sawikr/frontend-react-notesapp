@@ -8,9 +8,8 @@ const sendLogin = data =>
 const sendList = data =>
     axios.post(BASE_URL + '/noteLists', data);
 
-const loginObj = (usernameOrEmail, password) => {
-    return httpClient.post(BASE_URL + '/auth/login', {usernameOrEmail, password})
-};
+const loginObj = (usernameOrEmail, password) =>
+    axios.post(BASE_URL + '/auth/login', {usernameOrEmail, password});
 
 const getAllUsers = () =>
     axios.get(BASE_URL + '/auth/user')

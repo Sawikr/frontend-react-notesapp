@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Route} from 'react-router-dom';
-import {Routes} from 'react-router';
+import {Routes, Route} from 'react-router';
 import Navbar from "./element/Navbar";
 import NoteDetails from "./note/NoteDetails";
 import NotesList from './note/NotesList';

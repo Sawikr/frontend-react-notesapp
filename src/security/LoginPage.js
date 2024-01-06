@@ -109,12 +109,12 @@ const LoginPage = () => {
         }
 
         await LoginService.loginObj(usernameOrEmail, password)
-            .then(async (response) => {
+            .then((response) => {
                 setLoading(true);
                 console.log('Login is successfully!', response.data);
                 setLoginProgress(false);
                 setLoginTrue(true);
-                await wait(3000);
+                wait(3000);
                 setLoginTrue(false);
 
                 const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
@@ -127,12 +127,11 @@ const LoginPage = () => {
                 setStart(false);
                 window.location.reload(false);
             })
-            .catch(async error => {
+            .catch(error => {
                 console.log('An error occurred!', error);
                 if (counter === 0) {
                     setStart(true);
-                }
-                else if (counter === 1) {
+                } else if (counter === 1) {
                     setStart(false);
                 }
             })
