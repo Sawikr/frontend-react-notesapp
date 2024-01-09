@@ -259,7 +259,7 @@ const NoteDetails = () => {
                                 <Moment format="DD-MM-YYYY HH:mm" fromNow>{currentNote.updatedAt}</Moment>
                                 <span className="text-capitalize">, {currentNote.category}</span>
                             </div>
-                            <div className="mb-3">{currentNote.body}</div>
+                            <div className="mb-3" style={{textJustify: "auto", textAlign: "justify"}}>{currentNote.body}</div>
                         </article>
                         <Space/>
                         <button className="button" onClick={handleUpdate}>Edit</button>
