@@ -7,5 +7,8 @@ const get = id =>
 const send = data =>
     axios.post(BASE_URL + '/notes/email', data)
 
+const resend = data =>
+    axios.post(BASE_URL + '/notes/resend', data)
+
 // eslint-disable-next-line
-export default { get, send };
+export default { get, send, resend };

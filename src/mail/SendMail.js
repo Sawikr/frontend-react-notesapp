@@ -32,7 +32,7 @@ const SendMail = () => {
         setShowReturnButton(true);
     }
 
-    const sendMail = (e) => {
+    const sendMail = () => {
         if (!email || !title || !body) {
             setErrors(true);
             return;

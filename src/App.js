@@ -16,6 +16,7 @@ import RegisterPage from "./security/RegisterPage";
 import Username from "./element/Username";
 import Copyright from "./element/Copyright";
 import PasswordChange from "./mail/PasswordChange";
+import ResetPassword from "./mail/ResetPassword";
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/info" element={<Copyright />} />
                     <Route path="/radoslaw-sawicki-frontend-react-notesapp" element={<LoginPage />} />
                     <Route path="/password" element={<PasswordChange />} />
+                    <Route path="/reset" element={<ResetPassword />} />
                     <Route path="*" element={<LoginPage />} />
                 </Routes>
             </div>

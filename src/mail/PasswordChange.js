@@ -6,23 +6,15 @@ import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
 import {useNavigate} from 'react-router';
 import * as React from 'react';
-import {POST} from './SendMessage';
+import MailService from '../service/MailService';
 
 const PasswordChange = () => {
-    const [loginEmail, setLoginEmail] = useState('');
-    const [loginUsername, setLoginUsername] = useState('');
-    const [checkUsernameOrEmail, setCheckUsernameOrEmail] = useState('');
-    const [email, setEmail] = useState('');
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
+    const [emailName, setEmailName] = useState('');
     const [error, setError] = useState(false);
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [sentTrue, setSentTrue] = useState(false);
     const [showReturnButton, setShowReturnButton] = useState(false);
-    const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
@@ -36,31 +28,33 @@ const PasswordChange = () => {
         setShowReturnButton(true);
     }
 
-    async function sendMessage() {
-        const res = await fetch("/api/email", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({email: email}),
-        });
-        console.log(res);
-    };
-
-    const sendMessageIfUsernameOrEmailExists = async () => {
-        if (!email) {
+    const sendMessageIfUsernameOrEmailExists = () => {
+        if (!emailName) {
             setErrors(true);
             return;
         } else {
             setLoading(true);
         }
 
-        await sendMessage();
-        setLoading(false);
-        setSentTrue(true);
-        await wait(3000);
-        setSentTrue(false);
-        console.log('Send email!');
+        const sendResendEmail = {emailName};
+        MailService.resend(sendResendEmail)
+            .then(async response => {
+                console.log('Email sent successfully:', response.data);
+                console.log(sendResendEmail);
+                setLoading(false);
+                //alert("E-mail sent successfully to " + email + "!");
+                setSentTrue(true);
+                await wait(3000);
+                setSentTrue(false);
+            })
+            .catch(async error => {
+                console.log('An error occurred!', error);
+                setLoading(false);
+                //alert("An error occurred!");
+                setError(true);
+                await wait(3000);
+                setError(false);
+            })
     }
 
     useEffect(() => {
@@ -74,7 +68,7 @@ const PasswordChange = () => {
                 {
                     sentTrue &&
                     <Alert type="info">
-                        <div style={{color: '#79589f'}}>E-mail sent successfully to {email}!</div>
+                        <div style={{color: '#79589f'}}>E-mail sent successfully to {emailName}!</div>
                     </Alert>
                 }
                 {
@@ -115,8 +109,8 @@ const PasswordChange = () => {
                             type="text"
                             className="input"
                             id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={emailName}
+                            onChange={(e) => setEmailName(e.target.value)}
                         />
                     </div>
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>

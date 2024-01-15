@@ -13,8 +13,8 @@ import {
 import * as React from 'react';
 
 interface NotesAppResetPasswordEmailProps {
-    userFirstname: string;
-    resetPasswordLink: string;
+    userFirstname?: string;
+    resetPasswordLink?: string;
 }
 
 export const NotesAppResetPasswordEmail = (

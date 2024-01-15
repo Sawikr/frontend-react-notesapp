@@ -50,6 +50,17 @@ button {
   cursor: pointer;
 }
 
+.button-reset {
+    height: 40px;
+    width: 135px;
+    background: #79589f;
+    border-radius: 5px;
+    border: 0 solid #79589f;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 .button-add:hover {
   box-shadow: 0 4px 0 rgba(121, 88, 159, 0.35);
   outline: #79589f;
