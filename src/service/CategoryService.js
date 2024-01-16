@@ -36,6 +36,7 @@ export function getSelectCategory() {
         <option value="programming">Programming</option>
         <option value="other">Other</option>
         <option value="vacation">Vacation</option>
+        <option value="visits">Visits</option>
     </>;
 }
 
