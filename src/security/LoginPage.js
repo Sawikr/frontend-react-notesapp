@@ -6,6 +6,7 @@ import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {clickInfoToken, getClickInfoToken} from '../service/AddService';
 import {useNavigate} from 'react-router';
+import ModalAlert from '../alert/modal/ModalAlert';
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -14,6 +15,7 @@ const LoginPage = () => {
     const [loginTrue, setLoginTrue] = useState(false);
     const [loginFalse, setLoginFalse] = useState(false);
     const [loginProgress, setLoginProgress] = useState(false);
+    const [modalAlert, setModalAlert] = useState(false);
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -72,6 +74,11 @@ const LoginPage = () => {
             navigate("/notes/list");
         } else {
             if (start) {
+                if (counter === 1) {
+                    await wait(1000);
+                    setModalAlert(true);
+                    return;
+                }
                 interval = setInterval(() => {
                     login().then(r => {
                         logoutToken(true);
@@ -80,13 +87,14 @@ const LoginPage = () => {
                     setStart(false);
                     setCounter(counter + 1);
                     console.log('Counter is ' + counter + '!')
-                }, 6000);
-            } else if (counter === 3) {
-                clearInterval(interval);
+                }, 2000);
+            }
+            else if (counter === 1) {
+                //clearInterval(interval);
+                setLoading(false);
                 setLoginFalse(true);
                 await wait(3000);
                 setLoginFalse(false);
-                window.location.reload();
             }
             return () => clearInterval(interval);
         }
@@ -94,7 +102,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         fetchData().then(r => r);
-    }, [isAuth, start, loginFalse, showCheckPassword]);
+    }, [isAuth, start, loginFalse, showCheckPassword, counter, modalAlert]);
 
     async function login() {
         if (!usernameOrEmail || !password) {
@@ -127,7 +135,7 @@ const LoginPage = () => {
                 setStart(false);
                 window.location.reload(false);
             })
-            .catch(error => {
+            .catch(async error => {
                 console.log('An error occurred!', error);
                 if (counter === 0) {
                     setStart(true);
@@ -175,6 +183,14 @@ const LoginPage = () => {
                             </div>
                         </Alert>
                     }
+                    {
+                        modalAlert &&
+                        <ModalAlert/>
+                    }
+                    {/*{*/}
+                    {/*    modalAlert &&*/}
+                    {/*    <div className='loader-one'/>*/}
+                    {/*}*/}
                 </div>
                 {loading ? (
                     <div className="loader-container" style={{marginTop: 137}}>
