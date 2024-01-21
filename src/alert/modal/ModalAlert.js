@@ -11,9 +11,10 @@ import {
 } from 'mdb-react-ui-kit';
 
 export default function ModalAlert() {
-    const [basicModal, setBasicModal] = useState(false);
+    const [basicModal, setBasicModal] = useState(true);
 
-    const toggleOpen = () => setBasicModal(!basicModal);
+    const toggleOpen = () => setBasicModal(basicModal);
+    const toggleClose = () => setBasicModal(!basicModal);
 
     useEffect(() => {
         toggleOpen();
@@ -36,7 +37,7 @@ export default function ModalAlert() {
                             As of January 2024, the Replit platform has changed its hosting policies. The repl.co domains have been moved to replit.dev and will only be available when using the editor. This means that the server does not start automatically after logging in to the application.
                         </MDBModalBody>
                         <MDBModalFooter>
-                            <MDBBtn className='button' color='none' onClick={toggleOpen}>
+                            <MDBBtn className='button-modal' color='none' onClick={toggleClose}>
                                 Close
                             </MDBBtn>
                         </MDBModalFooter>

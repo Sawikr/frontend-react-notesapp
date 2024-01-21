@@ -79,14 +79,10 @@ const LoginPage = () => {
                         logoutToken(true);
                         console.log('Interval worked!');
                     })
-                    if (counter === 3) {
-                        setStart(true);
-                        return;
-                    }
                     setStart(false);
                     setCounter(counter + 1);
                     console.log('Counter is ' + counter + '!')
-                }, 2000);
+                }, 6000);
             }
             else if (counter === 2) {
                 clearInterval(interval);
@@ -94,14 +90,17 @@ const LoginPage = () => {
                 setLoginFalse(true);
                 await wait(3000);
                 setLoginFalse(false);
+                setCounter(0);
             }
-            return () => clearInterval(interval);
         }
     }
 
     useEffect(() => {
         fetchData().then(r => r);
-    }, [isAuth, start, loginFalse, showCheckPassword, counter]);
+        if (counter === 2) {
+            setModalAlert(true);
+        }
+    }, [isAuth, start, loginFalse, showCheckPassword]);
 
     async function login() {
         if (!usernameOrEmail || !password) {
@@ -116,7 +115,6 @@ const LoginPage = () => {
                 setLoginProgress(false);
             } else {
                 setLoading(true);
-                setStart(true);
             }
         }
 
@@ -141,21 +139,20 @@ const LoginPage = () => {
             })
             .catch(async error => {
                 console.log('An error occurred!', error);
-                if (counter === 0) {
+                if (counter <= 1) {
                     setStart(true);
-                } else if (counter === 1) {
+                }
+                else if (counter === 2) {
                     setStart(false);
-                } else if (counter === 2) {
-                    clearInterval(interval);
                     setLoading(false);
                     setLoginFalse(true);
                     await wait(3000);
                     setLoginFalse(false);
-                    setModalAlert(true);
-                } else if (counter === 3) {
+                }
+                else if (counter === 3) {
                     setCounter(0);
-        }
-    })
+                }
+        })
     }
 
     function checkPassword() {
