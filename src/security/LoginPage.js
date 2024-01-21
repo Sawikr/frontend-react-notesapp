@@ -74,23 +74,22 @@ const LoginPage = () => {
             navigate("/notes/list");
         } else {
             if (start) {
-                if (counter === 1) {
-                    await wait(1000);
-                    setModalAlert(true);
-                    return;
-                }
                 interval = setInterval(() => {
                     login().then(r => {
                         logoutToken(true);
                         console.log('Interval worked!');
                     })
+                    if (counter === 3) {
+                        setStart(true);
+                        return;
+                    }
                     setStart(false);
                     setCounter(counter + 1);
                     console.log('Counter is ' + counter + '!')
                 }, 2000);
             }
-            else if (counter === 1) {
-                //clearInterval(interval);
+            else if (counter === 2) {
+                clearInterval(interval);
                 setLoading(false);
                 setLoginFalse(true);
                 await wait(3000);
@@ -102,7 +101,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         fetchData().then(r => r);
-    }, [isAuth, start, loginFalse, showCheckPassword, counter, modalAlert]);
+    }, [isAuth, start, loginFalse, showCheckPassword, counter]);
 
     async function login() {
         if (!usernameOrEmail || !password) {
@@ -110,10 +109,15 @@ const LoginPage = () => {
             return;
         } else {
             //alert("Logging in... Please wait for the server's response!");
-            setLoading(true);
-            setLoginProgress(true);
-            await wait(3000);
-            setLoginProgress(false);
+            if (counter === 0) {
+                setLoading(true);
+                setLoginProgress(true);
+                await wait(3000);
+                setLoginProgress(false);
+            } else {
+                setLoading(true);
+                setStart(true);
+            }
         }
 
         await LoginService.loginObj(usernameOrEmail, password)
@@ -141,8 +145,17 @@ const LoginPage = () => {
                     setStart(true);
                 } else if (counter === 1) {
                     setStart(false);
-                }
-            })
+                } else if (counter === 2) {
+                    clearInterval(interval);
+                    setLoading(false);
+                    setLoginFalse(true);
+                    await wait(3000);
+                    setLoginFalse(false);
+                    setModalAlert(true);
+                } else if (counter === 3) {
+                    setCounter(0);
+        }
+    })
     }
 
     function checkPassword() {
@@ -187,10 +200,6 @@ const LoginPage = () => {
                         modalAlert &&
                         <ModalAlert/>
                     }
-                    {/*{*/}
-                    {/*    modalAlert &&*/}
-                    {/*    <div className='loader-one'/>*/}
-                    {/*}*/}
                 </div>
                 {loading ? (
                     <div className="loader-container" style={{marginTop: 137}}>
