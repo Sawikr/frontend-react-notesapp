@@ -5,9 +5,14 @@ import {navbarToken} from '../service/NavbarService';
 import {useEffect} from 'react';
 import {clickInfoToken} from '../service/AddService';
 import {useNavigate} from 'react-router';
+import {Link} from 'react-router-dom';
+import ModalAlert from '../alert/modal/ModalLoginAlert';
 
 const Copyright = () => {
     const [showReturnButton, setShowReturnButton] = useState(false);
+    const [showLoginInfo, setShowLoginInfo] = useState(false);
+    const [modalAlert, setModalAlert] = useState(false);
+    const [start, setStart] = useState(false);
     const currentYear = new Date().getFullYear();
     const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
@@ -15,7 +20,12 @@ const Copyright = () => {
     function returnButton() {
         navbarToken(true);
         clickInfoToken(true);
-        navigate(-2);
+        navigate("/radoslaw-sawicki-frontend-react-notesapp");
+    }
+
+    async function handleClick() {
+        setModalAlert(!modalAlert);
+        setStart(true);
     }
 
     async function showButton() {
@@ -23,9 +33,18 @@ const Copyright = () => {
         setShowReturnButton(true);
     }
 
+    async function showLogin() {
+        await wait(5000);
+        setShowLoginInfo(true);
+    }
+
     useEffect(() => {
+        if (start === true) {
+            setModalAlert(true);
+        }
         showButton().then(r => r);
-    });
+        showLogin().then(r => r);
+    }, [start, modalAlert]);
 
     return (
         <div className="main-content">
@@ -53,6 +72,22 @@ const Copyright = () => {
                         creating, editing, deleting and emailing personal notes. The application also includes current
                         exchange rates and weather forecast.</x-h7>
                 </label>
+                <div className="login-alert" style={{justifyContent: "center"}}>
+                {
+                    showLoginInfo &&
+                    <x-h7>
+                        <Space/>
+                        More information on logging in can be found
+                        <Link className="primary-color" title='NotesApp info'
+                              onClick={handleClick}> here
+                        </Link>.
+                    </x-h7>
+                }
+                {
+                    modalAlert &&
+                    <ModalAlert/>
+                }
+                </div>
             </form>
             <Space/>
             {
