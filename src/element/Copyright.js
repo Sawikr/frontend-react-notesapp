@@ -78,9 +78,11 @@ const Copyright = () => {
                     <x-h7>
                         <Space/>
                         More information on logging in can be found
-                        <Link className="primary-color" title='NotesApp info'
-                              onClick={handleClick}> here
-                        </Link>.
+                        <span className="info-alert">
+                            <Link className="primary-color" title='NotesApp info'
+                                  onClick={handleClick}> here
+                            </Link>.
+                        </span>
                     </x-h7>
                 }
                 {

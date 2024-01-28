@@ -40,8 +40,10 @@ export default function ModalAlert() {
                             </p>
                             <p style={{marginBottom: 10, textAlign: "justify"}}>
                                 For this reason, NotesApp is currently hosted on the Heroku platform. For more information about logging in to application, visit the NotesApp
-                                <Link to="https://github.com/Sawikr/radoslaw-sawicki-frontend-react-notesapp" className="primary-color" title='NotesApp repository'
-                                > repository</Link>.
+                                <span className="info-alert">
+                                    <Link to="https://github.com/Sawikr/radoslaw-sawicki-frontend-react-notesapp" title='NotesApp repository'
+                                    > repository</Link>.
+                                </span>
                             </p>
                         </MDBModalBody>
                         <MDBModalFooter>

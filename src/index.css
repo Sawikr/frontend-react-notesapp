@@ -255,6 +255,21 @@ select:hover {
   color: black;
 }
 
+.info-alert {
+  max-width: available;
+  margin: auto;
+  font-size: 16px;
+}
+
+.info-alert a {
+  color: #79589f;
+}
+
+.info-alert a:hover {
+  text-outline: initial;
+  color: black;
+}
+
 .info-logo {
   display: block;
   max-width: 600px;
