@@ -442,6 +442,11 @@ select:hover {
   font-size: 13px;
 }
 
+.check-password:hover {
+  text-outline: initial;
+  color: black;
+}
+
 /* @media */
 @media (max-width: 436px) {
   .input {
