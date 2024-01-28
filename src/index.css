@@ -144,6 +144,26 @@ textarea:hover {
   box-shadow: 0 4px 0  rgba(121, 88, 159, 0.35);
 }
 
+TextareaAutosize {
+  width: 400px;
+  padding: 7px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  background: white;
+  transition: border-color 0.6s ease;
+}
+
+TextareaAutosize:focus {
+  border-color: #79589f;
+  box-shadow: 0 4px 0 rgba(121, 88, 159, 0.35);
+  outline: none;
+}
+
+TextareaAutosize:hover {
+  border-color: #79589f;
+  box-shadow: 0 4px 0  rgba(121, 88, 159, 0.35);
+}
+
 select {
   width: 400px;
   height: 40px;

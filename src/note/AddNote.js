@@ -10,6 +10,7 @@ import Alert from '../alert/Alert';
 import {getSelectCategory} from '../service/CategoryService';
 import {navbarToken} from '../service/NavbarService';
 import {useNavigate} from 'react-router';
+import {TextareaAutosize} from '@mui/base';
 
 const AddNote = () => {
     const [title, setTitle] = useState('');
@@ -228,12 +229,13 @@ const AddNote = () => {
                                 <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
                             </div>
                         </Popup>
-                        <textarea
+                        <TextareaAutosize
+                            autofocus
                             id="body"
                             className="textarea"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}>
-                    </textarea>
+                    </TextareaAutosize>
                     </div>
                     <div className="form-group">
                         <label htmlFor="category">Note Category:</label>

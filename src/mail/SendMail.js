@@ -8,6 +8,7 @@ import {PropagateLoader} from 'react-spinners';
 import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
 import {useNavigate} from 'react-router';
+import {TextareaAutosize} from '@mui/base';
 
 const SendMail = () => {
     const [title, setTitle] = useState('');
@@ -157,12 +158,13 @@ const SendMail = () => {
                                 <span style={{color: 'red', fontStyle: 'italic'}}>The mandatory field!</span>
                             </div>
                         </Popup>
-                        <textarea
+                        <TextareaAutosize
+                            autofocus
                             id="body"
                             className="textarea"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}>
-                    </textarea>
+                    </TextareaAutosize>
                     </div>
                     <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                         <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
