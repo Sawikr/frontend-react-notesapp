@@ -127,7 +127,8 @@ const LoginPage = () => {
                 wait(3000);
                 setLoginTrue(false);
 
-                const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
+                //const token = 'Basic ' + window.btoa(usernameOrEmail + ":" + password);
+                const token = 'Bearer ' + response.data.accessToken;
                 storeToken(token);
                 saveLoggedInUser(usernameOrEmail);
                 logoutToken(false);
