@@ -28,13 +28,13 @@ export const getUpdatedCategoryToken = () => sessionStorage.getItem("updatedCate
 export function getSelectCategory() {
     return <>
         <option value="all">All categories</option>
-        <option value="congregation">Congregation</option>
         <option value="circuit">Circuit</option>
+        <option value="congregation">Congregation</option>
+        <option value="congress">Congress</option>
         <option value="letters">Letters</option>
         <option value="meeting">Meeting</option>
-        <option value="talk">Public talk</option>
-        <option value="programming">Programming</option>
         <option value="other">Other</option>
+        <option value="talk">Public talk</option>
         <option value="vacation">Vacation</option>
         <option value="visits">Visits</option>
     </>;
