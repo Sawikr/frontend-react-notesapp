@@ -1,7 +1,13 @@
 import {useState} from 'react';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
-import CategoryService, {getSelectCategory, getUpdatedCategoryToken, saveCategory, updatedCategoryToken} from '../service/CategoryService';
+import CategoryService, {
+    getCategory,
+    getSelectCategory,
+    getUpdatedCategoryToken,
+    saveCategory,
+    updatedCategoryToken
+} from '../service/CategoryService';
 import Space from '../element/Space';
 import SortNotesService from '../service/SortNotesService';
 import {PropagateLoader} from 'react-spinners';
@@ -11,6 +17,7 @@ import {getNavbarToken, navbarToken} from '../service/NavbarService';
 import {getNoteCreatingDateClickToken, getNoteCreatingDateToken, noteCreatingDateClickToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import {clickInfoToken, getClickInfoToken} from '../service/AddService';
 import {useNavigate} from 'react-router';
+import {useParams} from "react-router-dom";
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -41,7 +48,9 @@ const NotesList = () => {
     let isNoteCreatingDateClickToken = getNoteCreatingDateClickToken();
     let isClickInfo = getClickInfoToken();
     const [noteCreatedDate, setNoteCreatedDate] = useState(false);
+    const [clickSaveSelectedCategory, setClickSaveSelectedCategory] = useState(false);
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+    const {id} = useParams();
 
     async function getNotesList() {
         if (category === null) {
@@ -190,6 +199,7 @@ const NotesList = () => {
 
     useOnceEffect (() => {
         getNotesList().then(r => r);
+        //console.info(counter);
     }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken]);
 
     async function getSaveCategory() {
@@ -224,6 +234,7 @@ const NotesList = () => {
     async function saveSelectedCategory() {
         saveCategory(category);
         setUpdatedCategory(updatedCategory);
+        setClickSaveSelectedCategory(true);
         console.log('Selected category is: ' + category + '!');
     }
 

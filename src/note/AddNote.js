@@ -230,7 +230,6 @@ const AddNote = () => {
                             </div>
                         </Popup>
                         <TextareaAutosize
-                            autofocus
                             id="body"
                             className="textarea"
                             value={body}
