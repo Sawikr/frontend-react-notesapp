@@ -72,7 +72,7 @@ const SortNotesService = (props) => {
                 //console.log(response);
             })
             .catch(error => {
-                console.log("An error occurred!", error);
+                console.log('An error occurred!', error);
             })
     }, []);
 
@@ -106,15 +106,22 @@ const SortNotesService = (props) => {
 
     function foundSpecificCategory(category) {
         return foundCategoryNotes = props.notes.filter(obj => {
-            return obj.category === category}).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername) &&
+                (obj.category === category)}).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     }
 
     function foundAllCategories(category) {
-        return foundAllNotes = props.notes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        return foundAllNotes = props.notes.filter(obj => {
+            return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername)}).
+                    sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     }
 
     const foundNotesByCategory = props.notes.filter(obj => {
-        return obj.category === checkCategory(category)});
+        return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername) &&
+            obj.category === checkCategory(category)});
+
+    const foundAllNotesByUsername = props.notes.filter(obj => {
+        return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername)});
 
     const allNotes = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
@@ -133,9 +140,9 @@ const SortNotesService = (props) => {
             setVisiblePagination(true);
         }
         if (checkIfCategoryIsAll(category)) {
-            console.info("Number of notes per page: " + allNotes.length);
+            console.info('Number of notes per page: ' + allNotes.length);
         } else
-            console.info("Number of notes per page: " + categoryNotes.length);
+            console.info('Number of notes per page: ' + categoryNotes.length);
     }, [newCategory, categoryNotes, visiblePagination]);
 
     return (
@@ -193,7 +200,7 @@ const SortNotesService = (props) => {
                 <Pagination
                     className="pagination-bar"
                     currentPage={currentPage}
-                    totalCount={props.notes.length}
+                    totalCount={foundAllNotesByUsername.length}
                     pageSize={PageSize}
                     onPageChange={page => setCurrentPage(page)}
                 />

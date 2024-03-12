@@ -1,13 +1,7 @@
 import {useState} from 'react';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
-import CategoryService, {
-    getCategory,
-    getSelectCategory,
-    getUpdatedCategoryToken,
-    saveCategory,
-    updatedCategoryToken
-} from '../service/CategoryService';
+import CategoryService, {getCategory, getSelectCategory, getUpdatedCategoryToken, saveCategory, updatedCategoryToken} from '../service/CategoryService';
 import Space from '../element/Space';
 import SortNotesService from '../service/SortNotesService';
 import {PropagateLoader} from 'react-spinners';
@@ -17,7 +11,7 @@ import {getNavbarToken, navbarToken} from '../service/NavbarService';
 import {getNoteCreatingDateClickToken, getNoteCreatingDateToken, noteCreatingDateClickToken, noteCreatingDateToken} from '../service/NoteCreatingDateService';
 import {clickInfoToken, getClickInfoToken} from '../service/AddService';
 import {useNavigate} from 'react-router';
-import {useParams} from "react-router-dom";
+import {useParams} from 'react-router-dom';
 
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
@@ -236,6 +230,15 @@ const NotesList = () => {
         setUpdatedCategory(updatedCategory);
         setClickSaveSelectedCategory(true);
         console.log('Selected category is: ' + category + '!');
+        handleSubmit();
+    }
+
+    function handleSubmit() {
+        const button = document.getElementById('category');
+        button.onclick = function() {
+            console.log('You clicked field named category!');
+            setLoading(true);
+        };
     }
 
     return (
