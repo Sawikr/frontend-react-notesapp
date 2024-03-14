@@ -166,6 +166,16 @@ const SortNotesService = (props) => {
         </div>;
     }
 
+    function getPagination(foundNotes) {
+        return <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={foundNotes.length}
+            pageSize={PageSize}
+            onPageChange={page => setCurrentPage(page)}
+        />;
+    }
+
     return (
         <div>
             {
@@ -184,24 +194,10 @@ const SortNotesService = (props) => {
             }
             <Space/>
             {
-                !checkIfCategoryIsAll(category) &&
-                <Pagination
-                    className="pagination-bar"
-                    currentPage={currentPage}
-                    totalCount={foundNotesByCategory.length}
-                    pageSize={PageSize}
-                    onPageChange={page => setCurrentPage(page)}
-                />
+                !checkIfCategoryIsAll(category) && getPagination(foundNotesByCategory)
             }
             {
-                checkIfCategoryIsAll(category) &&
-                <Pagination
-                    className="pagination-bar"
-                    currentPage={currentPage}
-                    totalCount={foundAllNotesByUsername.length}
-                    pageSize={PageSize}
-                    onPageChange={page => setCurrentPage(page)}
-                />
+                checkIfCategoryIsAll(category) && getPagination(foundAllNotesByUsername)
             }
         </div>
     );

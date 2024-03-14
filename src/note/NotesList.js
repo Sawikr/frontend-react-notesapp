@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
-import CategoryService, {getCategory, getSelectCategory, getUpdatedCategoryToken, saveCategory, updatedCategoryToken} from '../service/CategoryService';
+import CategoryService, {getSelectCategory, getUpdatedCategoryToken, updatedCategoryToken} from '../service/CategoryService';
 import Space from '../element/Space';
 import SortNotesService from '../service/SortNotesService';
 import {PropagateLoader} from 'react-spinners';
