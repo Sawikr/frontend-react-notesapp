@@ -15,7 +15,7 @@ import {TextareaAutosize} from '@mui/base';
 const AddNote = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [category, setCategory] = useState('programming');
+    const [category, setCategory] = useState('all');
     const [isLogin, setIsLogin] = useState(true);
     const [updatedTrue, setUpdatedTrue] = useState(false);
     const [createdTrue, setCreatedTrue] = useState(false);
@@ -29,6 +29,7 @@ const AddNote = () => {
     const [loading, setLoading] = useState(false);
     const [updatedAt, setUpdatedAt] = useState(new Date());
     const [showReturnButton, setShowReturnButton] = useState(false);
+    const [selectedCategoryIsAll, setSelectedCategoryIsAll] = useState(false);
     const navigate = useNavigate();
     const {id} = useParams();
     const isAuth = isUserLoggedIn();
@@ -75,7 +76,14 @@ const AddNote = () => {
         if (!title || !body) {
             setErrors(true);
             return;
-        } else {
+        }
+        else if (category === 'all') {
+            setSelectedCategoryIsAll(true);
+            await wait(3000);
+            setSelectedCategoryIsAll(false);
+            return;
+        }
+        else {
             setLoading(true);
         }
 
@@ -188,7 +196,16 @@ const AddNote = () => {
                     </Alert>
                 }
                 {
-                    (updatedTrue || createdTrue || error || logFirst) &&
+                    selectedCategoryIsAll &&
+                    <Alert type="info">
+                        <div>
+                            <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
+                            <span className="ml-1" style={{color: '#79589f'}}> The category called ALL has been selected. Choose a different category!</span>
+                        </div>
+                    </Alert>
+                }
+                {
+                    (updatedTrue || createdTrue || error || logFirst || selectedCategoryIsAll) &&
                     <Space />
                 }
             </div>
