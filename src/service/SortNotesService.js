@@ -4,6 +4,7 @@ import {useEffect, useState, useMemo} from 'react';
 import LoginService from './LoginService';
 import Pagination from '../pagination/Pagination';
 import Space from '../element/Space';
+import {saveCategory} from './CategoryService';
 
 const SortNotesService = (props) => {
     const [loginEmail, setLoginEmail] = useState('');
@@ -103,39 +104,47 @@ const SortNotesService = (props) => {
             }
         </>;
     }
-
+    
+    function isLoggedInUser(obj) {
+        return obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername;
+    }
+    
     function foundSpecificCategory(category) {
         return foundCategoryNotes = props.notes.filter(obj => {
-            return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername) &&
-                (obj.category === category)}).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            return isLoggedInUser(obj) && obj.category === category}).
+                sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     }
 
     function foundAllCategories(category) {
         return foundAllNotes = props.notes.filter(obj => {
-            return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername)}).
-                    sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            return isLoggedInUser(obj)}).
+                sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     }
 
     const foundNotesByCategory = props.notes.filter(obj => {
-        return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername) &&
-            obj.category === checkCategory(category)});
+        return isLoggedInUser(obj) && obj.category === checkCategory(category)});
 
     const foundAllNotesByUsername = props.notes.filter(obj => {
-        return (obj.loginUser === checkLoggedInUser() || obj.loginUser === loginEmail || obj.loginUser === loginUsername)});
+        return isLoggedInUser(obj)});
 
-    const allNotes = useMemo(() => {
+    function pageRange() {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
+        return {firstPageIndex, lastPageIndex};
+    }
+
+    const allNotes = useMemo(() => {
+        const {firstPageIndex, lastPageIndex} = pageRange();
         return foundAllCategories(category).slice(firstPageIndex, lastPageIndex);
     }, [currentPage, category]);
 
     let categoryNotes = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
+        const {firstPageIndex, lastPageIndex} = pageRange();
         return foundSpecificCategory(category).slice(firstPageIndex, lastPageIndex);
     }, [currentPage, category]);
 
     useEffect(() => {
+        saveCategory(category);
         if (checkIfCategoryIsAll(category)) {
             setVisiblePagination(true);
         }
@@ -145,44 +154,33 @@ const SortNotesService = (props) => {
             console.info('Number of notes per page: ' + categoryNotes.length);
     }, [newCategory, categoryNotes, visiblePagination]);
 
+    function showNoteDetails(note) {
+        return <div key={note.id} className="notes-preview mt-3">
+            <Link to={`/notes/${note.id}`}>
+                <div style={{marginTop: 10}}>
+                    <h5 className="notes-primary-color"
+                        style={{marginLeft: 15}}>{note.title}</h5>
+                </div>
+                {notesDisplay(note)}
+            </Link>
+        </div>;
+    }
+
     return (
         <div>
             {
                 !checkIfCategoryIsAll(category) &&
-
-                categoryNotes && categoryNotes.filter(name => {
-                    return (name.loginUser === checkLoggedInUser() || name.loginUser === loginEmail || name.loginUser === loginUsername)
-                        && name.category === checkCategory(category)
+                categoryNotes && categoryNotes.filter(obj => {
+                    return isLoggedInUser(obj) && obj.category === checkCategory(category)
                 })
-                    .map(note => (
-                        <div key={note.id} className="notes-preview mt-3">
-                            <Link to={`/notes/${note.id}`}>
-                                <div style={{marginTop: 10}}>
-                                    <h5 className="notes-primary-color"
-                                        style={{marginLeft: 15}}>{note.title}</h5>
-                                </div>
-                                {notesDisplay(note)}
-                            </Link>
-                        </div>
-                    ))
+                    .map(note => showNoteDetails(note))
             }
             {
                 checkIfCategoryIsAll(category) &&
-
-                allNotes && allNotes.filter(name => {
-                    return (name.loginUser === checkLoggedInUser() || name.loginUser === loginEmail || name.loginUser === loginUsername)
+                allNotes && allNotes.filter(obj => {
+                    return isLoggedInUser(obj)
                 })
-                    .map(note => (
-                        <div key={note.id} className="notes-preview mt-3">
-                            <Link to={`/notes/${note.id}`}>
-                                <div style={{marginTop: 10}}>
-                                    <h5 className="notes-primary-color"
-                                        style={{marginLeft: 15}}>{note.title}</h5>
-                                </div>
-                                {notesDisplay(note)}
-                            </Link>
-                        </div>
-                    ))
+                    .map(note => showNoteDetails(note))
             }
             <Space/>
             {

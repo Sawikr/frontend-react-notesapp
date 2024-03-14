@@ -46,7 +46,7 @@ const NotesList = () => {
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
     const {id} = useParams();
 
-    async function getNotesList() {
+    async function isNull() {
         if (category === null) {
             setCategory(await getSaveCategory());
             setCounter(2);
@@ -66,23 +66,29 @@ const NotesList = () => {
         if (isNoteCreatingDateToken === null) {
             noteCreatingDateToken(false);
         }
+    }
+
+    async function afterAuth() {
+        if (showedError) {
+            setCategory(await getSaveCategory());
+        }
+        if (isClickInfo === null) {
+            clickInfoToken(false);
+        } else if (isClickInfo.match(true)) {
+            window.location.reload();
+        }
+        if (start) {
+            setLoginProgress(true);
+            await wait(3000);
+            setLoginProgress(false);
+        }
+    }
+
+    async function getNotesList() {
+        await isNull();
 
         if (isAuth) {
-            if (showedError) {
-                setCategory(await getSaveCategory());
-            }
-
-            if (isClickInfo === null) {
-                clickInfoToken(false);
-            } else if (isClickInfo.match(true)) {
-                window.location.reload();
-            }
-
-            if (start) {
-                setLoginProgress(true);
-                await wait(3000);
-                setLoginProgress(false);
-            }
+            await afterAuth();
 
             NotesService.getAll()
                 .then(async response => {
@@ -193,7 +199,6 @@ const NotesList = () => {
 
     useOnceEffect (() => {
         getNotesList().then(r => r);
-        //console.info(counter);
     }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken]);
 
     async function getSaveCategory() {
@@ -226,7 +231,6 @@ const NotesList = () => {
     }
 
     async function saveSelectedCategory() {
-        saveCategory(category);
         setUpdatedCategory(updatedCategory);
         setClickSaveSelectedCategory(true);
         console.log('Selected category is: ' + category + '!');
@@ -236,7 +240,7 @@ const NotesList = () => {
     function handleSubmit() {
         const button = document.getElementById('category');
         button.onclick = function() {
-            console.log('You clicked field named category!');
+            console.log('The category has been selected!');
             setLoading(true);
         };
     }
