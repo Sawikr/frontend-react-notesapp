@@ -7,6 +7,7 @@ import Alert from '../alert/Alert';
 import {navbarToken} from '../service/NavbarService';
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router';
+import ModalPasswordAlert from '../alert/modal/ModalPasswordAlert';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -19,6 +20,10 @@ const RegisterPage = () => {
     const [isShown, setIsShown] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showReturnButton, setShowReturnButton] = useState(false);
+    const [modalPasswordAlert, setModalPasswordAlert] = useState(false);
+    const [wrongPassword, setWrongPassword] = useState(false);
+    const [isClick, setIsClick] = useState(false);
+    let [interval, setInterval] = useState('');
     const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
@@ -53,7 +58,18 @@ const RegisterPage = () => {
 
     useEffect(() => {
         showButton().then(r => r);
-    });
+        if (error) {
+            wait(3000).then(r => setError(false));
+            setWrongPassword(true)
+        }
+        if (wrongPassword) {
+            setModalPasswordAlert(true);
+            if (isClick) {
+                setLoading(false)
+                setIsClick(false);
+            }
+        }
+    }, [error, wrongPassword, isClick]);
 
     function returnButton() {
         navbarToken(true);
@@ -64,6 +80,10 @@ const RegisterPage = () => {
     async function showButton() {
         await wait(3000);
         setShowReturnButton(true);
+    }
+
+    function getModalPasswordAlert(isClick) {
+        setIsClick(isClick);
     }
 
     return (
@@ -91,6 +111,10 @@ const RegisterPage = () => {
                             <span className="ml-1" style={{color: '#79589f'}}> An error occurred!</span>
                         </div>
                     </Alert>
+                }
+                {
+                    modalPasswordAlert &&
+                    <ModalPasswordAlert getModalPasswordAlert={getModalPasswordAlert}/>
                 }
                 <div className="loader-container" style={{marginTop: 130}}>
                     <div className="text-center">

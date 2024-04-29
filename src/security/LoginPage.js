@@ -7,6 +7,7 @@ import Alert from '../alert/Alert';
 import {clickInfoToken, getClickInfoToken} from '../service/AddService';
 import {useNavigate} from 'react-router';
 import ModalAlert from '../alert/modal/ModalAlert';
+import ModalPasswordAlert from '../alert/modal/ModalPasswordAlert';
 
 const LoginPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -23,6 +24,8 @@ const LoginPage = () => {
     const [counter, setCounter] = useState(0);
     let [interval, setInterval] = useState('');
     let [showCheckPassword, setShowCheckPassword] = useState(false);
+    const [passwordAlert, setPasswordAlert] = useState(false);
+    const [isClick, setIsClick] = useState(false);
     const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
     let isClickInfo = getClickInfoToken();
@@ -98,9 +101,17 @@ const LoginPage = () => {
     useEffect(() => {
         fetchData().then(r => r);
         if (counter === 2) {
+            setPasswordAlert(true);
             setModalAlert(true);
+            if (isClick) {
+                setPasswordAlert(false);
+            }
         }
     }, [isAuth, start, loginFalse, showCheckPassword]);
+
+    function getModalPasswordAlertInLogin(isClick) {
+        setIsClick(isClick);
+    }
 
     async function login() {
         if (!usernameOrEmail || !password) {
@@ -197,6 +208,10 @@ const LoginPage = () => {
                     {
                         modalAlert &&
                         <ModalAlert/>
+                    }
+                    {
+                        passwordAlert &&
+                        <ModalPasswordAlert getModalPasswordAlert={getModalPasswordAlertInLogin}/>
                     }
                 </div>
                 {loading ? (
