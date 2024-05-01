@@ -23,6 +23,7 @@ const RegisterPage = () => {
     const [modalPasswordAlert, setModalPasswordAlert] = useState(false);
     const [wrongPassword, setWrongPassword] = useState(false);
     const [isClick, setIsClick] = useState(false);
+    const [isClickAgain, setIsClickAgain] = useState(false);
     let [interval, setInterval] = useState('');
     const navigate = useNavigate();
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
@@ -52,24 +53,31 @@ const RegisterPage = () => {
                 console.log('An error occurred!', error);
                 //alert("An error occurred!");
                 setError(true);
-                await wait(3000);
             })
     }
 
     useEffect(() => {
         showButton().then(r => r);
         if (error) {
+            if (isClickAgain) {
+                setLoading(true);
+                setError(true);
+            }
             wait(3000).then(r => setError(false));
-            setWrongPassword(true)
+            wait(3000).then(r => setWrongPassword(true));
         }
+
         if (wrongPassword) {
             setModalPasswordAlert(true);
             if (isClick) {
+                setModalPasswordAlert(false);
+                setWrongPassword(false);
+                setIsClickAgain(true);
                 setLoading(false)
                 setIsClick(false);
             }
         }
-    }, [error, wrongPassword, isClick]);
+    }, [error, wrongPassword, modalPasswordAlert, isClick, isClickAgain]);
 
     function returnButton() {
         navbarToken(true);
@@ -108,7 +116,7 @@ const RegisterPage = () => {
                     <Alert type="info">
                         <div>
                             <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                            <span className="ml-1" style={{color: '#79589f'}}> An error occurred!</span>
+                            <span className="ml-1" style={{color: '#79589f'}}> Register is unsuccessfully. Check your registration details!</span>
                         </div>
                     </Alert>
                 }

@@ -26,6 +26,7 @@ const LoginPage = () => {
     let [showCheckPassword, setShowCheckPassword] = useState(false);
     const [passwordAlert, setPasswordAlert] = useState(false);
     const [isClick, setIsClick] = useState(false);
+    const [wrongPassword, setWrongPassword] = useState(false);
     const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
     let isClickInfo = getClickInfoToken();
@@ -84,7 +85,7 @@ const LoginPage = () => {
                     })
                     setStart(false);
                     setCounter(counter + 1);
-                    console.log('Counter is ' + counter + '!')
+                    console.log('Counter is ' + counter + '!');
                 }, 6000);
             }
             else if (counter === 2) {
@@ -101,8 +102,13 @@ const LoginPage = () => {
     useEffect(() => {
         fetchData().then(r => r);
         if (counter === 2) {
-            setPasswordAlert(true);
-            setModalAlert(true);
+            setWrongPassword(true);
+            wait(3000).then(r => {
+                if (wrongPassword) {
+                    setPasswordAlert(true);
+                    setModalAlert(true);
+                }
+            })
             if (isClick) {
                 setPasswordAlert(false);
             }
