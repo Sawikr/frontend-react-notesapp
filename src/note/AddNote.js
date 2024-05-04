@@ -27,7 +27,7 @@ const AddNote = () => {
     const [loginUser, setLoginUser] = useState(username);
     const [loginName, setLoginName] = useState(username);
     const [loading, setLoading] = useState(false);
-    const [updatedAt, setUpdatedAt] = useState(new Date());
+    let [updatedAt, setUpdatedAt] = useState(new Date());
     const [showReturnButton, setShowReturnButton] = useState(false);
     const [selectedCategoryIsAll, setSelectedCategoryIsAll] = useState(false);
     const navigate = useNavigate();
@@ -70,6 +70,21 @@ const AddNote = () => {
             })
     }
 
+    function currentDate() {
+        let currentDate = new Date(updatedAt.getTime());
+        return currentDate;
+    }
+
+    /**
+     * @description The method is necessary in deploy due to the server's time zone
+     * @returns New date increased by one hour
+     */
+    function currentDatePlusHour() {
+        let newDatePlusHour = new Date(updatedAt.getTime());
+        newDatePlusHour.setHours(newDatePlusHour.getHours() + 1);
+        return newDatePlusHour;
+    }
+
     const saveNote = async (e) => {
         e.preventDefault();
 
@@ -87,13 +102,12 @@ const AddNote = () => {
             setLoading(true);
         }
 
-        let currentDate = new Date(updatedAt.getTime());
-        setUpdatedAt(currentDate);
-
-        const note = {id, title, body, category, loginUser, updatedAt};
-        const noteFields = {title, body, category, updatedAt};
-
         if (id && isAuth) {
+
+            let newCurrentDatePlusHour = currentDatePlusHour();
+            updatedAt = newCurrentDatePlusHour;
+            const noteFields = {title, body, category, updatedAt};
+
             NotesService.updateNoteFields(id, noteFields)
                 .then(async response => {
                     console.log('Note updated successfully:', response.data);
@@ -112,6 +126,11 @@ const AddNote = () => {
                     navigate("/radoslaw-sawicki-frontend-react-notesapp");
                 })
         } else if (isAuth) {
+
+            let newCurrentDate = currentDate();
+            setUpdatedAt(newCurrentDate);
+            const note = {id, title, body, category, loginUser, updatedAt};
+
             NotesService.create(note)
                 .then(async response => {
                     console.log('Note added successfully:', response.data);
