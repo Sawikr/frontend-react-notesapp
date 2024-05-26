@@ -10,6 +10,9 @@ If you entered your login details incorrectly, you will be able to reset your pa
 
 NOTE: As of January 2024, the Replit platform has changed its hosting policies. The repl.co domains have been moved to replit.dev and will only be available when using the editor. This means that the server does not start automatically after logging in to the application. For this reason, NotesApp is currently hosted on the Heroku platform.
 
+## Security
+The Notes application is secured by the Spring Security framework using API access protection using OAuth2 access tokens. The application is also equipped with an automatic logout function in the event of user inactivity.
+
 ## Repository
 This repository contains the frontend mechanics of the aforementioned application.
 
