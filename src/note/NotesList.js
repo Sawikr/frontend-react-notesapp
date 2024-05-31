@@ -82,6 +82,9 @@ const NotesList = () => {
             await wait(3000);
             setLoginProgress(false);
         }
+        if (category === null) {
+            setCategory('all');
+        }
     }
 
     async function getNotesList() {
