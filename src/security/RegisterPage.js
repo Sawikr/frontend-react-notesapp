@@ -15,6 +15,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [registerTrue, setRegisterTrue] = useState(false);
+    const [isRegister, setIsRegister] = useState(false);
     const [error, setError] = useState(false);
     const [errors, setErrors] = useState(false);
     const [isShown, setIsShown] = useState(false);
@@ -40,16 +41,14 @@ const RegisterPage = () => {
 
         const register = {name, username, email, password};
         RegisterService.register(register)
-            .then(async response => {
+            .then(response => {
                 console.log(register);
                 console.log('Register sent successfully!', response.data);
-                setLoading(false);
                 //alert("Register is successfully!");
                 setRegisterTrue(true);
-                await wait(3000);
-                navigate("/radoslaw-sawicki-frontend-react-notesapp");
+                setIsRegister(true);
             })
-            .catch(async error => {
+            .catch(error => {
                 console.log('An error occurred!', error);
                 //alert("An error occurred!");
                 setError(true);
@@ -58,6 +57,13 @@ const RegisterPage = () => {
 
     useEffect(() => {
         showButton().then(r => r);
+        if (isRegister) {
+            wait(3000).then(r => {
+                setRegisterTrue(false);
+                navigate("/radoslaw-sawicki-frontend-react-notesapp");
+            });
+        }
+
         if (error) {
             if (isClickAgain) {
                 setLoading(true);
@@ -77,7 +83,7 @@ const RegisterPage = () => {
                 setIsClick(false);
             }
         }
-    }, [error, wrongPassword, modalPasswordAlert, isClick, isClickAgain]);
+    }, [error, registerTrue, wrongPassword, modalPasswordAlert, isClick, isClickAgain, isRegister]);
 
     function returnButton() {
         navbarToken(true);
@@ -107,7 +113,7 @@ const RegisterPage = () => {
                     <Alert type="info">
                         <div>
                             <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                            <span className="ml-1" style={{color: '#79589f'}}> Register is successfully!</span>
+                            <span className="ml-1" style={{color: '#79589f'}}> Register is successfully! Have fun {username.toUpperCase()}!</span>
                         </div>
                     </Alert>
                 }
