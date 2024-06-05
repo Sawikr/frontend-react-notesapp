@@ -189,7 +189,7 @@ const LoginPage = () => {
                         <Alert type="info">
                             <div>
                                 <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                                <span className="ml-1" style={{color: '#79589f'}}> Login is successfully!</span>
+                                <span className="ml-1" style={{color: '#79589f'}}> Login is successful!</span>
                             </div>
                         </Alert>
                     }
@@ -198,7 +198,7 @@ const LoginPage = () => {
                         <Alert type="info">
                             <div>
                                 <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                                <span className="ml-1" style={{color: '#79589f'}}> Login is unsuccessfully. Check your login details!</span>
+                                <span className="ml-1" style={{color: '#79589f'}}> Login is unsuccessful!. Check your login details!</span>
                             </div>
                         </Alert>
                     }

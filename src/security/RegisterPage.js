@@ -113,7 +113,7 @@ const RegisterPage = () => {
                     <Alert type="info">
                         <div>
                             <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                            <span className="ml-1" style={{color: '#79589f'}}> Register is successfully! Have fun {username.toUpperCase()}!</span>
+                            <span className="ml-1" style={{color: '#79589f'}}> Registration is successful! Have fun {username.toUpperCase()}!</span>
                         </div>
                     </Alert>
                 }
@@ -122,7 +122,7 @@ const RegisterPage = () => {
                     <Alert type="info">
                         <div>
                             <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                            <span className="ml-1" style={{color: '#79589f'}}> Register is unsuccessfully. Check your registration details!</span>
+                            <span className="ml-1" style={{color: '#79589f'}}> Registration is unsuccessful!. Check your registration details!</span>
                         </div>
                     </Alert>
                 }
@@ -140,7 +140,7 @@ const RegisterPage = () => {
             ) : (
             <div className="login">
                 <div className="text-center">
-                <h5>Register to Notes App</h5>
+                <h5>Sign up to Notes App</h5>
                 {!errors && <Space/>}
                 {errors && <span style={{color: 'red', fontStyle: 'italic'}}>Please enter the mandatory fields!</span>}
                 </div>
@@ -210,7 +210,7 @@ const RegisterPage = () => {
                 <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                     <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                 <div className="text-center">
-                    <button className="button-add" onClick={(e) => register(e)}>Register</button>
+                    <button className="button-add" onClick={(e) => register(e)}>Sign Up</button>
                 </div>
                 </form>
             </div>

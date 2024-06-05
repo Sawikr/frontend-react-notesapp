@@ -90,7 +90,7 @@ const AddService = () => {
                     message =
                         <>
                             <Link to="/notes/auth/register" className="ml-3"
-                                  onClick={handleClickRegister}>Register</Link>
+                                  onClick={handleClickRegister}>Sign Up</Link>
                         </>
                 } else if (isCurrency || isWeather) {
                     message =
@@ -102,7 +102,7 @@ const AddService = () => {
                     message =
                         <>
                             <Link to="/notes/auth/register" className="ml-3"
-                                  onClick={handleClickRegister}>Register</Link>
+                                  onClick={handleClickRegister}>Sign Up</Link>
                         </>
                 }
             }
