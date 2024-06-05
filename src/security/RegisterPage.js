@@ -122,7 +122,7 @@ const RegisterPage = () => {
                     <Alert type="info">
                         <div>
                             <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                            <span className="ml-1" style={{color: '#79589f'}}> Registration is unsuccessful!. Check your registration details!</span>
+                            <span className="ml-1" style={{color: '#79589f'}}> Registration is unsuccessful! Check your registration details!</span>
                         </div>
                     </Alert>
                 }
