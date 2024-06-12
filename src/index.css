@@ -41,7 +41,7 @@ button {
 
 .button-add {
   height: 40px;
-  width: 85px;
+  width: 116px;
   background: #79589f;
   border-radius: 5px;
   border: 0 solid #79589f;
@@ -67,6 +67,29 @@ button {
 }
 
 .button-add:focus {
+  border: 1px solid #79589f ;
+  background-color: white;
+  color: #79589f;
+  box-shadow: 4px 4px 0 rgba(121, 88, 159, 0.35);
+}
+
+.button-sign {
+  height: 40px;
+  width: 85px;
+  background: #79589f;
+  border-radius: 5px;
+  border: 0 solid #79589f;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.button-sign:hover {
+  box-shadow: 0 4px 0 rgba(121, 88, 159, 0.35);
+  outline: #79589f;
+}
+
+.button-sign:focus {
   border: 1px solid #79589f ;
   background-color: white;
   color: #79589f;

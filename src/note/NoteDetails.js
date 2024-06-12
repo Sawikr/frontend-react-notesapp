@@ -156,13 +156,14 @@ const NoteDetails = () => {
 
     const handleSend = () => {
         newNoteToken(false);
-        navbarToken(true);
+        navbarToken(false);
         navigate(`/notes/email/${id}`);
     }
 
     function returnButton() {
         navbarToken(true);
-        navigate(-1);
+        navigate("/notes/list");
+        window.location.reload();
     }
 
     async function showButton() {

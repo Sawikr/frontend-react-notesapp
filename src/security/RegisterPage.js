@@ -210,7 +210,7 @@ const RegisterPage = () => {
                 <label className="text-md-left" style={{color: 'black', fontSize: "11px"}}>
                     <span style={{textAlignVertical: 'center', fontSize: "8px", fontStyle: 'italic'}}>*</span> Press</label>
                 <div className="text-center">
-                    <button className="button-add" onClick={(e) => register(e)}>Sign Up</button>
+                    <button className="button-sign" onClick={(e) => register(e)}>Sign Up</button>
                 </div>
                 </form>
             </div>

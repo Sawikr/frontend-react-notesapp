@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useRef, useCallback} from 'react';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
 import CategoryService, {getSelectCategory, getUpdatedCategoryToken, updatedCategoryToken} from '../service/CategoryService';
@@ -16,10 +16,11 @@ import {useParams} from 'react-router-dom';
 const NotesList = () => {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [category, setCategory] = useState(null);
+    let [category, setCategory] = useState(null);
     const username = sessionStorage.getItem('authenticatedUser');
     const [loginUsername, setLoginUsername] = useState(username);
     const [categoryTrue, setCategoryTrue] = useState(false);
+    const [categoryIsNull, setCategoryIsNull] = useState(false);
     const [logFirst, setLogFirst] = useState(false);
     const [error, setError] = useState(false);
     const [showedError, setShowedError] = useState(false);
@@ -35,6 +36,9 @@ const NotesList = () => {
     let [interval, setInterval] = useState('');
     const [noteCreatingDateTrue, setNoteCreatingDateTrue] = useState(false);
     const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
+    let [foundCategory, setFoundCategory] = useState(null);
+    let [checkFoundCategory, setCheckFoundCategory] = useState(null);
+    let isCategory = useRef(0);
     const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
     let isHome = getNavbarToken();
@@ -45,6 +49,7 @@ const NotesList = () => {
     const [clickSaveSelectedCategory, setClickSaveSelectedCategory] = useState(false);
     const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
     const {id} = useParams();
+    const forceUpdate = useCallback(() => setCheckFoundCategory({}), []);
 
     async function isNull() {
         if (category === null) {
@@ -65,6 +70,15 @@ const NotesList = () => {
         }
         if (isNoteCreatingDateToken === null) {
             noteCreatingDateToken(false);
+        }
+        if (checkFoundCategory === null) {
+            setCheckFoundCategory(getNumberOfNotesInCategory());
+            if (checkFoundCategory === 0 && counter === 0) {
+                setCategoryIsNull(true);
+                wait(3000).then(r => {
+                    setCategoryIsNull(false);
+                });
+            }
         }
     }
 
@@ -106,6 +120,14 @@ const NotesList = () => {
                         setNoteCreatedDate(true);
                     } else {
                         setNoteCreatedDate(false);
+                    }
+
+                    checkFoundCategory = getNumberOfNotesInCategory();
+                    if (checkFoundCategory === 0 && counter !== 0 && category !== 'all') {
+                        setCategoryIsNull(true);
+                        wait(3000).then(r => {
+                            setCategoryIsNull(false);
+                        });
                     }
 
                     if (isLogout.match(false)) {
@@ -158,6 +180,7 @@ const NotesList = () => {
                                 }
                             }
                         }
+
                     } else if (isLogout.match(true)) {
                         setLogoutForm(true);
                         await wait(3000);
@@ -202,13 +225,14 @@ const NotesList = () => {
 
     useOnceEffect (() => {
         getNotesList().then(r => r);
-    }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken]);
+        setCheckFoundCategory(getNumberOfNotesInCategory());
+    }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken, category, checkFoundCategory, isHome]);
 
     async function getSaveCategory() {
         CategoryService.getAll()
             .then(async response => {
                 //console.log('Printing response!', response.data);
-                let foundCategory = response.data.filter(obj => {
+                foundCategory = response.data.filter(obj => {
                     return obj.username === loginUsername})
                     .findLast(obj => {return obj}).categoryName;
 
@@ -233,16 +257,35 @@ const NotesList = () => {
             })
     }
 
-    async function saveSelectedCategory() {
+    function getNumberOfNotesInCategory() {
+        NotesService.getAll()
+            .then(async response => {
+                //console.log('Printing response!', response.data);
+                return isCategory = response.data.filter(obj => {
+                    return obj.loginUser === loginUsername && obj.category === category}).length;
+
+            })
+            .catch(async error => {
+                console.log('An error occurred!', error);
+                //alert("An error occurred!");
+                setError(true);
+                await wait(4000);
+            })
+
+        return isCategory;
+    }
+
+    function saveSelectedCategory() {
         setUpdatedCategory(updatedCategory);
         setClickSaveSelectedCategory(true);
+        setCategory(category);
         console.log('Selected category is: ' + category + '!');
         handleSubmit();
     }
 
     function handleSubmit() {
         const button = document.getElementById('category');
-        button.onclick = function() {
+        button.onclick = function () {
             console.log('The category has been selected!');
             setLoading(true);
         };
@@ -256,7 +299,15 @@ const NotesList = () => {
                     <Alert type="info">
                         <div>
                             <i className="fa-solid fa-exclamation fa-beat fa-1x fa-border" style={{color: "#79589f", marginBottom: -4}}/>
-                            <span className="ml-1" style={{color: '#79589f'}}> Set the category of notes displayed!</span>
+                            <span className="ml-1" style={{color: '#79589f'}}> Set category of notes displayed!</span>
+                        </div>
+                    </Alert>
+                }
+                {
+                    categoryIsNull &&
+                    <Alert type="info">
+                        <div>
+                            <span className="ml-1" style={{color: '#79589f'}}> Category does not contain notes!</span>
                         </div>
                     </Alert>
                 }
@@ -323,7 +374,7 @@ const NotesList = () => {
                     </Alert>
                 }
                 {
-                    (categoryTrue || error || errorUpdatedCategory || logFirst || newCategory || updatedCategory || logoutForm ||
+                    (categoryTrue || categoryIsNull || error || errorUpdatedCategory || logFirst || newCategory || updatedCategory || logoutForm ||
                         noteCreatingDateTrue || noteCreatingDateFalse || loginProgress) &&
                     <Space />
                 }
