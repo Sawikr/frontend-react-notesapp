@@ -1,4 +1,4 @@
-import {useState, useRef, useCallback} from 'react';
+import {useState, useRef, useCallback, useMemo} from 'react';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
 import CategoryService, {getSelectCategory, getUpdatedCategoryToken, updatedCategoryToken} from '../service/CategoryService';
@@ -71,15 +71,6 @@ const NotesList = () => {
         if (isNoteCreatingDateToken === null) {
             noteCreatingDateToken(false);
         }
-        if (checkFoundCategory === null) {
-            setCheckFoundCategory(getNumberOfNotesInCategory());
-            if (checkFoundCategory === 0 && counter === 0) {
-                setCategoryIsNull(true);
-                wait(3000).then(r => {
-                    setCategoryIsNull(false);
-                });
-            }
-        }
     }
 
     async function afterAuth() {
@@ -98,6 +89,22 @@ const NotesList = () => {
         }
         if (category === null) {
             setCategory('all');
+        }
+    }
+
+    async function checkNumberOfNotesInCategory() {
+        checkFoundCategory = await getNumberOfNotesInCategory();
+        if (checkFoundCategory === 0 && counter !== 0 && category !== 'all' && isLogout.match(false)) {
+            setCategoryIsNull(true);
+            if (counter === 1) {
+                wait(3500).then(r => {
+                    setCategoryIsNull(false);
+                });
+            } else {
+                wait(4500).then(r => {
+                    setCategoryIsNull(false);
+                });
+            }
         }
     }
 
@@ -122,13 +129,7 @@ const NotesList = () => {
                         setNoteCreatedDate(false);
                     }
 
-                    checkFoundCategory = getNumberOfNotesInCategory();
-                    if (checkFoundCategory === 0 && counter !== 0 && category !== 'all') {
-                        setCategoryIsNull(true);
-                        wait(3000).then(r => {
-                            setCategoryIsNull(false);
-                        });
-                    }
+                    await checkNumberOfNotesInCategory();
 
                     if (isLogout.match(false)) {
                         isHome = getNavbarToken();
@@ -223,9 +224,11 @@ const NotesList = () => {
         }
     }
 
-    useOnceEffect (() => {
+    useOnceEffect(() => {
         getNotesList().then(r => r);
-        setCheckFoundCategory(getNumberOfNotesInCategory());
+        const interval = setInterval(async () =>
+            setCheckFoundCategory(await getNumberOfNotesInCategory()), 1000);
+        return () => clearInterval(interval);
     }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken, category, checkFoundCategory, isHome]);
 
     async function getSaveCategory() {
@@ -257,7 +260,7 @@ const NotesList = () => {
             })
     }
 
-    function getNumberOfNotesInCategory() {
+    async function getNumberOfNotesInCategory() {
         NotesService.getAll()
             .then(async response => {
                 //console.log('Printing response!', response.data);

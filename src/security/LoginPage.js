@@ -138,7 +138,7 @@ const LoginPage = () => {
         await LoginService.loginObj(usernameOrEmail, password)
             .then((response) => {
                 setLoading(true);
-                console.log('Login is successfully!', response.data);
+                console.log('Login is successful!');
                 setLoginProgress(false);
                 setLoginTrue(true);
                 wait(3000);
