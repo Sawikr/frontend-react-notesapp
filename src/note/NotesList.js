@@ -1,4 +1,4 @@
-import {useState, useRef, useCallback, useMemo} from 'react';
+import {useState, useRef, useCallback} from 'react';
 import {getLogoutToken, isUserLoggedIn, logout, logoutToken} from '../service/LoginService';
 import NotesService from '../service/NotesService';
 import CategoryService, {getSelectCategory, getUpdatedCategoryToken, updatedCategoryToken} from '../service/CategoryService';
@@ -38,6 +38,7 @@ const NotesList = () => {
     const [noteCreatingDateFalse, setNoteCreatingDateFalse] = useState(false);
     let [foundCategory, setFoundCategory] = useState(null);
     let [checkFoundCategory, setCheckFoundCategory] = useState(null);
+    let [isCheckFoundCategory, setIsCheckFoundCategory] = useState(false);
     let isCategory = useRef(0);
     const navigate = useNavigate();
     const isAuth = isUserLoggedIn();
@@ -94,17 +95,10 @@ const NotesList = () => {
 
     async function checkNumberOfNotesInCategory() {
         checkFoundCategory = await getNumberOfNotesInCategory();
-        if (checkFoundCategory === 0 && counter !== 0 && category !== 'all' && isLogout.match(false)) {
+        if (checkFoundCategory === 0 && counter !== 0 && counter !== 1 && category !== 'all' && isLogout.match(false)) {
             setCategoryIsNull(true);
-            if (counter === 1) {
-                wait(3500).then(r => {
-                    setCategoryIsNull(false);
-                });
-            } else {
-                wait(4500).then(r => {
-                    setCategoryIsNull(false);
-                });
-            }
+            await wait(3500);
+            setCategoryIsNull(false);
         }
     }
 
@@ -130,6 +124,7 @@ const NotesList = () => {
                     }
 
                     await checkNumberOfNotesInCategory();
+                    setIsCheckFoundCategory(true);
 
                     if (isLogout.match(false)) {
                         isHome = getNavbarToken();
@@ -225,11 +220,18 @@ const NotesList = () => {
     }
 
     useOnceEffect(() => {
-        getNotesList().then(r => r);
-        const interval = setInterval(async () =>
-            setCheckFoundCategory(await getNumberOfNotesInCategory()), 1000);
+        const interval = setInterval(async () => {
+            getNotesList().then(r => r);
+            if (isCheckFoundCategory) {
+                if (clickSaveSelectedCategory) {
+                    setCounter(2);
+                }
+                await checkNumberOfNotesInCategory();
+                setIsCheckFoundCategory(false);
+            }
+        }, 0);
         return () => clearInterval(interval);
-    }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken, category, checkFoundCategory, isHome]);
+    }, [loading, isLogout, isUpdatedCategory, counter, start, isNoteCreatingDateToken, isNoteCreatingDateClickToken, category, checkFoundCategory, isHome, clickSaveSelectedCategory]);
 
     async function getSaveCategory() {
         CategoryService.getAll()

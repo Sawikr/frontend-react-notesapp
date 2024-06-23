@@ -16,7 +16,6 @@ const SortNotesService = (props) => {
     let [getCategory, setGetCategory] = useState([]);
     let [foundCategoryNotes, setFoundCategoryNotes] = useState('');
     let [foundAllNotes, setFoundAllNotes] = useState('');
-    let [counter, setCounter] = useState(0);
     let category = props.category;
     let PageSize = 4;
 

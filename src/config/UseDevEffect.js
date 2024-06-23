@@ -2,10 +2,14 @@ import {useEffect} from 'react';
 
 export const useDevEffect = (cb, deps) => {
     let ran = false;
+    //console.log('effect ran');
     useEffect(() => {
         if (ran) return;
         cb();
-        return () => (ran = true);
+        return () => {
+            //console.log('unmounted');
+            ran = true
+        };
     }, deps);
 };
 
