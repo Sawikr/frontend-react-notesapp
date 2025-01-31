@@ -4,6 +4,20 @@ import Space from '../element/Space';
 import {useState} from 'react';
 import {useNavigate} from 'react-router';
 
+export const clickSharesToken = (shares) => sessionStorage.setItem("shares", shares);
+
+export const getSharesToken = () => sessionStorage.getItem("shares");
+
+export const isClickShares = () => {
+    const token = getSharesToken();
+    if (token != null && token.match(false)) {
+        console.log('IsClickShares return false!');
+        return false;
+    } else
+        console.log('IsClickShares return true!');
+    return true;
+}
+
 export const clickCurrencyToken = (currency) => sessionStorage.setItem("currency", currency);
 
 export const getCurrencyToken = () => sessionStorage.getItem("currency");
@@ -44,6 +58,14 @@ const ApiService = (props) => {
         setActive(false);
     };
 
+    function handleClickShares() {
+        clickInfoToken(false);
+        clickCurrencyToken(true);
+        navigate("/notes/shares");
+        console.log('Clicked shares: ' + getSharesToken());
+        window.location.reload();
+    }
+
     function handleClickCurrency() {
         clickInfoToken(false);
         clickCurrencyToken(true);
@@ -77,7 +99,8 @@ const ApiService = (props) => {
                 props.isOpen &&
                 <div>
                     <Space/>
-                    <Link to="/notes/nbp" onClick={handleClickCurrency}>Currency Rates</Link>
+                    <Link to="/notes/shares" onClick={handleClickShares}>Stock Shares</Link>
+                    <Link to="/notes/nbp" className="ml-3" onClick={handleClickCurrency}>Currency Rates</Link>
                     <Link to="/notes/weather" className="ml-3" onClick={handleClickWeather}>Weather Forecast</Link>
                 </div>
             }

@@ -22,6 +22,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router';
 import {isUserLoggedIn, logoutToken} from './service/LoginService';
 import useIdle from './hooks/useIdleTimeout';
+import Shares from './api/Shares';
 
 function App() {
     const [timeout, setTimeout] = useState(1000 * 60);
@@ -100,6 +101,7 @@ function App() {
                     <Route path="/notes/email/:id" element={<SendMail />} />
                     <Route path="/notes/weather" element={<Weather />} />
                     <Route path="/notes/nbp" element={<Currency />} />
+                    <Route path="/notes/shares" element={<Shares />} />
                     <Route path="/notes/edit/:id" element={<AddNote />}/>
                     <Route path="/notes/:id" element={<NoteDetails />}  />
                     <Route path="/info" element={<Copyright />} />

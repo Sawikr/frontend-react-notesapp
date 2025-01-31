@@ -34,5 +34,23 @@ export const getCurrencyCHF = () =>
 export const getCurrencyGBP = () =>
     axios.get(BASE_URL + '/notes/currency/gbp')
 
+export const getShare1 = () =>
+    axios.get(BASE_URL + '/notes/data/1')
+
+export const getShare2 = () =>
+    axios.get(BASE_URL + '/notes/data/2')
+
+export const getShare3 = () =>
+    axios.get(BASE_URL + '/notes/data/3')
+
+export const getShare4 = () =>
+    axios.get(BASE_URL + '/notes/data/4')
+
+export const getShare5 = () =>
+    axios.get(BASE_URL + '/notes/data/5')
+
+export const getShare6 = () =>
+    axios.get(BASE_URL + '/notes/data/6')
+
 // eslint-disable-next-line
-export default { getAll, create, get, remove, update, updateNoteFields, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP };
+export default { getAll, create, get, remove, update, updateNoteFields, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP, getShare1, getShare2, getShare3, getShare4, getShare5, getShare6 };

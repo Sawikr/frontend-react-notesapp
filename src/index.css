@@ -477,6 +477,18 @@ select:hover {
   margin: 0 -20px auto;
 }
 
+.column {
+  float: left;
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  width: 75%;
+}
+
 /* @media */
 @media (max-width: 436px) {
   .input {

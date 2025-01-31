@@ -164,7 +164,7 @@ const NotesList = () => {
                                     await wait(4500);
                                     setNoteCreatingDateFalse(false);
                                     setNoteCreatedDate(true);
-                                    setCounter(1);
+                                    //setCounter(1);
                                 }
                             } else {
                                 if (counter === 2) {
@@ -172,7 +172,7 @@ const NotesList = () => {
                                     await wait(4500);
                                     setNoteCreatingDateTrue(false);
                                     setNoteCreatedDate(false);
-                                    setCounter(1);
+                                    //setCounter(1);
                                 }
                             }
                         }
