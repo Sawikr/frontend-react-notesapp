@@ -97,7 +97,7 @@ const ApiService = (props) => {
             </div>
             {
                 props.isOpen &&
-                <div>
+                <div className="notes-api-services-text">
                     <Space/>
                     <Link to="/notes/shares" onClick={handleClickShares}>Stock Shares</Link>
                     <Link to="/notes/nbp" className="ml-3" onClick={handleClickCurrency}>Currency Rates</Link>

@@ -35,22 +35,22 @@ export const getCurrencyGBP = () =>
     axios.get(BASE_URL + '/notes/currency/gbp')
 
 export const getShare1 = () =>
-    axios.get(BASE_URL + '/notes/data/1')
+    axios.get(BASE_URL + '/notes/data/one')
 
 export const getShare2 = () =>
-    axios.get(BASE_URL + '/notes/data/2')
+    axios.get(BASE_URL + '/notes/data/two')
 
 export const getShare3 = () =>
-    axios.get(BASE_URL + '/notes/data/3')
+    axios.get(BASE_URL + '/notes/data/three')
 
 export const getShare4 = () =>
-    axios.get(BASE_URL + '/notes/data/4')
+    axios.get(BASE_URL + '/notes/data/four')
 
 export const getShare5 = () =>
-    axios.get(BASE_URL + '/notes/data/5')
+    axios.get(BASE_URL + '/notes/data/five')
 
 export const getShare6 = () =>
-    axios.get(BASE_URL + '/notes/data/6')
+    axios.get(BASE_URL + '/notes/data/six')
 
 // eslint-disable-next-line
 export default { getAll, create, get, remove, update, updateNoteFields, getWeather, getCurrencyEUR, getCurrencyUSD, getCurrencyCHF, getCurrencyGBP, getShare1, getShare2, getShare3, getShare4, getShare5, getShare6 };
