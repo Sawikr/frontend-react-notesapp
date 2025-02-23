@@ -11,25 +11,26 @@ function Shares() {
     const [share1, setShare1] = useState([]);
     const [share2, setShare2] = useState([]);
     const [share3, setShare3] = useState([]);
-    const [share4, setShare4] = useState([]);
-    const [share5, setShare5] = useState([]);
-    const [share6, setShare6] = useState([]);
+    const [open1, setOpen1] = useState([]);
+    const [open2, setOpen2] = useState([]);
+    const [open3, setOpen3] = useState([]);
+    const [close1, setClose1] = useState([]);
+    const [close2, setClose2] = useState([]);
+    const [close3, setClose3] = useState([]);
     const [change1, setChange1] = useState(0);
     const [change2, setChange2] = useState(0);
     const [change3, setChange3] = useState(0);
-    const [change4, setChange4] = useState(0);
-    const [change5, setChange5] = useState(0);
-    const [change6, setChange6] = useState(0);
+    const [volume1, setVolume1] = useState(0);
+    const [volume2, setVolume2] = useState(0);
+    const [volume3, setVolume3] = useState(0);
     const open = useState(0);
     const [close, setClose] = useState(0);
     const change = useState(0);
     const [changeColor1, setChangeColor1] = useState(true);
     const [changeColor2, setChangeColor2] = useState(true);
     const [changeColor3, setChangeColor3] = useState(true);
-    const [changeColor4, setChangeColor4] = useState(true);
-    const [changeColor5, setChangeColor5] = useState(true);
-    const [changeColor6, setChangeColor6] = useState(true);
     const [loading, setLoading] = useState(true);
+    const [loadingOne, setLoadingOne] = useState(false);
     const [showReturnButton, setShowReturnButton] = useState(false);
     const currentDate = Date.now().valueOf();
     const isAuth = isUserLoggedIn();
@@ -66,15 +67,19 @@ function Shares() {
                 console.log('Printing response!', response.data);
 
                 const closeResponse = response.data.data[0].close;
+                const openResponse = response.data.data[0].open;
+                const volumeResponse = response.data.data[0].volume;
                 //console.log('Close is ' + closeResponse + '!');
 
-                setShare1(closeResponse);
+                setClose1(closeResponse);
 
                 let change = getChange(response);
                 setChange1(change);
+                setOpen1(openResponse);
+                setVolume1(volumeResponse);
                 setChangeColor1(color(change));
 
-                setLoading(false);
+                setLoadingOne(false);
                 await showButton();
             })
             .catch(error => {
@@ -88,13 +93,17 @@ function Shares() {
                 console.log('Printing response!', response.data);
 
                 const closeResponse = response.data.data[0].close;
+                const openResponse = response.data.data[1].open;
+                const volumeResponse = response.data.data[0].volume;
                 //console.log('Close is ' + closeResponse + '!');
 
                 let change = getChange(response);
                 setChange2(change);
+                setOpen2(openResponse);
+                setVolume2(volumeResponse);
                 setChangeColor2(color(change));
 
-                setShare2(closeResponse);
+                setClose2(closeResponse);
             })
             .catch(error => {
                 console.log('An error occurred!', error);
@@ -107,70 +116,17 @@ function Shares() {
                 console.log('Printing response!', response.data);
 
                 const closeResponse = response.data.data[0].close;
+                const openResponse = response.data.data[1].open;
+                const volumeResponse = response.data.data[0].volume;
                 //console.log('Close is ' + closeResponse + '!');
 
                 let change = getChange(response);
                 setChange3(change);
+                setOpen3(openResponse);
+                setVolume3(volumeResponse);
                 setChangeColor3(color(change));
 
-                setShare3(closeResponse);
-            })
-            .catch(error => {
-                console.log('An error occurred!', error);
-            })
-    }
-
-    function getData4() {
-        NotesService.getShare4()
-            .then(response => {
-                console.log('Printing response!', response.data);
-
-                const closeResponse = response.data.data[0].close;
-                //console.log('Close is ' + closeResponse + '!');
-
-                let change = getChange(response);
-                setChange4(change);
-                setChangeColor4(color(change));
-
-                setShare4(closeResponse);
-            })
-            .catch(error => {
-                console.log('An error occurred!', error);
-            })
-    }
-
-    function getData5() {
-        NotesService.getShare5()
-            .then(response => {
-                console.log('Printing response!', response.data);
-
-                const closeResponse = response.data.data[0].close;
-                //console.log('Close is ' + closeResponse + '!');
-
-                let change = getChange(response);
-                setChange5(change);
-                setChangeColor5(color(change));
-
-                setShare5(closeResponse);
-            })
-            .catch(error => {
-                console.log('An error occurred!', error);
-            })
-    }
-
-    function getData6() {
-        NotesService.getShare6()
-            .then(response => {
-                console.log('Printing response!', response.data);
-
-                const closeResponse = response.data.data[0].close;
-                //console.log('Close is ' + closeResponse + '!');
-
-                let change = getChange(response);
-                setChange6(change);
-                setChangeColor6(color(change));
-
-                setShare6(closeResponse);
+                setClose3(closeResponse);
             })
             .catch(error => {
                 console.log('An error occurred!', error);
@@ -181,15 +137,12 @@ function Shares() {
         getData1();
         getData2();
         getData3();
-        getData4();
-        getData5();
-        getData6();
     }, []);
 
     return (
         <div className="main-content">
             {
-            loading ? (
+            loadingOne ? (
                 <div>
                     {!isAuth &&
                         <div className="loader-container" style={{marginTop: 137}}>
@@ -212,10 +165,20 @@ function Shares() {
             <div className="main-content">
                 <h4>Stock Shares</h4>
                 <Space/>
-                <x-h8>NASDAQ:</x-h8>
-                <div className="row mb-3 ml-auto">
+                <x-h8>
+                    <div className="row mb-2 ml-auto">
+                        NASDAQ:
+                    </div>
+                </x-h8>
+                <div className="row mb-4 ml-auto">
                     <div className="column left">
-                    {JSON.stringify(share1)}
+                        Close: {JSON.stringify(close1)}
+                        <div>
+                            Open: {JSON.stringify(open1)}
+                        </div>
+                        <div>
+                            Volume: {JSON.stringify(volume1)}
+                        </div>
                     </div>
                     <div className="column right">
                         {changeColor1 &&
@@ -226,10 +189,20 @@ function Shares() {
                         } %
                     </div>
                 </div>
-                <x-h8>S&P500:</x-h8>
-                <div className="row mb-3 ml-auto">
+                <x-h8>
+                    <div className="row mb-2 ml-auto">
+                        S&P500:
+                    </div>
+                </x-h8>
+                <div className="row mb-4 ml-auto">
                     <div className="column left">
-                        {JSON.stringify(share2)}
+                        Close: {JSON.stringify(close2)}
+                        <div>
+                            Open: {JSON.stringify(open2)}
+                        </div>
+                        <div>
+                            Volume: {JSON.stringify(volume2)}
+                        </div>
                     </div>
                     <div className="column right">
                         {changeColor2 &&
@@ -240,10 +213,20 @@ function Shares() {
                         } %
                     </div>
                 </div>
-                <x-h8>WIG20:</x-h8>
-                <div className="row mb-3 ml-auto">
+                <x-h8>
+                    <div className="row mb-2 ml-auto">
+                        WIG20:
+                    </div>
+                </x-h8>
+                <div className="row mb-4 ml-auto">
                 <div className="column left">
-                    {JSON.stringify(share3)}
+                    Close: {JSON.stringify(close3)}
+                    <div>
+                        Open: {JSON.stringify(open3)}
+                    </div>
+                    <div>
+                        Volume: {JSON.stringify(volume3)}
+                    </div>
                 </div>
                 <div className="column right">
                     {changeColor3 &&
@@ -253,48 +236,6 @@ function Shares() {
                         <i className="ml-1" style={{color: "red"}}>{change3.toFixed(2)}</i>
                     } %
                 </div>
-                </div>
-                <x-h8>NVIDIA:</x-h8>
-                <div className="row mb-3 ml-auto">
-                    <div className="column left">
-                        {JSON.stringify(share4)}
-                    </div>
-                    <div className="column right">
-                        {changeColor4 &&
-                            <i className="ml-1" style={{color: "green"}}>{change4.toFixed(2)}</i>
-                        }
-                        {!changeColor4 &&
-                            <i className="ml-1" style={{color: "red"}}>{change4.toFixed(2)}</i>
-                        } %
-                    </div>
-                </div>
-                <x-h8>Alphabet:</x-h8>
-                <div className="row mb-3 ml-auto">
-                    <div className="column left">
-                        {JSON.stringify(share5)}
-                    </div>
-                    <div className="column right">
-                        {changeColor5 &&
-                            <i className="ml-1" style={{color: "green"}}>{change5.toFixed(2)}</i>
-                        }
-                        {!changeColor5 &&
-                            <i className="ml-1" style={{color: "red"}}>{change5.toFixed(2)}</i>
-                        } %
-                    </div>
-                </div>
-                <x-h8>Microsoft:</x-h8>
-                <div className="row mb-3 ml-auto">
-                    <div className="column left">
-                        {JSON.stringify(share6)}
-                    </div>
-                    <div className="column right">
-                        {changeColor6 &&
-                            <i className="ml-1" style={{color: "green"}}>{change6.toFixed(2)}</i>
-                        }
-                        {!changeColor6 &&
-                            <i className="ml-1" style={{color: "red"}}>{change6.toFixed(2)}</i>
-                        } %
-                    </div>
                 </div>
                 <x-h8>Date:</x-h8>
                 <div className="mb-3">
